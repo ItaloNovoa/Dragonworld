@@ -1,18 +1,17 @@
 package edu.eci.DragonWorld.model;
 
-public class comida {
+public class Comida {
 	
-	public boolean comido;
+	public boolean comido=false;
 	public int exp;
 	public int posX;
 	public int posY;
 		
-	public comida() {
+	public Comida() {
 		
 	}
 	
-	public comida(boolean comido, int exp, int posX, int posY) {
-		this.comido = comido;
+	public Comida(int exp, int posX, int posY) {		
 		this.exp = exp;
 		this.posX = posX;
 		this.posY = posY;

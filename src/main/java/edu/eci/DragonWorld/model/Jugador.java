@@ -1,6 +1,6 @@
 package edu.eci.DragonWorld.model;
 
-public class Player {
+public class Jugador {
 	public int id;
 	public String nombre;
 	public long exp;
@@ -9,11 +9,11 @@ public class Player {
 	public boolean vivo;
 	
 	
-	public Player() {
+	public Jugador() {
 		
 	}
 
-	public Player(int id, String nombre, long exp, int posX, int posY, boolean vivo) {
+	public Jugador(int id, String nombre, long exp, int posX, int posY, boolean vivo) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -26,6 +26,15 @@ public class Player {
 	public int getId() {
 		return id;
 	}
+	
+	public void mover(int x,int y) {
+		
+	}
+	
+	public void evolucionar() {
+		
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}

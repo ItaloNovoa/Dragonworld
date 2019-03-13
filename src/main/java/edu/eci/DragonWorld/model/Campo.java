@@ -3,18 +3,19 @@ package edu.eci.DragonWorld.model;
 import java.util.List;
 import java.util.Random;
 
-public class CAMPO {
+public class Campo {
 	public int id;
 	public final int CAPACIDAD=50;
 	public int ancho,largo;
 	public final int CAPACIDADCOMIDA=100;
-	public List<Player> players;
-	public List<comida> alimentos;
+	//volver atomica
+	public List<Jugador> players;
+	public List<Comida> alimentos;
 		
-	public CAMPO() {
+	public Campo() {
 	}
 
-	public CAMPO(int id, int ancho, int largo) {
+	public Campo(int id, int ancho, int largo) {
 		this.id = id;
 		this.ancho = ancho;
 		this.largo = largo;
@@ -24,11 +25,19 @@ public class CAMPO {
 	public void rellenarComida() {
 		int rr=CAPACIDADCOMIDA-alimentos.size();
 		for (int i=0;i<rr;i++) {
-			comida c= new comida(false, (int) (Math.random() * 20) + 1, (int) (Math.random() * ancho) + 1, (int) (Math.random() * largo) + 1);
+			Comida c= new Comida((int) (Math.random() * 20) + 1, (int) (Math.random() * ancho) + 1, (int) (Math.random() * largo) + 1);
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param j jugador que ataca
+	 * @param posx coordenada X del mouse
+	 * @param posy coordenada Y del mouse
+	 */
+	public void atacar(Jugador j,int posx,int posy) {
+		
+	}
 	
 	public int getId() {
 		return id;
