@@ -1,5 +1,3 @@
-
-
 //import MenuScene from "./scenes/MenuScene";
 //import Phaser from "phaser";
 const config = {
@@ -29,17 +27,19 @@ var score = 0;
 var scoreText;
 
 function preload() {
-    this.load.image ('fondo', 'images/cielo.jpg');
-    this.load.image ('dragon1', 'images/dragon1.gif');
+    this.load.image ('fondo', 'images/fondo3.jpg');
+    this.load.image ('drag', 'images/dragon3.png');
     this.load.image ('food', 'images/star.png');
-    /*this.load.spritesheet('dragon1', 
-        'images/dragonMove3',
-        { frameWidth: 32, frameHeight: 48 }
-    );*/
+    this.load.atlas('dragones', 'images/dragones.png', 'images/dragones.js');
+    
 }
 function create() {
     this.fondo=this.add.image(config.width/2,config.height/2, 'fondo');
-    this.dragon=this.physics.add.image(config.width/2,config.height/2, 'dragon1')
+    this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1});
+    //this.add.sprite(400, 100, 'dragones').play('dragon1');
+    this.dragon=this.physics.add.sprite(400, 100, 'dragones').play('dragon1');
+    
+    
     this.food = this.physics.add.group({
         key: 'food',
         repeat: 14,
@@ -55,8 +55,7 @@ function create() {
     });
     //this.food=this.physics.add.image(100,config.height/2, 'food');
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    this.dragon.setScale(0.5);
-    this.fondo.setScale(2.5);  
+    //this.dragon.add.play; 
     //this.food.setScale(1);
     //this.food.setVelocityX(180);
     this.izquierda=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
@@ -97,8 +96,11 @@ function update(time, delta) {
     }if(this.space.isUp){
         this.dragon.setVelocity(0,0);
     }
+    if (this.input.mousePointer.x == this.dragon.x && this.input.mousePointer.y == this.dragon.y){
+        this.dragon.setVelocity(0,0);
+    }
     //movimiento que siga el mouse
-    this.physics.moveTo(this.dragon, this.input.mousePointer.x,this.input.mousePointer.y,200);
+    this.physics.moveTo(this.dragon, this.input.mousePointer.x,this.input.mousePointer.y+32,200);
     
     //this.dragon.angle-=1;
     this.input.on('pointermove', function (pointer) {
