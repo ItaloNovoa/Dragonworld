@@ -1,137 +1,190 @@
-//import MenuScene from "./scenes/MenuScene";
-//import Phaser from "phaser";
-const config = {
-    //document.documentElement.clientWidth
-    //document.documentElement.clientHeight
-    width:document.documentElement.clientWidth-20,
-    height: document.documentElement.clientHeight-20,
-    parent: "container",
-    type: Phaser.AUTO,
-    
-    scene: {
-        menu: "menu",
-        preload: preload,
-        create: create,
-        update: update
+var SceneA = new Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+        function SceneB() {
+            Phaser.Scene.call(this, 'sceneA');
+            this.fondoInicio;
+        },
+
+    preload: function () {
+        this.load.image('fInicio', 'images/fondo4.jpg');
+        this.load.image('block', 'images/50x50-black.png');
     },
-    /*scene: [MenuScene],*/
-    physics:{
+
+    create: function () {
+        //this.fondoInicio = this.add.image(config.width / 2, config.height / 2, 'fInicio');
+        this.add.image(config.width / 2, config.height / 2, 'fInicio');
+        var blocks = this.add.group({ key: 'block', repeat: 210 });
+        this.input.once('pointerdown', function () {
+            this.scene.switch('sceneB');
+        }, this);
+
+    }
+});
+
+var SceneB = new Phaser.Class({
+    Extends: Phaser.Scene,
+    initialize:
+        function SceneB() {
+            Phaser.Scene.call(this, 'sceneB');
+            this.graphics;
+            this.timerEvent;
+            this.clockSize = 240;
+        },
+
+    preload: function () {
+        this.load.image('fondo', 'images/fondo5.jpg');
+        this.load.image('drag', 'images/dragon3.png');
+        this.load.image('food', 'images/star.png');
+        this.load.atlas('dragones', 'images/dragones.png', 'images/dragones.js');
+    },
+
+    create: function () {
+        this.add.image(config.width / 2, config.height / 2, 'fondo');
+    },
+    preload: preload,
+    create: create,
+    update: update
+});
+
+const config = {
+    type: Phaser.AUTO,
+    width: document.documentElement.clientWidth - 20,
+    height: document.documentElement.clientHeight - 20,
+    backgroundColor: '#000000',
+    parent: 'container',
+    scene: [SceneA, SceneB],
+    physics: {
         default: "arcade",
         arcade: {
         }
     }
-}
+};
 
+var game = new Phaser.Game(config);
 var game = new Phaser.Game(config);
 var score = 0;
 var scoreText;
 
+
 function preload() {
-    this.load.image ('fondo', 'images/fondo3.jpg');
-    this.load.image ('drag', 'images/dragon3.png');
-    this.load.image ('food', 'images/star.png');
+    this.load.image('fondo', 'images/fondo5.jpg');
+    this.load.image('drag', 'images/dragon3.png');
+    this.load.image('food', 'images/esfera6.png');
     this.load.atlas('dragones', 'images/dragones.png', 'images/dragones.js');
-    
+
 }
 function create() {
-    this.fondo=this.add.image(config.width/2,config.height/2, 'fondo');
-    this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1});
+    this.fondo = this.add.image(config.width / 2, config.height / 2, 'fondo');
+    this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
     //this.add.sprite(400, 100, 'dragones').play('dragon1');
-    this.dragon=this.physics.add.sprite(400, 100, 'dragones').play('dragon1');
-    
-    
+    this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');
+
+
     this.food = this.physics.add.group({
         key: 'food',
         repeat: 14,
-        //setXY: { x: 12, y: 0, stepX: 70 }
     });
-    
+
     this.food.children.iterate(function (child) {
         child.setX(Phaser.Math.FloatBetween(32, config.width - 32));
         child.setY(Phaser.Math.FloatBetween(32, config.height - 32));
-        
+
         //child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    
+
     });
     //this.food=this.physics.add.image(100,config.height/2, 'food');
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    //this.dragon.add.play; 
-    //this.food.setScale(1);
+    //this.dragon.add.play;     
     //this.food.setVelocityX(180);
-    this.izquierda=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.derecha=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.arriba=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.abajo=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.space=this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.arriba = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     //this.dragon.setCollideWorldBounds(true);
     this.dragon.setCollideWorldBounds(true);
-    
+
     // fisicas
     //this.physics.world.addcollider(this.dragon, this.food, );
     this.physics.add.collider(this.dragon, this.food, collectFood, null, this);
-    this.physics.add.overlap(this.dragon,  this.food, collectFood, null, this);
+    this.physics.add.overlap(this.dragon, this.food, collectFood, null, this);
 }
 function update(time, delta) {
     //console.log(delta,time);
-    if(this.izquierda.isDown){
+    if (this.izquierda.isDown) {
         this.dragon.x++;
-    }if(this.derecha.isDown){
+    } if (this.derecha.isDown) {
         this.dragon.x--;
-    }if(this.abajo.isDown){
+    } if (this.abajo.isDown) {
         this.dragon.y++;
-    }if(this.arriba.isDown){
+    } if (this.arriba.isDown) {
         this.dragon.y--;
     }
-    if(this.space.isDown){
-        
-        if(this.izquierda.isDown){
-            this.dragon.setVelocity(100,0);
-        }if(this.derecha.isDown){
-            this.dragon.setVelocity(-100,0);
-        }if(this.abajo.isDown){
-            this.dragon.setVelocity(0,100);
-        }if(this.arriba.isDown){
-            this.dragon.setVelocity(0,-100);
+    if (this.space.isDown) {
+
+        if (this.izquierda.isDown) {
+            this.dragon.setVelocity(100, 0);
+        } if (this.derecha.isDown) {
+            this.dragon.setVelocity(-100, 0);
+        } if (this.abajo.isDown) {
+            this.dragon.setVelocity(0, 100);
+        } if (this.arriba.isDown) {
+            this.dragon.setVelocity(0, -100);
         }
-    }if(this.space.isUp){
-        this.dragon.setVelocity(0,0);
+    } if (this.space.isUp) {
+        this.dragon.setVelocity(0, 0);
     }
-    if (this.input.mousePointer.x == this.dragon.x && this.input.mousePointer.y == this.dragon.y){
-        this.dragon.setVelocity(0,0);
+    if (this.input.mousePointer.x == this.dragon.x && this.input.mousePointer.y == this.dragon.y) {
+        this.dragon.setVelocity(0, 0);
     }
     //movimiento que siga el mouse
-    this.physics.moveTo(this.dragon, this.input.mousePointer.x,this.input.mousePointer.y+32,200);
-    
+    this.physics.moveTo(this.dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 200);
+
     //this.dragon.angle-=1;
     this.input.on('pointermove', function (pointer) {
         let cursor = pointer;
         //calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
         let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
-        this.dragon.angle=angleNow;
-  }, this);
-  /*
-    this.input.off('pointermove', function (pointer) {
-        let cursor = pointer;
-        this.physics.moveTo(this.dragon, cursor.x, cursor.y,100);
-        let angle = Phaser.Math.Angle.Between(this.dragon.x, this.dragon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
-    }, this);*/
+        this.dragon.angle = angleNow;
+    }, this);
+    /*
+      this.input.off('pointermove', function (pointer) {
+          let cursor = pointer;
+          this.physics.moveTo(this.dragon, cursor.x, cursor.y,100);
+          let angle = Phaser.Math.Angle.Between(this.dragon.x, this.dragon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
+      }, this);*/
 
 }
 
-function collectFood (dragon, food)
-{
+function collectFood(dragon, food) {
     food.disableBody(true, true);
     score += 10;
     scoreText.setText('Score: ' + score);
     // si se acaba la comida, se vuelve a regenerar
-    if (this.food.countActive(true) === 0)
-    {
+    if (this.food.countActive(true) === 0) {
         this.food.children.iterate(function (child) {
 
             child.enableBody(true, Phaser.Math.FloatBetween(32, config.width - 32), Phaser.Math.FloatBetween(32, config.height - 32), true, true);
 
         });
-    }   
+    }
 }
 
+var animateButton = function (e) {
 
+    e.preventDefault;
+    //reset animation
+    e.target.classList.remove('animate');
+
+    e.target.classList.add('animate');
+    setTimeout(function () {
+        e.target.classList.remove('animate');
+    }, 700);
+};
+
+var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+for (var i = 0; i < bubblyButtons.length; i++) {
+    bubblyButtons[i].addEventListener('click', animateButton, false);
+}
