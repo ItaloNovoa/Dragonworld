@@ -25,3 +25,7 @@
 ###### https://blogs.technet.microsoft.com/srd/2011/06/16/webgl-considered-harmful/
 ###### https://www.openbugbounty.org/reports/141652/
 ###### https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+
+## Funcionalidad
+
+<video src="Dragonworld\DragonWorldWik\Funcionalidad.mp4" width="320" height="200" controls preload></video>
