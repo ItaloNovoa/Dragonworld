@@ -70,16 +70,17 @@ var scoreText;
 function preload() {
     this.load.image('fondo', 'images/fondo5.jpg');
     this.load.image('drag', 'images/dragon3.png');
-    this.load.image('food', 'images/esfera6.png');
+    this.load.image('food', 'images/esfera3.png');
     this.load.atlas('dragones', 'images/dragones.png', 'images/dragones.js');
+    this.load.atlas('fuegos', 'images/fuego1.png', 'images/fuego.js');
 
 }
 function create() {
     this.fondo = this.add.image(config.width / 2, config.height / 2, 'fondo');
     this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
+    this. f = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
     //this.add.sprite(400, 100, 'dragones').play('dragon1');
-    this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');
-
+    this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');    
 
     this.food = this.physics.add.group({
         key: 'food',
@@ -109,8 +110,22 @@ function create() {
     //this.physics.world.addcollider(this.dragon, this.food, );
     this.physics.add.collider(this.dragon, this.food, collectFood, null, this);
     this.physics.add.overlap(this.dragon, this.food, collectFood, null, this);
+    this.input.on('pointerdown', function (pointer) {
+
+        this.f = this.add.sprite(this.dragon.x, (this.dragon.y), 'fuegos').play('fuego1');
+        let cursor = pointer;
+        //calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
+        let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
+        this.f.angle = angleNow-180;
+        //this.f.time.destroy(1000);
+        //this.f.destroy(2000);
+        
+    }, this);
 }
+
+
 function update(time, delta) {
+    //this.input.on('pointerdown',this.lanzarFuego,this);
     //console.log(delta,time);
     if (this.izquierda.isDown) {
         this.dragon.x++;
