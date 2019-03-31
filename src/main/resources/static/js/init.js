@@ -62,10 +62,9 @@ const config = {
 };
 
 var game = new Phaser.Game(config);
-var game = new Phaser.Game(config);
 var score = 0;
 var scoreText;
-
+var foods;
 
 function preload() {
     this.load.image('fondo', 'images/fondo5.jpg');
@@ -82,7 +81,12 @@ function create() {
     //this.add.sprite(400, 100, 'dragones').play('dragon1');
     this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');    
 
-    this.food = this.physics.add.group({
+    this.foods =this.physics.add.group();
+    for (var i = 0; i < 20; i++)
+	{
+		this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
+	}
+    /**this.food = this.physics.add.group({
         key: 'food',
         repeat: 14,
     });
@@ -90,10 +94,8 @@ function create() {
     this.food.children.iterate(function (child) {
         child.setX(Phaser.Math.FloatBetween(32, config.width - 32));
         child.setY(Phaser.Math.FloatBetween(32, config.height - 32));
-
         //child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
-    });
+    });*/
     //this.food=this.physics.add.image(100,config.height/2, 'food');
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     //this.dragon.add.play;     
@@ -108,8 +110,8 @@ function create() {
 
     // fisicas
     //this.physics.world.addcollider(this.dragon, this.food, );
-    this.physics.add.collider(this.dragon, this.food, collectFood, null, this);
-    this.physics.add.overlap(this.dragon, this.food, collectFood, null, this);
+    this.physics.add.collider(this.dragon, this.foods, collectFood, null, this);
+    this.physics.add.overlap(this.dragon, this.foods, collectFood, null, this);
     this.input.on('pointerdown', function (pointer) {
 
         this.f = this.add.sprite(this.dragon.x, (this.dragon.y), 'fuegos').play('fuego1');
@@ -154,15 +156,13 @@ function update(time, delta) {
 
 function collectFood(dragon, food) {
     food.disableBody(true, true);
+    this.foods.remove(food)
     score += 10;
     scoreText.setText('Score: ' + score);
+    console.log(this.foods.children.entries.length);
     // si se acaba la comida, se vuelve a regenerar
-    if (this.food.countActive(true) == 0) {
-        this.food.children.iterate(function (child) {
-
-            child.enableBody(true, Phaser.Math.FloatBetween(32, config.width - 32), Phaser.Math.FloatBetween(32, config.height - 32), true, true);
-
-        });
+    if (this.foods.children.entries.length <= 19) {
+        this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
     }
 }
 
