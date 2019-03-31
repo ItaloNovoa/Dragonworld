@@ -57,8 +57,9 @@ const config = {
     physics: {
         default: "arcade",
         arcade: {
+            
         }
-    }
+    },
 };
 
 var game = new Phaser.Game(config);
@@ -86,24 +87,11 @@ function create() {
 	{
 		this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
 	}
-    /**this.food = this.physics.add.group({
-        key: 'food',
-        repeat: 14,
-    });
-
-    this.food.children.iterate(function (child) {
-        child.setX(Phaser.Math.FloatBetween(32, config.width - 32));
-        child.setY(Phaser.Math.FloatBetween(32, config.height - 32));
-        //child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });*/
+   
     //this.food=this.physics.add.image(100,config.height/2, 'food');
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     //this.dragon.add.play;     
     //this.food.setVelocityX(180);
-    this.izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.derecha = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.arriba = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     //this.dragon.setCollideWorldBounds(true);
     this.dragon.setCollideWorldBounds(true);
@@ -114,17 +102,37 @@ function create() {
     this.physics.add.overlap(this.dragon, this.foods, collectFood, null, this);
     this.input.on('pointerdown', function (pointer) {
 
-        this.f = this.add.sprite(this.dragon.x, (this.dragon.y), 'fuegos').play('fuego1');
+        this.f = this.add.sprite(this.dragon.x, this.dragon.y, 'fuegos').play('fuego1');
         let cursor = pointer;
         //calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
         let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
         this.f.angle = angleNow-180;
+        var time;
+        //this.f.events.onInputDown.add(destroySprite, this);
         //this.f.time.destroy(1000);
         //this.f.destroy(2000);
+        //event.gameObject.setActive(false);
+        //
+        //console.log(game);
         
+        //this.add.tween(this.f).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+        /**var timedEvent = this.time.addEvent({
+            delay: 5000,
+            callback: fadePicture(this.f),
+            callbackScope:this,
+        });*/
+        timedEvent = this.time.delayedCall(250, onEvent, [], this);
     }, this);
 }
 
+
+
+
+function onEvent (){
+    console.log("as")
+    this.f.setActive(false);
+    this.f.setVisible(false); 
+}
 
 function update(time, delta) {
     //this.input.on('pointerdown',this.lanzarFuego,this);
@@ -159,7 +167,6 @@ function collectFood(dragon, food) {
     this.foods.remove(food)
     score += 10;
     scoreText.setText('Score: ' + score);
-    console.log(this.foods.children.entries.length);
     // si se acaba la comida, se vuelve a regenerar
     if (this.foods.children.entries.length <= 19) {
         this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
