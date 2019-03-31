@@ -127,27 +127,7 @@ function create() {
 function update(time, delta) {
     //this.input.on('pointerdown',this.lanzarFuego,this);
     //console.log(delta,time);
-    if (this.izquierda.isDown) {
-        this.dragon.x++;
-    } if (this.derecha.isDown) {
-        this.dragon.x--;
-    } if (this.abajo.isDown) {
-        this.dragon.y++;
-    } if (this.arriba.isDown) {
-        this.dragon.y--;
-    }
-    if (this.space.isDown) {
-
-        if (this.izquierda.isDown) {
-            this.dragon.setVelocity(100, 0);
-        } if (this.derecha.isDown) {
-            this.dragon.setVelocity(-100, 0);
-        } if (this.abajo.isDown) {
-            this.dragon.setVelocity(0, 100);
-        } if (this.arriba.isDown) {
-            this.dragon.setVelocity(0, -100);
-        }
-    } if (this.space.isUp) {
+    if (this.space.isUp) {
         this.dragon.setVelocity(0, 0);
     }
     if (this.input.mousePointer.x == this.dragon.x && this.input.mousePointer.y == this.dragon.y) {
@@ -177,7 +157,7 @@ function collectFood(dragon, food) {
     score += 10;
     scoreText.setText('Score: ' + score);
     // si se acaba la comida, se vuelve a regenerar
-    if (this.food.countActive(true) === 0) {
+    if (this.food.countActive(true) == 0) {
         this.food.children.iterate(function (child) {
 
             child.enableBody(true, Phaser.Math.FloatBetween(32, config.width - 32), Phaser.Math.FloatBetween(32, config.height - 32), true, true);
