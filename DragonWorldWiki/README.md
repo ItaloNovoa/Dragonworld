@@ -28,4 +28,4 @@
 
 ## Funcionalidad
 
-<video src="Dragonworld\DragonWorldWik\Funcionalidad.mp4" width="320" height="200" controls preload></video>
+https://dragonworld-arsw.herokuapp.com/
