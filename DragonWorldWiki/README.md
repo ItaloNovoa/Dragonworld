@@ -16,7 +16,7 @@
 ###### •	El jugador puede emitir fuego del dragón al oprimir el botón izquierdo del mouse
 ###### •	El puntaje debe visualizarse en la esquina superior izquierda de la pantalla
 ###### 
-###### En el video se puede visualizar que a medida que se mueve el mouse el dragón sigue su movimiento, además, cuando toca una esfera ésta desaparece y suma a su puntaje que aparece en la esquina superior izquierda. También se puede ver como las esferas se autogeneran.
+###### En el video se puede visualizar que a medida que se mueve el mouse el dragón sigue su movimiento, además, cuando toca una esfera ésta desaparece y suma a su puntaje que aparece en la esquina superior izquierda. También se puede ver como las esferas se autogeneran y al dar clic en el botón izquierdo del mouse lanza fuego.
 
 ## Cuadro de Vulnerabilidad
 
