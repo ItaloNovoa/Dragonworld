@@ -76,7 +76,8 @@ function preload() {
 
 }
 function create() {
-	this.fondo = this.add.image(config.width / 2, config.height / 2, 'fondo');
+	this.fondo = this.add.image((config.width / 2)-100, (config.height / 2)-100, 'fondo');
+	this.fondo.setScale(1.3);
 	this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
 	this. f = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
 	//this.add.sprite(400, 100, 'dragones').play('dragon1');
@@ -92,6 +93,7 @@ function create() {
 	scoreText = this.add.text(150, 40, 'score: 0', { fontSize: '32px', fill: '#000' });
 	//this.dragon.add.play;     
 	//this.food.setVelocityX(180);
+	
 	this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 	//this.dragon.setCollideWorldBounds(true);
 	this.dragon.setCollideWorldBounds(true);
