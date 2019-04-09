@@ -2,30 +2,6 @@ var SceneA = new Phaser.Class({
 	Extends: Phaser.Scene,
 	initialize:
 		function SceneB() {
-		Phaser.Scene.call(this, 'sceneA');
-		this.fondoInicio;
-	},
-
-	preload: function () {
-		this.load.image('fInicio', 'images/fondo4.jpg');
-		this.load.image('block', 'images/50x50-black.png');
-	},
-
-	create: function () {
-		//this.fondoInicio = this.add.image(config.width / 2, config.height / 2, 'fInicio');
-		this.add.image(config.width / 2, config.height / 2, 'fInicio');
-		var blocks = this.add.group({ key: 'block', repeat: 210 });
-		this.input.once('pointerdown', function () {
-			this.scene.switch('sceneB');
-		}, this);
-
-	}
-});
-
-var SceneB = new Phaser.Class({
-	Extends: Phaser.Scene,
-	initialize:
-		function SceneB() {
 		Phaser.Scene.call(this, 'sceneB');
 		this.graphics;
 		this.timerEvent;
@@ -53,7 +29,7 @@ const config = {
 		height: document.documentElement.clientHeight - 20,
 		backgroundColor: '#000000',
 		parent: 'container',
-		scene: [SceneA, SceneB],
+		scene: [SceneA],
 		physics: {
 		default: "arcade",
 		arcade: {
@@ -79,8 +55,7 @@ function create() {
 	this.fondo = this.add.image((config.width / 2)-100, (config.height / 2)-100, 'fondo');
 	this.fondo.setScale(1.3);
 	this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
-	this. f = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
-	//this.add.sprite(400, 100, 'dragones').play('dragon1');
+	this. f = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });	
 	this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');    
 	this.activo=true;
 	this.foods =this.physics.add.group();
@@ -88,12 +63,8 @@ function create() {
 	{
 		this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
 	}
-
-	//this.food=this.physics.add.image(100,config.height/2, 'food');
-	scoreText = this.add.text(150, 40, 'score: 0', { fontSize: '32px', fill: '#000' });
-	//this.dragon.add.play;     
-	//this.food.setVelocityX(180);
 	
+	scoreText = this.add.text(150, 40, 'score: 0', { fontSize: '32px', fill: '#000' });	
 	this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 	//this.dragon.setCollideWorldBounds(true);
 	this.dragon.setCollideWorldBounds(true);

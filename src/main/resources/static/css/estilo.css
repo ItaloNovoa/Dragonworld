@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+.titleEfecto {
+    text-align: center;
+    /*font-family: "Helvetica Rounded";*/
+    /*font-family: "Forte Regular";*/
+    font-family: "Calibri";
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	letter-spacing: 1px;
+    /*background-image: url('https://thumbs.gfycat.com/FalseFavorableAmericancurl-size_restricted.gif');*/
+    background-image: url('https://i.gifer.com/UwGd.gif');
+    /*background-image: url('https://i.pinimg.com/originals/46/d9/d8/46d9d8be91f572dafcf9592ca624f704.gif');*/
+    /*background-image: url('https://i.pinimg.com/originals/cc/68/90/cc6890557d4811c54570ecce05975932.gif');*/
+    /*background-image: url('https://media.giphy.com/media/6wpHEQNjkd74Q/200.gif');*/
+	background-size: cover;
+	color: transparent;
+	-moz-background-clip: text;
+    -webkit-background-clip: text;
+    font-size: 80px;
+	text-transform: uppercase;   
+    line-height: 1.5;
+    font-weight: 300;
+    position: relative;
+    margin-bottom: 0.5em;
+
+}
+
+.white-mode {
+	text-decoration: none;
+	padding: 7px 10px;
+	background-color: #122;
+	border-radius: 3px;
+	color: #FFF;
+	transition: .35s ease-in-out;
+	position: absolute;
+	left: 15px;
+	bottom: 15px;
+	font-family: "Montserrat";
+}
+
+.white-mode:hover {
+	background-color: #FFF;
+	color: #122;
+}
+
+/* styling my button */
+.btn1{
+    background-image: url('.../images/btnPlay.png');
+}
