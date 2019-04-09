@@ -1,3 +1,5 @@
+//var stompClient = null;
+
 var SceneA = new Phaser.Class({
 	Extends: Phaser.Scene,
 	initialize:
@@ -52,89 +54,73 @@ function preload() {
 
 }
 function create() {
+	this.foods =this.physics.add.group();
+	this.listaDragones =this.physics.add.group();
+
+	/*Fondo*/
 	this.fondo = this.add.image((config.width / 2)-100, (config.height / 2)-100, 'fondo');
 	this.fondo.setScale(1.3);
-	this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
-	this. f = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });	
-	this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');    
-	this.activo=true;
-	this.foods =this.physics.add.group();
-	for (var i = 0; i < 20; i++)
-	{
-		this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
-	}
-	
-	scoreText = this.add.text(150, 40, 'score: 0', { fontSize: '32px', fill: '#000' });	
-	this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-	//this.dragon.setCollideWorldBounds(true);
-	this.dragon.setCollideWorldBounds(true);
 
-	// fisicas
-	//this.physics.world.addcollider(this.dragon, this.food, );
+	/*Dragones*/
+	this.anims.create({ key: 'dragon1', frames: this.anims.generateFrameNames('dragones', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
+	this. fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fuegos', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });	
+	this.dragon = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');  
+	this.activo=true;
+	this.dragon.setCollideWorldBounds(true);
 	this.physics.add.collider(this.dragon, this.foods, collectFood, null, this);
 	this.physics.add.overlap(this.dragon, this.foods, collectFood, null, this);
 	this.input.on('pointerdown', function (pointer) {
 		if(this.activo==true){
 			this.activo=false;
-			this.f = this.add.sprite(this.dragon.x, this.dragon.y, 'fuegos').play('fuego1');
+			this.fuegoSprite = this.add.sprite(this.dragon.x, this.dragon.y, 'fuegos').play('fuego1');
 			let cursor = pointer;
 			//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
 			let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
-			this.f.angle = angleNow-180;
-			var time;
-			//this.f.events.onInputDown.add(destroySprite, this);
-			//this.f.time.destroy(1000);
-			//this.f.destroy(2000);
-			//event.gameObject.setActive(false);
-			//
-			//console.log(game);
-
-			//this.add.tween(this.f).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-			/**var timedEvent = this.time.addEvent({
-            delay: 5000,
-            callback: fadePicture(this.f),
-            callbackScope:this,
-        	});*/
+			this.fuegoSprite.angle = angleNow-180;
+			var time;			
 			timedEvent = this.time.delayedCall(250, onEvent, [], this);
 		}
 	}, this);
+
+	/*Comida*/
+	for (var i = 0; i < 20; i++){
+		this.foods.create(Phaser.Math.FloatBetween(32, config.width - 32),Phaser.Math.FloatBetween(32, config.height - 32), 'food');
+	}
+	
+	/*Puntaje*/
+	scoreText = this.add.text(150, 40, 'score: 0', { fontSize: '32px', fill: '#000' });	
+	this.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);	
 }
-
-
-
 
 function onEvent (){
 	console.log("as")
-	this.f.setActive(false);
-	this.f.setVisible(false);
+	this.fuegoSprite.setActive(false);
+	this.fuegoSprite.setVisible(false);
 	this.activo=true;
 }
 
-function update(time, delta) {
+function creteDragon(){
+	dragon2 = this.physics.add.sprite(400, 100, 'dragones').play('dragon1');
+	this.listaDragones.create(400, 100, dragon2);
+}
 
+function update(time, delta) {
 	if (this.space.isUp) {
 		this.dragon.setVelocity(0, 0);
 	}
 	if (this.input.mousePointer.x == this.dragon.x && this.input.mousePointer.y == this.dragon.y) {
 		this.dragon.setVelocity(0, 0);
 	}
-	//movimiento que siga el mouse
+	//movimiento del dragon que siga el mouse
 	this.physics.moveTo(this.dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 200);
 
-	//this.dragon.angle-=1;
+	//stompClient.send("/topic/dragon", {}, JSON.stringify(this.dragon.x));
 	this.input.on('pointermove', function (pointer) {
 		let cursor = pointer;
 		//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
 		let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
 		this.dragon.angle = angleNow;
 	}, this);
-	/*
-      this.input.off('pointermove', function (pointer) {
-          let cursor = pointer;
-          this.physics.moveTo(this.dragon, cursor.x, cursor.y,100);
-          let angle = Phaser.Math.Angle.Between(this.dragon.x, this.dragon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
-      }, this);*/
-
 }
 
 function collectFood(dragon, food) {
@@ -149,9 +135,7 @@ function collectFood(dragon, food) {
 }
 
 var animateButton = function (e) {
-
-	e.preventDefault;
-	//reset animation
+	e.preventDefault;	
 	e.target.classList.remove('animate');
 
 	e.target.classList.add('animate');
@@ -165,3 +149,79 @@ var bubblyButtons = document.getElementsByClassName("bubbly-button");
 for (var i = 0; i < bubblyButtons.length; i++) {
 	bubblyButtons[i].addEventListener('click', animateButton, false);
 }
+
+/***************************************************** STOMP ********************************************************************/
+
+var app = (function () {
+
+    class Point{
+        constructor(x,y){
+            this.x=x;
+            this.y=y;
+        }        
+	}    
+	
+    var addPointToCanvas = function (point) {        
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        //ctx.arc(point.x, point.y);
+        ctx.stroke();
+    };
+
+    var connectAndSubscribe = function () {
+		console.info('Connecting to WS...');
+		var socket = new SockJS('/stompDragon');
+		stompClient = Stomp.over(socket);	
+		stompClient.connect({}, function (frame) {            
+			console.log('Connected: ' + frame);
+			stompClient.subscribe('/topic/dragon', function (eventbody) {
+				var puntoJSON =  JSON.parse(eventbody.body);
+				//var callback = mostrarMensaje;
+				var callback = addPointToCanvas;
+				mostrar(puntoJSON, callback);
+			});
+		});
+	
+		stompClient.connect({}, function (frame) {            
+			console.log('Connected: ' + frame);
+			var sala = document.getElementById("sala").value;     
+			stompClient.subscribe('/topic/dragon/'+sala, function (eventbody) {
+				var puntoJSON =  JSON.parse(eventbody.body);
+				var callback = mostrarMensaje;
+				//var callback = addPointToCanvas;
+				mostrar(puntoJSON, callback);
+			});            
+		});
+	};
+
+    function mostrar(puntoJSON, callback){
+        callback(puntoJSON);
+    }
+    
+    function mostrarMensaje(puntoJSON){
+        alert("Coordenada X: " + puntoJSON.x + ", Coordenada Y: "+ puntoJSON.y);
+    }   
+
+    return {
+        init: function () {
+			var can = document.getElementById("canvas");       
+            //websocket connection
+            connectAndSubscribe();
+        },
+        
+        disconnect: function () {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        },
+
+        connectTopic: function(){
+            connectAndSubscribe();
+        }
+    };
+
+})();
