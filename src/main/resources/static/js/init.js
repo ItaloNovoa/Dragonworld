@@ -72,11 +72,16 @@ function create() {
 	this.input.on('pointerdown', function (pointer) {
 		if(this.activo==true){
 			this.activo=false;
-			this.fuegoSprite = this.add.sprite(this.dragon.x, this.dragon.y, 'fuegos').play('fuego1');
 			let cursor = pointer;
 			//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
 			let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
+			coseno=Math.cos(((angleNow-180)*-1) * Math.PI / 180);
+			seno=Math.sin(((angleNow-180)*-1)* Math.PI / 180)
+			this.fuegoSprite = this.add.sprite(this.dragon.x+(50*coseno), this.dragon.y-(50*seno), 'fuegos').play('fuego1');
+						
 			this.fuegoSprite.angle = angleNow-180;
+			
+			
 			var time;			
 			timedEvent = this.time.delayedCall(250, onEvent, [], this);
 		}
@@ -93,7 +98,6 @@ function create() {
 }
 
 function onEvent (){
-	console.log("as")
 	this.fuegoSprite.setActive(false);
 	this.fuegoSprite.setVisible(false);
 	this.activo=true;
