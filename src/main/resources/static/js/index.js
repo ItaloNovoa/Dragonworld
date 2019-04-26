@@ -30,18 +30,20 @@ var appGame = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
-        stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+       // stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+        stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
-                alert("subscribe");
-                alert(eventbody);
-                alert(eventbody.body);
+                //alert("subscribe");
+                //alert(eventbody);
+                //alert(eventbody.body);
                 var gameObj = JSON.parse(eventbody.body);
-                alert(eventbody);
+                //alert(eventbody);
                 /* Se cambiaba de página cuando empezaba el juego. Por el momento e ovuta el vdiv de inicio y se muestra en el index
                 setTimeout(function() {
                     window.open("../juego.html");
                 }, 100);*/
+                //alert("startgaem");
                 setTimeout(function() {
                     init.startGame(gameObj);
                 }, 50);                              
@@ -54,16 +56,13 @@ var appGame = (function () {
                                             
             });
             init.initializeGame(numRoom);
-        } , 
+        } /*, 
         function(error){
             console.info("error"+error);
         }
 
-        , "skieprkh");
-        /*
-        setTimeout(function() {
-            init.initializeGame(numRoom);
-        }, 100);*/
+        , "skieprkh"*/);
+
         
     };
 
@@ -108,6 +107,8 @@ var appGame = (function () {
         connectTopic: function () {
             connectAndSubscribe();
         }
+
+
     };
 
 })();

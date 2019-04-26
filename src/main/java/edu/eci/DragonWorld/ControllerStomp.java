@@ -24,7 +24,7 @@ public class ControllerStomp {
         System.out.println("Nuevo jugador recibido en el servidor!:");
         // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
         servicesDragon.addPlayerToRoom(player, numRoom);
-        if (servicesDragon.getRooms().get(numRoom).getPlayers().size() == 2) {
+        if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
             System.out.println("-------------------------- #Jugadores"
                     + servicesDragon.getRooms().get(numRoom).getPlayers().size());
             System.out.println("-------------------------- Nickaname" + player.getNickName());
@@ -34,10 +34,14 @@ public class ControllerStomp {
 
     @MessageMapping("/newRoom")
     public void handleRoomEvent(Room roomObj) throws Exception {
-        System.out.println("Nueva sala!:");
-        // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
-        System.out.println("--------------------------numero de sala: " + roomObj.getNum());
-        servicesDragon.addNewRoom(roomObj);
+        int numRoom = roomObj.getNum();
+        if (!servicesDragon.getRooms().containsKey(numRoom)){
+            System.out.println("Nueva sala!:");
+            // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
+            System.out.println("--------------------------numero de sala: " + roomObj.getNum());
+            servicesDragon.addNewRoom(roomObj);
+        }
+        
     }
 
     @MessageMapping("/movePlayer.{numRoom}")

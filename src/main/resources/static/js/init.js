@@ -79,12 +79,12 @@ var init = (function () {
 
 	function create() {		
 		this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });		
-		alert("CREANDO");
+		//alert("CREANDO");
 		this.listaDragones = this.physics.add.group();		
 		console.log(roomADibujar);
-		alert(roomADibujar[0].nickName);
+		//alert(roomADibujar[0].nickName);
 		for (var i = 0; i < roomADibujar.length; i++) {
-			console.log("for");			
+			//console.log("for");			
 			if(roomADibujar[i].nickName == nickNamePlayer){
 				this.dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
 				this.dragon.setCollideWorldBounds(true);
@@ -99,20 +99,6 @@ var init = (function () {
 			//roomADibujar[i].setGraphic(graphicDragon);
 		}
 	}
-	/*
-	function updateDragones (dragons){
-		for (var i = 0; i < updateRoom.length; i++){
-			//alert ("updaste dragons");
-			if (updateRoom[i].nickName != nickNamePlayer){
-				this.dragonMove = mapJugadores.get(updateRoom[i].nickName);
-				this.physics.moveTo(this.dragonMove, this.input.mousePointer.x, this.input.mousePointer.y , 200);
-				//alert (dragonMove.y);
-			}
-			
-			//this.physics.moveTo(this.dragonMove, 300,  + 32, 200);
-		}
-	}*/
-
 
 
 	function update(time, delta) {		
@@ -137,18 +123,30 @@ var init = (function () {
 
 		if(typeof updateRoom !== 'undefined'){
 			for (var i = 0; i < updateRoom.length; i++){
-				if(updateRoom[i].nickName != nickNamePlayer){
+				var diseñoDeDragonI;
+				//alert(mapJugadores.get(updateRoom[i].nickName));
+				if(updateRoom[i].nickName != nickNamePlayer && mapJugadores.has(updateRoom[i].nickName)){
 					diseñoDeDragonI=mapJugadores.get(updateRoom[i].nickName);					
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
 					diseñoDeDragonI.setAngle(updateRoom[i].angle);
 					
+				} else if (updateRoom[i].nickName != nickNamePlayer ){
+					//alert(updateRoom[i].nickName);
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
+					diseñoDeDragonI.setCollideWorldBounds(true); 
+					mapJugadores.set(updateRoom[i].nickName,diseñoDeDragonI);
+					this.listaDragones.create(diseñoDeDragonI);
 				}
 			}
 		}
+
+		//var grgonPrueba = this.physics.add.sprite(200, 300, 'dragonesAtlas').play('dragonSprite');
+		//this.listaDragones.create(grgonPrueba);
 	}
 
 	return {
 		initializeGame: function (numRoomInit) {
+
 			var ancho = config.width;
 			var alto = config.height;
 			var room = new Room(numRoomInit, ancho, alto);			
@@ -160,7 +158,11 @@ var init = (function () {
 		startGame: function(room){
 			roomADibujar = room;
 			$('#divInicio').hide();
-			game = new Phaser.Game(config);
+			//game = new Phaser.Game(config);
+			if (game == null){
+				//alert("new Phaser");
+				game = new Phaser.Game(config);
+			}
 		}, 
 		getNickName: function(nickNameP){
 			nickNamePlayer = nickNameP;
