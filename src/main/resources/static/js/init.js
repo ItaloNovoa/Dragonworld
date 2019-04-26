@@ -99,13 +99,19 @@ var init = (function () {
 			//roomADibujar[i].setGraphic(graphicDragon);
 		}
 	}
-
+	/*
 	function updateDragones (dragons){
-		for (var i = 0; i < dragons.length; i++){
-			this.dragonMove = mapJugadores.get(dragons[i].nickName);
-			this.physics.moveTo(this.dragonMove, 300,  + 32, 200);
+		for (var i = 0; i < updateRoom.length; i++){
+			//alert ("updaste dragons");
+			if (updateRoom[i].nickName != nickNamePlayer){
+				this.dragonMove = mapJugadores.get(updateRoom[i].nickName);
+				this.physics.moveTo(this.dragonMove, this.input.mousePointer.x, this.input.mousePointer.y , 200);
+				//alert (dragonMove.y);
+			}
+			
+			//this.physics.moveTo(this.dragonMove, 300,  + 32, 200);
 		}
-	}
+	}*/
 
 
 
@@ -128,6 +134,17 @@ var init = (function () {
 		player.setPosY(this.dragon.y);
 		
 		appGame.moveDragon(player);
+
+		if(typeof updateRoom !== 'undefined'){
+			for (var i = 0; i < updateRoom.length; i++){
+				if(updateRoom[i].nickName != nickNamePlayer){
+					diseñoDeDragonI=mapJugadores.get(updateRoom[i].nickName);					
+					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
+					diseñoDeDragonI.setAngle(updateRoom[i].angle);
+					
+				}
+			}
+		}
 	}
 
 	return {
@@ -150,7 +167,7 @@ var init = (function () {
 		},
 		updateDragons: function (dragons){
 			updateRoom = dragons;
-			updateDragones(dragons);
+			//updateDragones(dragons);
 		}	
 	};
 })();
