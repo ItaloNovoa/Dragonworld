@@ -8,35 +8,27 @@
             "frames": [
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_0"
+                    "frame": "dragonf_0"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_0"
+                    "frame": "dragonf_6"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_0"
+                    "frame": "dragonf_12"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_0"
+                    "frame": "dragonf_1"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_1"
+                    "frame": "dragonf_7"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_1"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_1"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_1"
+                    "frame": "dragonf_13"
                 }
             ]
         },
@@ -48,35 +40,27 @@
             "frames": [
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_2"
+                    "frame": "dragonf_2"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_2"
+                    "frame": "dragonf_8"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_2"
+                    "frame": "dragonf_14"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_2"
+                    "frame": "dragonf_3"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_3"
+                    "frame": "dragonf_9"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_3"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_3"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_3"
+                    "frame": "dragonf_15"
                 }
             ]
         },
@@ -88,35 +72,27 @@
             "frames": [
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_4"
+                    "frame": "dragonf_4"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_4"
+                    "frame": "dragonf_10"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_4"
+                    "frame": "dragonf_16"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_4"
+                    "frame": "dragonf_5"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_5"
+                    "frame": "dragonf_11"
                 },
                 {
                     "key": "dragonesf",
-                    "frame": "dragonesfinal_5"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_5"
-                },
-                {
-                    "key": "dragonesf",
-                    "frame": "dragonesfinal_5"
+                    "frame": "dragonf_17"
                 }
             ]
         }

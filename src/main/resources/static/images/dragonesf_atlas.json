@@ -1,7 +1,7 @@
 {
     "frames": [
         {
-            "filename": "dragonesf__0",
+            "filename": "dragonf_0",
             "frame": {
                 "x": 0,
                 "y": 0,
@@ -14,7 +14,7 @@
             }
         },
         {
-            "filename": "dragonesf__1",
+            "filename": "dragonf_1",
             "frame": {
                 "x": 46.5,
                 "y": 0,
@@ -27,7 +27,7 @@
             }
         },
         {
-            "filename": "dragonesf__2",
+            "filename": "dragonf_2",
             "frame": {
                 "x": 93,
                 "y": 0,
@@ -40,7 +40,7 @@
             }
         },
         {
-            "filename": "dragonesf__3",
+            "filename": "dragonf_3",
             "frame": {
                 "x": 139.5,
                 "y": 0,
@@ -53,7 +53,7 @@
             }
         },
         {
-            "filename": "dragonesf__4",
+            "filename": "dragonf_4",
             "frame": {
                 "x": 186,
                 "y": 0,
@@ -66,7 +66,7 @@
             }
         },
         {
-            "filename": "dragonesf__5",
+            "filename": "dragonf_5",
             "frame": {
                 "x": 232.5,
                 "y": 0,
@@ -79,7 +79,7 @@
             }
         },
         {
-            "filename": "dragonesf__6",
+            "filename": "dragonf_6",
             "frame": {
                 "x": 0,
                 "y": 60,
@@ -92,7 +92,7 @@
             }
         },
         {
-            "filename": "dragonesf__7",
+            "filename": "dragonf_7",
             "frame": {
                 "x": 46.5,
                 "y": 60,
@@ -105,7 +105,7 @@
             }
         },
         {
-            "filename": "dragonesf__8",
+            "filename": "dragonf_8",
             "frame": {
                 "x": 93,
                 "y": 60,
@@ -118,7 +118,7 @@
             }
         },
         {
-            "filename": "dragonesf__9",
+            "filename": "dragonf_9",
             "frame": {
                 "x": 139.5,
                 "y": 60,
@@ -131,7 +131,7 @@
             }
         },
         {
-            "filename": "dragonesf__10",
+            "filename": "dragonf_10",
             "frame": {
                 "x": 186,
                 "y": 60,
@@ -144,7 +144,7 @@
             }
         },
         {
-            "filename": "dragonesf__11",
+            "filename": "dragonf_11",
             "frame": {
                 "x": 232.5,
                 "y": 60,
@@ -157,7 +157,7 @@
             }
         },
         {
-            "filename": "dragonesf__12",
+            "filename": "dragonf_12",
             "frame": {
                 "x": 0,
                 "y": 120,
@@ -170,7 +170,7 @@
             }
         },
         {
-            "filename": "dragonesf__13",
+            "filename": "dragonf_13",
             "frame": {
                 "x": 46.5,
                 "y": 120,
@@ -183,7 +183,7 @@
             }
         },
         {
-            "filename": "dragonesf__14",
+            "filename": "dragonf_14",
             "frame": {
                 "x": 93,
                 "y": 120,
@@ -196,7 +196,7 @@
             }
         },
         {
-            "filename": "dragonesf__15",
+            "filename": "dragonf_15",
             "frame": {
                 "x": 139.5,
                 "y": 120,
@@ -209,7 +209,7 @@
             }
         },
         {
-            "filename": "dragonesf__16",
+            "filename": "dragonf_16",
             "frame": {
                 "x": 186,
                 "y": 120,
@@ -222,7 +222,7 @@
             }
         },
         {
-            "filename": "dragonesf__17",
+            "filename": "dragonf_17",
             "frame": {
                 "x": 232.5,
                 "y": 120,
