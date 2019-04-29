@@ -1,12 +1,12 @@
 {
     "frames": [
         {
-            "filename": "dragonesfinal_0",
+            "filename": "dragonesf__0",
             "frame": {
                 "x": 0,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -14,12 +14,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_1",
+            "filename": "dragonesf__1",
             "frame": {
-                "x": 60,
+                "x": 46.5,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -27,12 +27,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_2",
+            "filename": "dragonesf__2",
             "frame": {
-                "x": 120,
+                "x": 93,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -40,12 +40,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_3",
+            "filename": "dragonesf__3",
             "frame": {
-                "x": 180,
+                "x": 139.5,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -53,12 +53,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_4",
+            "filename": "dragonesf__4",
             "frame": {
-                "x": 240,
+                "x": 186,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -66,12 +66,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_5",
+            "filename": "dragonesf__5",
             "frame": {
-                "x": 300,
+                "x": 232.5,
                 "y": 0,
-                "w": 60,
-                "h": 75
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -79,12 +79,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_6",
+            "filename": "dragonesf__6",
             "frame": {
                 "x": 0,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -92,12 +92,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_7",
+            "filename": "dragonesf__7",
             "frame": {
-                "x": 60,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "x": 46.5,
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -105,12 +105,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_8",
+            "filename": "dragonesf__8",
             "frame": {
-                "x": 120,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "x": 93,
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -118,12 +118,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_9",
+            "filename": "dragonesf__9",
             "frame": {
-                "x": 180,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "x": 139.5,
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -131,12 +131,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_10",
+            "filename": "dragonesf__10",
             "frame": {
-                "x": 240,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "x": 186,
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -144,12 +144,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_11",
+            "filename": "dragonesf__11",
             "frame": {
-                "x": 300,
-                "y": 75,
-                "w": 60,
-                "h": 75
+                "x": 232.5,
+                "y": 60,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -157,12 +157,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_12",
+            "filename": "dragonesf__12",
             "frame": {
                 "x": 0,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -170,12 +170,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_13",
+            "filename": "dragonesf__13",
             "frame": {
-                "x": 60,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "x": 46.5,
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -183,12 +183,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_14",
+            "filename": "dragonesf__14",
             "frame": {
-                "x": 120,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "x": 93,
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -196,12 +196,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_15",
+            "filename": "dragonesf__15",
             "frame": {
-                "x": 180,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "x": 139.5,
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -209,12 +209,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_16",
+            "filename": "dragonesf__16",
             "frame": {
-                "x": 240,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "x": 186,
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,
@@ -222,12 +222,12 @@
             }
         },
         {
-            "filename": "dragonesfinal_17",
+            "filename": "dragonesf__17",
             "frame": {
-                "x": 300,
-                "y": 150,
-                "w": 60,
-                "h": 75
+                "x": 232.5,
+                "y": 120,
+                "w": 46.5,
+                "h": 60
             },
             "anchor": {
                 "x": 0.5,

@@ -82,8 +82,9 @@ var init = (function () {
 	}
 
 	function create() {
-		this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
-		
+		//this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
+		this.dragonesf_anim = this.cache.json.get('dragonesf_anim');	
+		this.anims.fromJSON(this.dragonesf_anim);
 		
 
 		this.listaDragones = this.physics.add.group();
@@ -91,15 +92,13 @@ var init = (function () {
 			//console.log("for");			
 			if (roomADibujar[i].nickName == nickNamePlayer) {
 				this.dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesf');	
-				this.dragonesf_anim = this.cache.json.get('dragonesf_anim');	
-				this.anims.fromJSON(this.dragonesf_anim);		
-				this.dragon.anims.play('naranja');
-				//this.dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'tomato')
+				this.dragon.anims.play('verde');
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				this.dragon.setCollideWorldBounds(true);
 			} else {
-				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
-				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
+				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesf').anims.play('naranja');
+				
+				graphicDragon.setCollideWorldBounds(true); //para que el dragon no se salga de la pantalla
 				//mapJugadores[roomADibujar[i].nickName] = graphicDragon;
 				mapJugadores.set(roomADibujar[i].nickName, graphicDragon);
 				var txtDragon = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, roomADibujar[i].nickName);
@@ -125,7 +124,6 @@ var init = (function () {
 			//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
 			let angleNow = (Math.atan2(this.dragon.y - cursor.y, this.dragon.x - cursor.x) * 180 / Math.PI);
 			this.dragon.angle = angleNow;
-
 		}, this);
 		player.setAngle(this.dragon.angle);
 		player.setPosX(this.dragon.x);
@@ -142,15 +140,17 @@ var init = (function () {
 					diseñoDeDragonI = mapJugadores.get(updateRoom[i].nickName);
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
 					diseñoDeDragonI.setAngle(updateRoom[i].angle);
-					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
+					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);					
 					textDragonI.x = updateRoom[i].posX - 20;
 					textDragonI.y = updateRoom[i].posY + 40;
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) {
 					//alert(updateRoom[i].nickName);
-					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesf').anims.play('naranja');
 					diseñoDeDragonI.setCollideWorldBounds(true);
 					mapJugadores.set(updateRoom[i].nickName, diseñoDeDragonI);
+					textDragonI = this.add.text(updateRoom[i].posX-20, updateRoom[i].posY + 50, updateRoom[i].nickName);
+					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);
 					this.listaDragones.create(diseñoDeDragonI);
 				}
 			}

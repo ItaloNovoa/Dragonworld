@@ -1,0 +1,100 @@
+{
+    "anims": [
+        {
+            "key": "rojo",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__0"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__6"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__12"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__1"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__7"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__13"
+                }
+            ]
+        },
+        {
+            "key": "verde",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__2"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__8"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__14"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__3"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__9"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__15"
+                }
+            ]
+        },
+        {
+            "key": "naranja",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__4"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__10"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__16"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__5"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__11"
+                },
+                {
+                    "key": "dragonf",
+                    "frame": "dragonesf__17"
+                }
+            ]
+        }
+    ]
+}
