@@ -1,0 +1,242 @@
+{
+    "frames": [
+        {
+            "filename": "dragon1_colores_sprite_0",
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_1",
+            "frame": {
+                "x": 84.3,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_2",
+            "frame": {
+                "x": 168.6,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_3",
+            "frame": {
+                "x": 252.89999999999998,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_4",
+            "frame": {
+                "x": 337.2,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_5",
+            "frame": {
+                "x": 421.5,
+                "y": 0,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_6",
+            "frame": {
+                "x": 0,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_7",
+            "frame": {
+                "x": 84.3,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_8",
+            "frame": {
+                "x": 168.6,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_9",
+            "frame": {
+                "x": 252.89999999999998,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_10",
+            "frame": {
+                "x": 337.2,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_11",
+            "frame": {
+                "x": 421.5,
+                "y": 103,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_12",
+            "frame": {
+                "x": 0,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_13",
+            "frame": {
+                "x": 84.3,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_14",
+            "frame": {
+                "x": 168.6,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_15",
+            "frame": {
+                "x": 252.89999999999998,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_16",
+            "frame": {
+                "x": 337.2,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1_colores_sprite_17",
+            "frame": {
+                "x": 421.5,
+                "y": 206,
+                "w": 84.3,
+                "h": 103
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Phaser3",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}
