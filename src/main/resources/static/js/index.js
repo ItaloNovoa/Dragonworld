@@ -1,5 +1,6 @@
 var nickName;
 var numRoom;
+var objPlayer;
 
 apimock = (function () {
     return {
@@ -16,6 +17,24 @@ apimock = (function () {
     };
 
 })();
+/*
+ClosingVar =true
+window.onbeforeunload = ExitCheck();
+function esxitCheck()
+{
+ if(ClosingVar == true) 
+  { 
+      alert("cerrando");
+    ExitCheck = false
+    return "Si decide continuar,abandonará la página pudiendo perder los cambios si no ha GRABADO ¡¡¡";
+  }
+}
+var customWindow = window.open('', '_blank', '');
+    */
+function cerrarWindow(){
+    alert("cerrando");
+    appGame.cerrar();
+}
 
 var appGame = (function () {
     var stompClient = null;
@@ -30,40 +49,36 @@ var appGame = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
-       // stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+        //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
-                //alert("subscribe");
-                //alert(eventbody);
-                //alert(eventbody.body);
+            stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {                
                 var gameObj = JSON.parse(eventbody.body);
-                //alert(eventbody);
-                /* Se cambiaba de página cuando empezaba el juego. Por el momento e ovuta el vdiv de inicio y se muestra en el index
-                setTimeout(function() {
-                    window.open("../juego.html");
-                }, 100);*/
-                //alert("startgaem");
-                setTimeout(function() {
+                // Se cambiaba de página cuando empezaba el juego. Por el momento e ovuta el vdiv de inicio y se muestra en el index
+               setTimeout(function() {
                     init.startGame(gameObj);
                 }, 50);                              
             });
             stompClient.subscribe('/topic/movePlayer.' + numRoom, function (eventbody) {
-                console.log("moviendo");
-                console.log(eventbody);
+                //console.log("moviendo");
                 var gameObj = JSON.parse(eventbody.body);
                 init.updateDragons(gameObj);
                                             
             });
+            stompClient.subscribe('/topic/disconnectPlayer.' + numRoom, function (eventbody) {                
+                var gameObj = JSON.parse(eventbody.body);
+                init.endGame(gameObj);
+                //init.updateDragons(gameObj);
+                //appGame.disconnect();
+            });/*
+            stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {                
+                var gameObj = JSON.parse(eventbody.body);
+                init.endGame(gameObj);
+                //init.updateDragons(gameObj);
+                //appGame.disconnect();
+            });*/
             init.initializeGame(numRoom);
-        } /*, 
-        function(error){
-            console.info("error"+error);
-        }
-
-        , "skieprkh"*/);
-
-        
+        });        
     };
 
     function mostrar(gameJSON, callback) {
@@ -83,12 +98,12 @@ var appGame = (function () {
         disconnect: function () {
             if (stompClient !== null) {
                 stompClient.disconnect();
-            }
-            setConnected(false);
-            console.log("Disconnected");
+            }                     
+            //alert("Disconnected");           
         },
 
         initializeGame: function (numRoomSend, player, room) {
+            objPlayer=player;            
             stompClient.send("/app/newRoom", {}, JSON.stringify(room));
             setTimeout(function() {
                 stompClient.send("/app/newPlayer." + numRoomSend, {}, JSON.stringify(player)); //convierte obje
@@ -97,18 +112,15 @@ var appGame = (function () {
         },
 
         moveDragon: function (player) {
-            console.log("move dragon");
-            console.log("########: "+numRoom);
-            console.log( JSON.stringify(player));
             stompClient.send("/app/movePlayer." +numRoom, {}, JSON.stringify(player)); //convierte obje
+        },
 
+        cerrar: function(){            
+            stompClient.send("/app/disconnectp." +numRoom, {}, JSON.stringify(objPlayer));
         },
 
         connectTopic: function () {
             connectAndSubscribe();
         }
-
-
     };
-
 })();

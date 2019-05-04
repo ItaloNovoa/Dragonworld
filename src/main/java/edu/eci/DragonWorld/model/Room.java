@@ -35,8 +35,27 @@ public class Room {
 		players.remove(player.getNickName());
 	}
 
+	public void disconnectPlayer(Player player) {
+		player.setState("inactivo");
+		players.replace(player.getNickName(), player);
+	}
+
 	public ConcurrentHashMap<String, Player> getPlayers() {
 		return players;
+	}
+
+	public String playersJson() {
+		String resp = "[";
+		for (String key : players.keySet()) {
+			Player player = players.get(key);
+			resp += "{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
+					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()
+					+ "\"},";
+		}
+		resp = resp.substring(0, resp.length() - 1);
+		resp += "]";
+		// System.out.println(resp);
+		return resp;
 	}
 
 	public void setAvaliable() {
@@ -45,19 +64,6 @@ public class Room {
 
 	public boolean getAvaliable() {
 		return available;
-	}
-
-	public String playersJson() {
-		String resp = "[";
-		for (String key : players.keySet()) {
-			Player player = players.get(key);
-			resp += "{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
-					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"numRoomP\":" + player.getPosX() + "},";
-		}
-		resp = resp.substring(0, resp.length() - 1);
-		resp += "]";
-		System.out.println(resp);
-		return resp;
 	}
 
 	/**

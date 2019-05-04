@@ -14,8 +14,13 @@ public interface ServicesDragon {
 
     public void moveDragon(Player player, int numRoom);
 
-    public void deletePlayerOfRoom();
+    // public void deletePlayerOfRoom(Player player, int numRoom);
+
+    public void endGamePlayer(Player player, int numRoom);
+
+    public void updateRoom(int numRoom, Room room);
 
     public ConcurrentHashMap<Integer, Room> getRooms();
 
+    public Player getPlayerByNicknameRoom(int numRoom, String nickname);
 }

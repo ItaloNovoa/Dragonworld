@@ -7,19 +7,20 @@ public class Player {
 	public float posX;
 	public float angle;
 	public float posY;
-	// public boolean vivo;
+	public String state;
 	public int numRoomP;
 
 	public Player() {
 
 	}
 
-	public Player(String nickName, float posX, float posY, float angle, int numRoomP) {
+	public Player(String nickName, float posX, float posY, float angle, String state, int numRoomP) {
 		this.nickName = nickName;
 		this.posX = posX;
 		this.posY = posY;
 		this.numRoomP = numRoomP;
 		this.angle = angle;
+		this.state = state;
 	}
 
 	/*
@@ -78,10 +79,13 @@ public class Player {
 	public void setPosY(float posY) {
 		this.posY = posY;
 	}
-	/*
-	 * public boolean isVivo() { return vivo; }
-	 * 
-	 * public void setVivo(boolean vivo) { this.vivo = vivo; }
-	 */
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 }

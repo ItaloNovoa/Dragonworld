@@ -1,5 +1,8 @@
 package edu.eci.DragonWorld;
 
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,36 +23,49 @@ public class ControllerStomp {
 
     @MessageMapping("/newPlayer.{numRoom}")
     public void handlePlayerEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
-        System.out.println("########################################");
-        System.out.println("Nuevo jugador recibido en el servidor!:");
         // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
         servicesDragon.addPlayerToRoom(player, numRoom);
         if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
-            System.out.println("-------------------------- #Jugadores"
-                    + servicesDragon.getRooms().get(numRoom).getPlayers().size());
-            System.out.println("-------------------------- Nickaname" + player.getNickName());
-            msgt.convertAndSend("/topic/newGame." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+            String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
+
+            msgt.convertAndSend("/topic/newGame." + numRoom, playersJson);
         }
     }
 
     @MessageMapping("/newRoom")
     public void handleRoomEvent(Room roomObj) throws Exception {
         int numRoom = roomObj.getNum();
-        if (!servicesDragon.getRooms().containsKey(numRoom)){
-            System.out.println("Nueva sala!:");
+        if (!servicesDragon.getRooms().containsKey(numRoom)) {
+            // System.out.println("Nueva sala!:");
             // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
-            System.out.println("--------------------------numero de sala: " + roomObj.getNum());
+            // System.out.println("--------------------------numero de sala: " +
+            // roomObj.getNum());
             servicesDragon.addNewRoom(roomObj);
         }
-        
+
     }
 
     @MessageMapping("/movePlayer.{numRoom}")
     public void handlePlayerMoveEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
-
-        System.out.println("El jugador se esta moviendo!:");
         servicesDragon.moveDragon(player, numRoom);
+        // System.out.println("#Jugadores: " +
+        // servicesDragon.getRooms().get(numRoom).getPlayers().size());
         msgt.convertAndSend("/topic/movePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
     }
+
+    @MessageMapping("/disconnectp.{numRoom}")
+    public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
+        servicesDragon.endGamePlayer(player, numRoom);
+        // System.out.println(servicesDragon.getRooms().get(numRoom).getPlayers().get(player.getNickName()).getState());
+        msgt.convertAndSend("/topic/disconnectPlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+        System.out.println("DESCONECTADO");
+        System.out.println("#Jugadores: " + servicesDragon.getRooms().get(numRoom).getPlayers().size());
+    }
+    /*
+     * @MessageMapping("/delete.{numRoom}") public void
+     * handlePlayerDeleteEvent(Player player, @DestinationVariable Integer numRoom)
+     * throws Exception { servicesDragon.deletePlayerOfRoom(player, numRoom);
+     * msgt.convertAndSend("/topic/deletePlayer." + numRoom); }
+     */
 
 }

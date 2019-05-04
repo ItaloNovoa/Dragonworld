@@ -20,7 +20,6 @@ public class ServicesDragonImpl implements ServicesDragon {
 
     @Override
     public void addPlayerToRoom(Player player, int numRoom) {
-        System.out.println("ADD PLAYER ---------------");
         if (rooms == null)
             System.out.println("ESTA NULL");
         if (!rooms.get(numRoom).getPlayers().containsKey(player.getNickName())) {
@@ -30,11 +29,30 @@ public class ServicesDragonImpl implements ServicesDragon {
             // Excepcion que ya existe el nickname
             System.out.println("Ya existe un jugador con el mismo nickName");
         }
-
+        /*
+         * ConcurrentHashMap<String, Player> players =
+         * getRooms().get(numRoom).getPlayers(); for (String n : players.keySet()) {
+         * System.out.println(players.get(n).getState()); }
+         */
     }
 
     @Override
-    public void deletePlayerOfRoom() {
+    public void endGamePlayer(Player player, int numRoom) {
+        if (rooms.containsKey(numRoom)) {
+            rooms.get(numRoom).getPlayers().get(player.getNickName()).setState("inactivo");
+            // Room room = getRooms().get(numRoom);
+            // room.disconnectPlayer(player);
+            // rooms.replace(numRoom, room);
+        }
+    }
+    /*
+     * @Override public void deletePlayerOfRoom(Player player, int numRoom) { if
+     * (rooms.containsKey(numRoom)) {
+     * rooms.get(numRoom).getPlayers().get(player.getNickName()).setState("inactivo"
+     * ); } }
+     */
+
+    public void updateRoom(int numRoom, Room room) {
 
     }
 
@@ -48,4 +66,8 @@ public class ServicesDragonImpl implements ServicesDragon {
         rooms.get(numRoom).getPlayers().replace(player.getNickName(), player);
     }
 
+    @Override
+    public Player getPlayerByNicknameRoom(int numRoom, String nickname) {
+        return rooms.get(numRoom).getPlayers().get(nickname);
+    }
 }
