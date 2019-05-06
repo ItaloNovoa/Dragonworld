@@ -196,13 +196,27 @@ var init = (function () {
 		},
 		endGame: function(dragonsR){				
 			activo = false;
-			for (var i = 0; i < dragonsR.length; i++){	
-				if(dragonsR[i].state == "inactivo"){
+			
+			for (var i = 0; i < updateRoom.length; i++){
+				if(!dragonsR.includes(updateRoom[i])){
+					console.log("eliminando " + dragonsR[i].nickName );
+					diseñoDeDragonI=mapJugadores.get(updateRoom[i].nickName);
+					diseñoDeDragonI.setVisible(false);
+					//diseñoDeDragonI.disableBody(true, true);
+					//mapJugadores.remove(diseñoDeDragonI);
+				}	
+			}
+			
+			/*
+			for (var i = 0; i < dragonsR.length; i++){
+
+				if(dragonsR[i].state === "inactivo"){
 					console.log("eliminando " + dragonsR[i].nickName );
 					diseñoDeDragonI=mapJugadores.get(dragonsR[i].nickName);
-					diseñoDeDragonI.setVisible(false);
+					diseñoDeDragonI.setVisible(false);					
 				}					
-			}
+			}*/
+			appGame.deletePlayer();
 			//updateRoom = dragons;
 		}
 	};

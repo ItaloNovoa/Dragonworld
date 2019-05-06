@@ -27,7 +27,6 @@ public class ControllerStomp {
         servicesDragon.addPlayerToRoom(player, numRoom);
         if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
             String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
-
             msgt.convertAndSend("/topic/newGame." + numRoom, playersJson);
         }
     }
@@ -53,19 +52,24 @@ public class ControllerStomp {
         msgt.convertAndSend("/topic/movePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
     }
 
-    @MessageMapping("/disconnectp.{numRoom}")
+    @MessageMapping("/disconnect.{numRoom}")
     public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
-        servicesDragon.endGamePlayer(player, numRoom);
+        //servicesDragon.endGamePlayer(player, numRoom);
+        servicesDragon.deletePlayerOfRoom(player, numRoom);
         // System.out.println(servicesDragon.getRooms().get(numRoom).getPlayers().get(player.getNickName()).getState());
-        msgt.convertAndSend("/topic/disconnectPlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+        //msgt.convertAndSend("/topic/disconnectPlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+        msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
         System.out.println("DESCONECTADO");
+        System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
         System.out.println("#Jugadores: " + servicesDragon.getRooms().get(numRoom).getPlayers().size());
     }
-    /*
-     * @MessageMapping("/delete.{numRoom}") public void
-     * handlePlayerDeleteEvent(Player player, @DestinationVariable Integer numRoom)
-     * throws Exception { servicesDragon.deletePlayerOfRoom(player, numRoom);
-     * msgt.convertAndSend("/topic/deletePlayer." + numRoom); }
-     */
+    
+    @MessageMapping("/delete.{numRoom}") 
+    public void handlePlayerDeleteEvent(Player player, @DestinationVariable Integer numRoom) throws Exception { 
+        servicesDragon.deletePlayerOfRoom(player, numRoom);
+        msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+        System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
+    }
+    
 
 }

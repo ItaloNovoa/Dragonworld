@@ -11,6 +11,8 @@ import edu.eci.DragonWorld.services.ServicesDragon;
 @Service
 public class ServicesDragonImpl implements ServicesDragon {
 
+    private ConcurrentHashMap<Integer, Room> rooms = new ConcurrentHashMap<Integer, Room>();
+
     @Override
     public void addNewRoom(Room room) {
         if (!rooms.containsKey(room.getNum())) {
@@ -29,28 +31,33 @@ public class ServicesDragonImpl implements ServicesDragon {
             // Excepcion que ya existe el nickname
             System.out.println("Ya existe un jugador con el mismo nickName");
         }
-        /*
-         * ConcurrentHashMap<String, Player> players =
-         * getRooms().get(numRoom).getPlayers(); for (String n : players.keySet()) {
-         * System.out.println(players.get(n).getState()); }
-         */
+        ConcurrentHashMap<String, Player> players = rooms.get(numRoom).getPlayers();
+        for (String n : players.keySet()) {
+            System.out.println(players.get(n).getState());
+        }
     }
 
     @Override
     public void endGamePlayer(Player player, int numRoom) {
         if (rooms.containsKey(numRoom)) {
-            rooms.get(numRoom).getPlayers().get(player.getNickName()).setState("inactivo");
-            // Room room = getRooms().get(numRoom);
-            // room.disconnectPlayer(player);
-            // rooms.replace(numRoom, room);
+            Room room = getRooms().get(numRoom);
+            room.disconnectPlayer(player);
+            rooms.replace(numRoom, room);
+            // rooms.get(numRoom).getPlayers().get(player.getNickName()).setState("inactivo");
+            ConcurrentHashMap<String, Player> players = rooms.get(numRoom).getPlayers();
+            for (String n : players.keySet()) {
+                System.out.println(players.get(n).getState());
+            }
+
         }
     }
-    /*
-     * @Override public void deletePlayerOfRoom(Player player, int numRoom) { if
-     * (rooms.containsKey(numRoom)) {
-     * rooms.get(numRoom).getPlayers().get(player.getNickName()).setState("inactivo"
-     * ); } }
-     */
+
+    @Override
+    public void deletePlayerOfRoom(Player player, int numRoom) {
+        if (rooms.containsKey(numRoom)) {
+            rooms.get(numRoom).getPlayers().remove(player.getNickName());
+        }
+    }
 
     public void updateRoom(int numRoom, Room room) {
 
