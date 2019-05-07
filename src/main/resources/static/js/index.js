@@ -17,23 +17,19 @@ apimock = (function () {
     };
 
 })();
+
 /*
-ClosingVar =true
-window.onbeforeunload = ExitCheck();
-function esxitCheck()
-{
- if(ClosingVar == true) 
-  { 
-      alert("cerrando");
-    ExitCheck = false
-    return "Si decide continuar,abandonará la página pudiendo perder los cambios si no ha GRABADO ¡¡¡";
-  }
-}
-var customWindow = window.open('', '_blank', '');
-    */
-function cerrarWindow() {
-    alert("cerrando");
+window.onbeforeunload = function(){ 
+    c = confirm('Are you sure?'); 
+    if(c == true){ 
+        appGame.cerrar();
+        return true; 
+    }             
+} */
+
+function cerrarWindow() {    
     appGame.cerrar();
+    window.close();
 }
 
 var appGame = (function () {
