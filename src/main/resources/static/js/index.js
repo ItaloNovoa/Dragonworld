@@ -28,8 +28,7 @@ window.onbeforeunload = function(){
 } */
 
 function cerrarWindow() {    
-    appGame.cerrar();
-    window.close();
+    appGame.cerrar();   
 }
 
 var appGame = (function () {
@@ -61,16 +60,9 @@ var appGame = (function () {
                 init.updateDragons(gameObj);
 
             });
-            stompClient.subscribe('/topic/disconnectPlayer.' + numRoom, function (eventbody) {
-                var gameObj = JSON.parse(eventbody.body);
-                init.endGame(gameObj);
-                //init.updateDragons(gameObj);
-                //appGame.disconnect();
-            });
             stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {                
                 var gameObj = JSON.parse(eventbody.body);
                 init.endGame(gameObj);
-                //init.updateDragons(gameObj);
                 appGame.disconnect();
             });
             init.initializeGame(numRoom);
@@ -82,9 +74,6 @@ var appGame = (function () {
     }
 
     return {
-        /*init: function () {
-        },*/
-
         conectar: function () {
             nickName = document.getElementById("nickname").value;
             numRoom = document.getElementById("sala").value;
@@ -94,8 +83,7 @@ var appGame = (function () {
         disconnect: function () {
             if (stompClient !== null) {
                 stompClient.disconnect();
-            }
-            //alert("Disconnected");           
+            }           
         },
 
         initializeGame: function (numRoomSend, player, room) {
@@ -114,11 +102,6 @@ var appGame = (function () {
         cerrar: function () {
             stompClient.send("/app/disconnect." + numRoom, {}, JSON.stringify(objPlayer));
 
-        },
-
-        deletePlayer: function () {
-            stompClient.send("/app/delete." + numRoom, {}, JSON.stringify(objPlayer));
-            
         },
 
         connectTopic: function () {

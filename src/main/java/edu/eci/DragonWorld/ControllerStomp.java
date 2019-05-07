@@ -1,8 +1,5 @@
 package edu.eci.DragonWorld;
 
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -54,22 +51,11 @@ public class ControllerStomp {
 
     @MessageMapping("/disconnect.{numRoom}")
     public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
-        //servicesDragon.endGamePlayer(player, numRoom);
-        servicesDragon.deletePlayerOfRoom(player, numRoom);
-        // System.out.println(servicesDragon.getRooms().get(numRoom).getPlayers().get(player.getNickName()).getState());
-        //msgt.convertAndSend("/topic/disconnectPlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
-        msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
-        System.out.println("DESCONECTADO");
-        System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
-        System.out.println("#Jugadores: " + servicesDragon.getRooms().get(numRoom).getPlayers().size());
-    }
-    
-    @MessageMapping("/delete.{numRoom}") 
-    public void handlePlayerDeleteEvent(Player player, @DestinationVariable Integer numRoom) throws Exception { 
         servicesDragon.deletePlayerOfRoom(player, numRoom);
         msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
-        System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
+        // System.out.println("DESCONECTADO");
+        // System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
+        // System.out.println("#Jugadores: " +
+        // servicesDragon.getRooms().get(numRoom).getPlayers().size());
     }
-    
-
 }

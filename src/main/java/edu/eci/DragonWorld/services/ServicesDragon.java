@@ -6,7 +6,6 @@ import edu.eci.DragonWorld.model.Player;
 import edu.eci.DragonWorld.model.Room;
 
 public interface ServicesDragon {
-    
 
     public void addNewRoom(Room room);
 
@@ -17,8 +16,6 @@ public interface ServicesDragon {
     public void deletePlayerOfRoom(Player player, int numRoom);
 
     public void endGamePlayer(Player player, int numRoom);
-
-    public void updateRoom(int numRoom, Room room);
 
     public ConcurrentHashMap<Integer, Room> getRooms();
 
