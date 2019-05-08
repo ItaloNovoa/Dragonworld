@@ -1,18 +1,18 @@
 package edu.eci.DragonWorld.model;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Room {
 	public int num;
 	public ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<String, Player>();
+	public ConcurrentHashMap<Integer, Food> foods = new ConcurrentHashMap<Integer, Food>();
 	public boolean available;
-
 	public final int CAPACIDAD = 50;
 	public float ancho;
 	public float alto;
-	public final int CAPACIDADFood = 100;
-	// volver atomica
+	public final int CAPACIDADFOOD = 10;
 
 	public List<Food> alimentos;
 
@@ -24,6 +24,7 @@ public class Room {
 		this.num = num;
 		this.ancho = ancho;
 		this.alto = alto;
+		generateFood();
 	}
 
 	public void addPlayer(Player player) {
@@ -56,6 +57,20 @@ public class Room {
 		resp += "]";
 		// System.out.println(resp);
 		return resp;
+	}
+
+	public void generateFood() {
+		for (int i = 0; i < CAPACIDADFOOD; i++) {
+			Random r = new Random();
+			double posX = 0.0 + (ancho - 0.0) * r.nextDouble();
+			double posy = 0.0 + (alto - 0.0) * r.nextDouble();
+			SphereFood food = new SphereFood(posX, posy);
+			foods.put(i, food);
+		}
+	}
+
+	public ConcurrentHashMap<Integer, Food> getFoods() {
+		return foods;
 	}
 
 	public void setAvaliable() {

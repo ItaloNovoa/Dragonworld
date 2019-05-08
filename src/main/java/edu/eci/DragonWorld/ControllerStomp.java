@@ -23,8 +23,9 @@ public class ControllerStomp {
         // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
         servicesDragon.addPlayerToRoom(player, numRoom);
         if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
-            String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
-            msgt.convertAndSend("/topic/newGame." + numRoom, playersJson);
+            // String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
+            msgt.convertAndSend("/topic/createFood." + numRoom, servicesDragon.getRooms().get(numRoom).getFoods());
+            msgt.convertAndSend("/topic/newGame." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
         }
     }
 
@@ -37,6 +38,7 @@ public class ControllerStomp {
             // System.out.println("--------------------------numero de sala: " +
             // roomObj.getNum());
             servicesDragon.addNewRoom(roomObj);
+
         }
 
     }
@@ -58,4 +60,13 @@ public class ControllerStomp {
         // System.out.println("#Jugadores: " +
         // servicesDragon.getRooms().get(numRoom).getPlayers().size());
     }
+
+    @MessageMapping("/eat/{numRoom}/food.{numFood}")
+    public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
+            @DestinationVariable Integer numFood) throws Exception {
+        servicesDragon.eat(player, numFood, numRoom);
+        msgt.convertAndSend("/topic/eat/" + numRoom + "/food." + numFood,
+                servicesDragon.getRooms().get(numRoom).playersJson());
+    }
+
 }

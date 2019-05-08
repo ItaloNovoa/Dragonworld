@@ -5,10 +5,11 @@ var init = (function () {
 	var activo;
 
 	class Room {
-		constructor(num, ancho, alto) {
+		constructor(num, ancho, alto, foods) {
 			this.num = num;
 			this.ancho = ancho;
 			this.alto = alto;
+			this.foods = foods;			
 		}
 
 		setPlayers(playersJson) {
@@ -66,8 +67,10 @@ var init = (function () {
 			}
 		},
 	};
-	var mapJugadores = new Map(); //hasmap de gráficas excepto la de este dragon
+	var mapPlayersG = new Map(); //hasmap de gráficas excepto la de este dragon
 	var mapTextJugadores = new Map(); //hasmap de nombres de dragones
+	var mapFoodG = new Map(); //hasmap de gráficas de esferas
+	var foodsO;  //hasmap de objetos de esferas
 	var player;
 	var game;
 	var score = 0;
@@ -91,16 +94,24 @@ var init = (function () {
 			//Dibujar este dragon
 			if(roomADibujar[i].nickName == nickNamePlayer){				
 				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
-				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
+				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);				
 				dragon.setCollideWorldBounds(true);
 			}else if (roomADibujar[i].state != "inactivo"){ //Dibujar los dragones diferentes al creado aqui
 				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
-				mapJugadores.set(roomADibujar[i].nickName,graphicDragon);
+				mapPlayersG.set(roomADibujar[i].nickName,graphicDragon);
 				var txtDragon = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, roomADibujar[i].nickName);
 				mapTextJugadores.set(roomADibujar[i].nickName, txtDragon);				
 			}
 			console.log("despues de grafica");
+		}
+		//Crear comida
+		this.foods = this.physics.add.group();
+		this.physics.add.collider(dragon, this.foods, collectFood, null, this);
+		this.physics.add.overlap(dragon, this.foods, collectFood, null, this);
+		for (var i = 0; i < foodsO.length; i++){			
+			var foodG = this.foods.create(foodsO[i].posX, foodsO[i].posY, 'food');
+			mapFoodG.set(i, foodG);
 		}
 	}
 
@@ -130,8 +141,8 @@ var init = (function () {
 			for (var i = 0; i < updateRoom.length; i++){
 				var diseñoDeDragonI;
 				var textDragonI;		
-				if(updateRoom[i].nickName != nickNamePlayer && mapJugadores.has(updateRoom[i].nickName)){
-					diseñoDeDragonI=mapJugadores.get(updateRoom[i].nickName);
+				if(updateRoom[i].nickName != nickNamePlayer && mapPlayersG.has(updateRoom[i].nickName)){
+					diseñoDeDragonI=mapPlayersG.get(updateRoom[i].nickName);
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
 					diseñoDeDragonI.setAngle(updateRoom[i].angle);
 					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);					
@@ -141,11 +152,28 @@ var init = (function () {
 				} else if (updateRoom[i].nickName != nickNamePlayer){ //nuevos dragones					
 					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
 					diseñoDeDragonI.setCollideWorldBounds(true); 
-					mapJugadores.set(updateRoom[i].nickName,diseñoDeDragonI); //agregar nuevo dragon al hasmap de gráficas
+					mapPlayersG.set(updateRoom[i].nickName,diseñoDeDragonI); //agregar nuevo dragon al hasmap de gráficas
 					textDragonI = this.add.text(updateRoom[i].posX-20, updateRoom[i].posY + 50, updateRoom[i].nickName);
 					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);					
 				}
 			}
+		}
+	}
+
+	//####################CORREGIR !
+	//No se sabe como obtener la posicion en el arreglo (foodsO) para enviarla al servidor y despues actualizarla visualmente
+	function collectFood(dragon, food) {
+		appGame.eat(dragon, food);		
+	}
+
+	function eatFood(food) {
+		food.disableBody(true, true);
+		this.foods.remove(food)
+		score += 10;
+		scoreText.setText('Score: ' + score);
+		// si se acaba la comida, se vuelve a regenerar
+		if (this.foods.children.entries.length <= 19) {
+			this.foods.create(Phaser.Math.FloatBetween(150, config.width - 150),Phaser.Math.FloatBetween(100, config.height - 100), 'food');
 		}
 	}
 
@@ -165,7 +193,10 @@ var init = (function () {
 			if (game == null){
 				game = new Phaser.Game(config);
 			}
-		}, 
+		},
+		startFood: function(foods){
+			foodsO = foods;			
+		},
 		getNickName: function(nickNameP){
 			nickNamePlayer = nickNameP;
 		},
@@ -177,14 +208,16 @@ var init = (function () {
 			
 			for (var i = 0; i < updateRoom.length; i++){
 				if(!dragonsR.includes(updateRoom[i])){
-					console.log("eliminando " + dragonsR[i].nickName );
-					diseñoDeDragonI=mapJugadores.get(updateRoom[i].nickName);
+					var textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
+					textDragonI.setVisible(false);	
+					diseñoDeDragonI=mapPlayersG.get(updateRoom[i].nickName);
 					diseñoDeDragonI.setVisible(false);
-					//diseñoDeDragonI.disableBody(true, true);
-					//mapJugadores.remove(diseñoDeDragonI);
 				}	
 			}
 			appGame.deletePlayer();
+		},
+		eat: function(food){
+			eatFood(food);
 		}
 	};
 })();

@@ -17,6 +17,8 @@ public interface ServicesDragon {
 
     public void endGamePlayer(Player player, int numRoom);
 
+    public void eat(Player player, int numFood, int numRoom);
+
     public ConcurrentHashMap<Integer, Room> getRooms();
 
     public Player getPlayerByNicknameRoom(int numRoom, String nickname);

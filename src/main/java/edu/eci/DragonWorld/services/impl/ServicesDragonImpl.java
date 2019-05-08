@@ -1,5 +1,6 @@
 package edu.eci.DragonWorld.services.impl;
 
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
@@ -68,5 +69,15 @@ public class ServicesDragonImpl implements ServicesDragon {
     @Override
     public Player getPlayerByNicknameRoom(int numRoom, String nickname) {
         return rooms.get(numRoom).getPlayers().get(nickname);
+    }
+
+    @Override
+    public void eat(Player player, int numFood, int numRoom) {
+        Room room = rooms.get(numRoom);
+        Random r = new Random();
+        double posx = 0.0 + (room.getAncho() - 0.0) * r.nextDouble();
+        double posy = 0.0 + (room.getAlto() - 0.0) * r.nextDouble();
+        rooms.get(numRoom).getFoods().get(numFood).setPosX(posx);
+        rooms.get(numRoom).getFoods().get(numFood).setPosY(posy);
     }
 }

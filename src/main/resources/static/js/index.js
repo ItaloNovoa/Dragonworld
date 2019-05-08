@@ -49,15 +49,28 @@ var appGame = (function () {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
-                // Se cambiaba de página cuando empezaba el juego. Por el momento e ovuta el vdiv de inicio y se muestra en el index
+                alert(eventbody);
+                // Se cambiaba de página cuando empezaba el juego. Por el momento se quita el div de inicio y se muestra en el index
                 setTimeout(function () {
                     init.startGame(gameObj);
+                }, 60);
+            });
+            stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
+                var foodObj = JSON.parse(eventbody.body);
+                setTimeout(function () {
+                    init.startFood(gameObj);
                 }, 50);
             });
             stompClient.subscribe('/topic/movePlayer.' + numRoom, function (eventbody) {
                 //console.log("moviendo");
                 var gameObj = JSON.parse(eventbody.body);
                 init.updateDragons(gameObj);
+
+            });
+            stompClient.subscribe('/topic/eat/' + numRoom + "/food."+numFood, function (eventbody) {
+                //console.log("moviendo");
+                //var gameObj = JSON.parse(eventbody.body);
+                init.eat(numFood);
 
             });
             stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {                
@@ -102,6 +115,10 @@ var appGame = (function () {
         cerrar: function () {
             stompClient.send("/app/disconnect." + numRoom, {}, JSON.stringify(objPlayer));
 
+        },
+
+        eat: function (numFood) {
+            stompClient.send("/app/eat/" + numRoom + "/food."+numFood, {}, JSON.stringify(objPlayer));
         },
 
         connectTopic: function () {

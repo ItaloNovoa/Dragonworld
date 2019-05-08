@@ -1,18 +1,17 @@
 package edu.eci.DragonWorld.model;
 
-public class Food {
-
+public abstract class Food {
 	public boolean comido = false;
-	public int exp;
-	public int posX;
-	public int posY;
+	public int score;
+	public double posX;
+	public double posY;
 
 	public Food() {
 
 	}
 
-	public Food(int exp, int posX, int posY) {
-		this.exp = exp;
+	public Food(int score, double posX, double posY) {
+		this.score = score;
 		this.posX = posX;
 		this.posY = posY;
 	}
@@ -25,27 +24,27 @@ public class Food {
 		this.comido = comido;
 	}
 
-	public int getExp() {
-		return exp;
+	public int getScore() {
+		return score;
 	}
 
-	public void setExp(int exp) {
-		this.exp = exp;
+	public void setExp(int score) {
+		this.score = score;
 	}
 
-	public int getPosX() {
+	public double getPosX() {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
+	public void setPosX(double posX) {
 		this.posX = posX;
 	}
 
-	public int getPosY() {
+	public double getPosY() {
 		return posY;
 	}
 
-	public void setPosY(int posY) {
+	public void setPosY(double posY) {
 		this.posY = posY;
 	}
 
