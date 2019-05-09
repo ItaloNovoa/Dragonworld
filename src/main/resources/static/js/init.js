@@ -70,13 +70,13 @@ var init = (function () {
 	var mapPlayersG = new Map(); //hasmap de gráficas excepto la de este dragon
 	var mapTextJugadores = new Map(); //hasmap de nombres de dragones
 	var mapFoodG = new Map(); //hasmap de gráficas de esferas
+
 	var foodsO;  //hasmap de objetos de esferas
 	var player;
 	var game;
 	var score = 0;
 	var scoreText;
-	var foods;
-	var activo;
+	var fuegoActivo=true;
 	var dragon;
 
 	function preload() { //funcion que carga recursos	
@@ -106,17 +106,39 @@ var init = (function () {
 			console.log("despues de grafica");
 		}
 		//Crear comida
-		this.foods = this.physics.add.group();
-		alert(foodsO.length);
+		this.foodsJugador = this.physics.add.group();
+		
 		for (var i = 0; i < foodsO.length; i++){	
-			alert(foodsO[i].posX);
-			var foodG = this.foods.create(foodsO[i].posX, foodsO[i].posY, 'food');
+			
+			var foodG = this.foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
 			mapFoodG.set(i, foodG);
 		}
-		this.physics.add.collider(dragon, this.foods, collectFood, null, this);
-		this.physics.add.overlap(dragon, this.foods, collectFood, null, this);
+		this.physics.add.collider(dragon, this.foodsJugador, collectFood, null, this);
+		this.physics.add.overlap(dragon, this.foodsJugador, collectFood, null, this);
+
+		//mouse and fire
+		this.fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
+		this.input.on('pointerdown', function (pointer) {
+			if (pointer.buttons == 1 && fuegoActivo) {
+				fuegoActivo=false;
+				let cursor = pointer;
+				//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
+				let angleNow = (Math.atan2(dragon.y - cursor.y, dragon.x - cursor.x) * 180 / Math.PI);
+				coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
+				seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
+				this.fuegoSprite = this.add.sprite(dragon.x + (50 * coseno), dragon.y - (50 * seno), 'fuegos').play('fuego1');
+				this.fuegoSprite.angle = angleNow - 180;
+				var time;			
+				timedEvent = this.time.delayedCall(250, onEvent, [], this);
+			}
+		}, this);
+		
 	}
 
+	function onEvent (){
+		this.fuegoSprite.destroy();
+		fuegoActivo=true;
+	}
 
 	function update(time, delta) {
 		//movimiento del dragon que siga el mouse
@@ -165,17 +187,22 @@ var init = (function () {
 	//####################CORREGIR !
 	//No se sabe como obtener la posicion en el arreglo (foodsO) para enviarla al servidor y despues actualizarla visualmente
 	function collectFood(dragon, food) {
-		appGame.eat(dragon, food);		
+		//alert("colision");
+		//appGame.eat(dragon, food);
+		food.disableBody(true, true);
+		this.foodsJugador.remove(food);
+		food.setActive(false);
+		food.setVisible(false);
 	}
 
 	function eatFood(food) {
 		food.disableBody(true, true);
-		this.foods.remove(food)
+		this.foodsJugador.remove(food)
 		score += 10;
 		scoreText.setText('Score: ' + score);
 		// si se acaba la comida, se vuelve a regenerar
-		if (this.foods.children.entries.length <= 19) {
-			this.foods.create(Phaser.Math.FloatBetween(150, config.width - 150),Phaser.Math.FloatBetween(100, config.height - 100), 'food');
+		if (foodsJugador.children.entries.length <= 19) {
+			foodsJugador.create(Phaser.Math.FloatBetween(150, config.width - 150),Phaser.Math.FloatBetween(100, config.height - 100), 'food');
 		}
 	}
 
@@ -205,18 +232,30 @@ var init = (function () {
 		updateDragons: function (dragons){
 			updateRoom = dragons;
 		},
-		endGame: function(dragonsR){				
-			activo = false;
+		endGame: function(dragonsR){
 			
 			for (var i = 0; i < updateRoom.length; i++){
 				if(!dragonsR.includes(updateRoom[i])){
-					var textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
-					textDragonI.setVisible(false);	
+					var textDragonI = mapTextJugadores.get(updateRoom[i].nickName);						
 					diseñoDeDragonI=mapPlayersG.get(updateRoom[i].nickName);
-					diseñoDeDragonI.setVisible(false);
+					try {
+						diseñoDeDragonI.setVisible(false);
+						diseñoDeDragonI.setActive(false);
+						textDragonI.setVisible(false);						
+					}catch(err) {
+					}
+					try{
+						mapTextJugadores.delete(updateRoom[i].nickName);
+						mapPlayersG.delete(updateRoom[i].nickName);
+					}catch(err){
+
+					}				
+					
 				}	
 			}
-			appGame.deletePlayer();
+			try{
+				appGame.deletePlayer();
+			}catch(err){}
 		},
 		eat: function(food){
 			eatFood(food);

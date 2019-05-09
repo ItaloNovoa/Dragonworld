@@ -40,6 +40,7 @@ public class ControllerStomp {
             // System.out.println("--------------------------numero de sala: " +
             // roomObj.getNum());
             servicesDragon.addNewRoom(roomObj);
+            System.out.println("crear nuvep room");
 
         }
 

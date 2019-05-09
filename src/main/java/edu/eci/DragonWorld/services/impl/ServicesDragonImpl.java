@@ -24,16 +24,23 @@ public class ServicesDragonImpl implements ServicesDragon {
     }
 
     @Override
-    public void addPlayerToRoom(Player player, int numRoom) {
+    public void addPlayerToRoom(Player player, int numRoom) {       
         if (rooms == null)
             System.out.println("ESTA NULL");
-        if (!rooms.get(numRoom).getPlayers().containsKey(player.getNickName())) {
-            rooms.get(numRoom).addPlayer(player);
-            System.out.println(rooms.get(numRoom).playersJson());
-        } else {
-            // Excepcion que ya existe el nickname
-            System.out.println("Ya existe un jugador con el mismo nickName");
+
+    //-----------------ARREGLAR
+        try {
+            if (!rooms.get(numRoom).getPlayers().containsKey(player.getNickName())) {
+                rooms.get(numRoom).addPlayer(player);
+                System.out.println(rooms.get(numRoom).playersJson());
+            } else {
+                // Excepcion que ya existe el nickname
+                System.out.println("Ya existe un jugador con el mismo nickName");
+            }
+        } catch (Exception e) {
+            //TODO: handle exception
         }
+        
     }
 
     @Override
