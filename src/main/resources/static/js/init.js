@@ -210,9 +210,9 @@ var init = (function () {
 					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
 					diseñoDeDragonI.setVisible(false);
 					diseñoDeDragonI.setActive(false);
-					mapJugadores.delete(updateRoom[i].nickName);
+					//mapJugadores.delete(updateRoom[i].nickName);
 					textDragonI.destroy();
-					mapTextJugadores.delete(updateRoom[i].nickName);					
+					//mapTextJugadores.delete(updateRoom[i].nickName);					
 					//diseñoDeDragonI.disableBody(true, true);
 					//mapJugadores.remove(diseñoDeDragonI);
 				}
