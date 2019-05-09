@@ -1,5 +1,6 @@
 var nickName;
 var numRoom;
+var numFood = 1;
 var objPlayer;
 
 apimock = (function () {
@@ -58,7 +59,7 @@ var appGame = (function () {
             stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
                 var foodObj = JSON.parse(eventbody.body);
                 setTimeout(function () {
-                    init.startFood(gameObj);
+                    init.startFood(foodObj);
                 }, 50);
             });
             stompClient.subscribe('/topic/movePlayer.' + numRoom, function (eventbody) {

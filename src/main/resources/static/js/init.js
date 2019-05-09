@@ -107,12 +107,14 @@ var init = (function () {
 		}
 		//Crear comida
 		this.foods = this.physics.add.group();
-		this.physics.add.collider(dragon, this.foods, collectFood, null, this);
-		this.physics.add.overlap(dragon, this.foods, collectFood, null, this);
-		for (var i = 0; i < foodsO.length; i++){			
+		alert(foodsO.length);
+		for (var i = 0; i < foodsO.length; i++){	
+			alert(foodsO[i].posX);
 			var foodG = this.foods.create(foodsO[i].posX, foodsO[i].posY, 'food');
 			mapFoodG.set(i, foodG);
 		}
+		this.physics.add.collider(dragon, this.foods, collectFood, null, this);
+		this.physics.add.overlap(dragon, this.foods, collectFood, null, this);
 	}
 
 

@@ -17,7 +17,9 @@ public class ServicesDragonImpl implements ServicesDragon {
     @Override
     public void addNewRoom(Room room) {
         if (!rooms.containsKey(room.getNum())) {
+            room.generateFood();
             rooms.put(room.getNum(), room);
+
         }
     }
 

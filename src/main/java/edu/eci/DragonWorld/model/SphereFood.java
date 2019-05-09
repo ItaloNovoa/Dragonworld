@@ -5,6 +5,7 @@ public class SphereFood extends Food {
 
     public SphereFood(double posX, double posy) {
         super.score = score;
+        System.out.println(this.getPosY());
     }
 
 }

@@ -24,7 +24,9 @@ public class ControllerStomp {
         servicesDragon.addPlayerToRoom(player, numRoom);
         if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
             // String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
-            msgt.convertAndSend("/topic/createFood." + numRoom, servicesDragon.getRooms().get(numRoom).getFoods());
+            System.out.println("comida al iniciar");
+            System.out.println(servicesDragon.getRooms().get(numRoom).getFoods());
+            msgt.convertAndSend("/topic/createFood." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
             msgt.convertAndSend("/topic/newGame." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
         }
     }

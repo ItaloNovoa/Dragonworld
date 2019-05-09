@@ -10,8 +10,8 @@ public class Room {
 	public ConcurrentHashMap<Integer, Food> foods = new ConcurrentHashMap<Integer, Food>();
 	public boolean available;
 	public final int CAPACIDAD = 50;
-	public float ancho;
-	public float alto;
+	public double ancho;
+	public double alto;
 	public final int CAPACIDADFOOD = 10;
 
 	public List<Food> alimentos;
@@ -62,11 +62,30 @@ public class Room {
 	public void generateFood() {
 		for (int i = 0; i < CAPACIDADFOOD; i++) {
 			Random r = new Random();
-			double posX = 0.0 + (ancho - 0.0) * r.nextDouble();
-			double posy = 0.0 + (alto - 0.0) * r.nextDouble();
+			System.out.println("ancho*--------------------"+ancho);
+			double rx = r.nextDouble();
+			double posX = 0 + (ancho - 0) * rx;
+			System.out.println(posX);
+			System.out.println(rx);
+			double posy = 0 + (alto - 0) * r.nextDouble();
 			SphereFood food = new SphereFood(posX, posy);
+			System.out.println(ancho - 0);
 			foods.put(i, food);
 		}
+	}
+
+	public String foodsJson() {
+		String resp = "[";
+		for (Integer key : foods.keySet()) {
+			Food food = foods.get(key);
+			resp += "{\"id\":\"" + key + "\",\"posX\":" + food.getPosX() + ",\"posY\":"
+					+ food.getPosY() + ",\"score\":" + food.getScore() + ",\"comido\":\"" + "no lo he puesto"
+					+ "\"},";
+		}
+		resp = resp.substring(0, resp.length() - 1);
+		resp += "]";
+		// System.out.println(resp);
+		return resp;
 	}
 
 	public ConcurrentHashMap<Integer, Food> getFoods() {
@@ -111,7 +130,7 @@ public class Room {
 		this.num = num;
 	}
 
-	public float getAncho() {
+	public double getAncho() {
 		return ancho;
 	}
 
@@ -119,7 +138,7 @@ public class Room {
 		this.ancho = ancho;
 	}
 
-	public float getAlto() {
+	public double getAlto() {
 		return alto;
 	}
 
