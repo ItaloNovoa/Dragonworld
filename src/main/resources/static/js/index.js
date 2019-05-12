@@ -91,7 +91,13 @@ var appGame = (function () {
         conectar: function () {
             nickName = document.getElementById("nickname").value;
             numRoom = document.getElementById("sala").value;
-            connectAndSubscribe();
+            if (nickName=="" || numRoom==""){
+                alert("Ingrese el Nickname o numero de SALA");
+            }else if( numRoom<0 || numRoom>10){
+                alert("la sala debe estar entre 0 y 10");
+            }else{
+                connectAndSubscribe();
+            }
         },
 
         disconnect: function () {
