@@ -34,7 +34,6 @@ function cerrarWindow() {
 
 var appGame = (function () {
     var stompClient = null;
-    var nickName1;
     var addGameToCanvas = function (game) {
         var room = new Room(game.id, game.ancho, game.alto);
         room.setPlayers(game.players);
@@ -50,30 +49,22 @@ var appGame = (function () {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
-                alert(eventbody);
                 // Se cambiaba de página cuando empezaba el juego. Por el momento se quita el div de inicio y se muestra en el index
                 setTimeout(function () {
                     init.startGame(gameObj);
                 }, 60);
             });
             stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
-                var foodObj = JSON.parse(eventbody.body);
-                setTimeout(function () {
+                var foodObj = JSON.parse(eventbody.body);                
+                //setTimeout(function () {
                     init.startFood(foodObj);
-                }, 50);
+                //}, 50);
+
             });
             stompClient.subscribe('/topic/movePlayer.' + numRoom, function (eventbody) {
-                //console.log("moviendo");
                 var gameObj = JSON.parse(eventbody.body);
                 init.updateDragons(gameObj);
-
-            });
-            stompClient.subscribe('/topic/eat/' + numRoom + "/food."+numFood, function (eventbody) {
-                //console.log("moviendo");
-                //var gameObj = JSON.parse(eventbody.body);
-                init.eat(numFood);
-
-            });
+            });            
             stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {                
                 var gameObj = JSON.parse(eventbody.body);
                 init.endGame(gameObj);
@@ -126,8 +117,12 @@ var appGame = (function () {
 
         eat: function (numFood) {
             stompClient.send("/app/eat/" + numRoom + "/food."+numFood, {}, JSON.stringify(objPlayer));
+            stompClient.subscribe('/topic/eat/' + numRoom + "/food."+numFood, function (eventbody) {
+                var Comida = JSON.parse(eventbody.body);
+                //alert(JSON.stringify(Comida[numFood]));
+                init.startFood(Comida);
+            });
         },
-
         connectTopic: function () {
             connectAndSubscribe();
         }

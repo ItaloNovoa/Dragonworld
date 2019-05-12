@@ -68,16 +68,17 @@ var init = (function () {
 		},
 	};
 	var mapPlayersG = new Map(); //hasmap de gráficas excepto la de este dragon
-	var mapTextJugadores = new Map(); //hasmap de nombres de dragones
-	var mapFoodG = new Map(); //hasmap de gráficas de esferas
+	var mapTextJugadores = new Map(); //hasmap de nombres de dragones	
 
 	var foodsO;  //hasmap de objetos de esferas
+	var firstfood;
 	var player;
 	var game;
 	var score = 0;
 	var scoreText;
 	var fuegoActivo=true;
 	var dragon;
+	var foodsJugador;
 
 	function preload() { //funcion que carga recursos	
 		this.load.image('dragonImg', 'images/dragon3.png');
@@ -106,15 +107,15 @@ var init = (function () {
 			console.log("despues de grafica");
 		}
 		//Crear comida
-		this.foodsJugador = this.physics.add.group();
+		foodsJugador = this.physics.add.group();
 		
-		for (var i = 0; i < foodsO.length; i++){	
+		for (var i = 0; i < foodsO.length; i++){
 			
-			var foodG = this.foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
-			mapFoodG.set(i, foodG);
+			var foodG = foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
+			foodG.name=i;
 		}
-		this.physics.add.collider(dragon, this.foodsJugador, collectFood, null, this);
-		this.physics.add.overlap(dragon, this.foodsJugador, collectFood, null, this);
+		this.physics.add.collider(dragon, foodsJugador, collectFood, null, this);
+		this.physics.add.overlap(dragon, foodsJugador, collectFood, null, this);
 
 		//mouse and fire
 		this.fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
@@ -171,14 +172,18 @@ var init = (function () {
 					diseñoDeDragonI.setAngle(updateRoom[i].angle);
 					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);					
 					textDragonI.x = updateRoom[i].posX - 20;
-					textDragonI.y = updateRoom[i].posY + 40;
+					textDragonI.y = updateRoom[i].posY + 40;					
+					this.physics.add.collider(diseñoDeDragonI, foodsJugador, eatFood, null, this);
+					this.physics.add.overlap(diseñoDeDragonI, foodsJugador, eatFood, null, this);
 					
 				} else if (updateRoom[i].nickName != nickNamePlayer){ //nuevos dragones					
 					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
 					diseñoDeDragonI.setCollideWorldBounds(true); 
 					mapPlayersG.set(updateRoom[i].nickName,diseñoDeDragonI); //agregar nuevo dragon al hasmap de gráficas
 					textDragonI = this.add.text(updateRoom[i].posX-20, updateRoom[i].posY + 50, updateRoom[i].nickName);
-					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);					
+					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);										
+					this.physics.add.collider(diseñoDeDragonI, foodsJugador, eatFood, null, this);
+					this.physics.add.overlap(diseñoDeDragonI, foodsJugador, eatFood, null, this);				
 				}
 			}
 		}
@@ -186,24 +191,20 @@ var init = (function () {
 
 	//####################CORREGIR !
 	//No se sabe como obtener la posicion en el arreglo (foodsO) para enviarla al servidor y despues actualizarla visualmente
-	function collectFood(dragon, food) {
-		//alert("colision");
-		//appGame.eat(dragon, food);
+	function collectFood(dragon, food) {		
 		food.disableBody(true, true);
-		this.foodsJugador.remove(food);
-		food.setActive(false);
-		food.setVisible(false);
+		foodsJugador.remove(food);
+		appGame.eat(food.name);	
+		var foodG = foodsJugador.create(foodsO[food.name].posX, foodsO[food.name].posY, 'foodImg');
+		foodG.name=food.name;		
 	}
 
-	function eatFood(food) {
+	function eatFood(dragon,food) {
 		food.disableBody(true, true);
-		this.foodsJugador.remove(food)
-		score += 10;
-		scoreText.setText('Score: ' + score);
-		// si se acaba la comida, se vuelve a regenerar
-		if (foodsJugador.children.entries.length <= 19) {
-			foodsJugador.create(Phaser.Math.FloatBetween(150, config.width - 150),Phaser.Math.FloatBetween(100, config.height - 100), 'food');
-		}
+		foodsJugador.remove(food);
+		//init.startFood();
+		var foodG = foodsJugador.create(foodsO[food.name].posX, foodsO[food.name].posY, 'foodImg');
+		foodG.name=food.name;
 	}
 
 	return {
@@ -225,6 +226,7 @@ var init = (function () {
 		},
 		startFood: function(foods){
 			foodsO = foods;			
+			//alert(JSON.stringify(foodsO));		
 		},
 		getNickName: function(nickNameP){
 			nickNamePlayer = nickNameP;
@@ -260,5 +262,8 @@ var init = (function () {
 		eat: function(food){
 			eatFood(food);
 		}
+		/** comidaNueva: function(comida){
+			foods1=comida;
+		}*/
 	};
 })();

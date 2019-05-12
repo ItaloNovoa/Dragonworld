@@ -62,14 +62,14 @@ public class Room {
 	public void generateFood() {
 		for (int i = 0; i < CAPACIDADFOOD; i++) {
 			Random r = new Random();
-			System.out.println("ancho*--------------------"+ancho);
+			//System.out.println("ancho*--------------------"+ancho);
 			double rx = r.nextDouble();
 			double posX = 0 + (ancho - 0) * rx;
-			System.out.println(posX);
-			System.out.println(rx);
+			//System.out.println(posX);
+			//System.out.println(rx);
 			double posy = 0 + (alto - 0) * r.nextDouble();
 			SphereFood food = new SphereFood(posX, posy);
-			System.out.println(ancho - 0);
+			//System.out.println(ancho - 0);
 			foods.put(i, food);
 		}
 	}
