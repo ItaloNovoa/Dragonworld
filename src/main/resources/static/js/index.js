@@ -28,8 +28,8 @@ window.onbeforeunload = function(){
     }             
 } */
 
-function cerrarWindow() {    
-    appGame.cerrar();   
+function cerrarWindow() {
+    appGame.cerrar();
 }
 
 var appGame = (function () {
@@ -55,20 +55,25 @@ var appGame = (function () {
                 }, 60);
             });
             stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
-                var foodObj = JSON.parse(eventbody.body);                
+                var foodObj = JSON.parse(eventbody.body);
                 //setTimeout(function () {
-                    init.startFood(foodObj);
+                init.startFood(foodObj);
                 //}, 50);
 
             });
             stompClient.subscribe('/topic/movePlayer.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
                 init.updateDragons(gameObj);
-            });            
-            stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {                
+            });
+            stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
                 init.endGame(gameObj);
                 appGame.disconnect();
+            });
+            stompClient.subscribe('/topic/eat/' + numRoom , function (eventbody) {
+                var Comida = JSON.parse(eventbody.body);
+                //alert(JSON.stringify(Comida));
+                init.updateFood(Comida);
             });
             init.initializeGame(numRoom);
         });
@@ -82,11 +87,11 @@ var appGame = (function () {
         conectar: function () {
             nickName = document.getElementById("nickname").value;
             numRoom = document.getElementById("sala").value;
-            if (nickName=="" || numRoom==""){
+            if (nickName == "" || numRoom == "") {
                 alert("Ingrese el Nickname o numero de SALA");
-            }else if( numRoom<0 || numRoom>10){
+            } else if (numRoom < 0 || numRoom > 10) {
                 alert("la sala debe estar entre 0 y 10");
-            }else{
+            } else {
                 connectAndSubscribe();
             }
         },
@@ -94,7 +99,7 @@ var appGame = (function () {
         disconnect: function () {
             if (stompClient !== null) {
                 stompClient.disconnect();
-            }           
+            }
         },
 
         initializeGame: function (numRoomSend, player, room) {
@@ -116,12 +121,7 @@ var appGame = (function () {
         },
 
         eat: function (numFood) {
-            stompClient.send("/app/eat/" + numRoom + "/food."+numFood, {}, JSON.stringify(objPlayer));
-            stompClient.subscribe('/topic/eat/' + numRoom + "/food."+numFood, function (eventbody) {
-                var Comida = JSON.parse(eventbody.body);
-                //alert(JSON.stringify(Comida[numFood]));
-                init.startFood(Comida);
-            });
+            stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));            
         },
         connectTopic: function () {
             connectAndSubscribe();

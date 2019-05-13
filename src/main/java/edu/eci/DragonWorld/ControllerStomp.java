@@ -65,9 +65,11 @@ public class ControllerStomp {
     @MessageMapping("/eat/{numRoom}/food.{numFood}")
     public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
             @DestinationVariable Integer numFood) throws Exception {
-        servicesDragon.eat(player, numFood, numRoom);
-        msgt.convertAndSend("/topic/eat/" + numRoom + "/food." + numFood,
-                servicesDragon.getRooms().get(numRoom).foodsJson());
+        
+            servicesDragon.eat(player, numFood, numRoom);
+            System.out.println("ENTRO A COMIDAa------------------");
+        
+        msgt.convertAndSend("/topic/eat/" + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
     }
 
 }
