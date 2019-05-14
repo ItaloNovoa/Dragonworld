@@ -75,6 +75,10 @@ var appGame = (function () {
                 //alert(JSON.stringify(Comida));
                 init.updateFood(Comida);
             });
+            stompClient.subscribe('/topic/ataca/' + numRoom , function (eventbody) {
+                var nombre = JSON.parse(eventbody.body);
+                init.ataco(nombre);                
+            });
             init.initializeGame(numRoom);
         });
     };
@@ -121,7 +125,11 @@ var appGame = (function () {
         },
 
         eat: function (numFood) {
+            alert("llego al index");
             stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));            
+        },
+        ataque: function(){
+            stompClient.send("/app/ataca/" + numRoom ,{},JSON.stringify(objPlayer));
         },
         connectTopic: function () {
             connectAndSubscribe();
