@@ -104,7 +104,7 @@ var init = (function () {
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui
 				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
-
+				graphicDragon.name=roomADibujar[i].nickName;
 
 				//this.physics.add.collider(graphicDragon, foodsJugador, eatFood, null, this);
 				//this.physics.add.overlap(graphicDragon, foodsJugador, eatFood, null, this);
@@ -142,10 +142,7 @@ var init = (function () {
 				seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
 				this.fuegoSprite = this.physics.add.sprite(dragon.x + (50 * coseno), dragon.y - (50 * seno), 'fuegos').play('fuego1');
 				this.fuegoSprite.angle = angleNow - 180;
-
-				var collider = this.physics.add.collider(this.fuegoSprite, foodsJugador, null, function () {
-					alert('colisiono');
-				}, this);
+				
 
 				var time;
 				timedEvent = this.time.delayedCall(250, onEvent, [], this);
@@ -228,7 +225,7 @@ var init = (function () {
 			for (var i = 0; i < updateRoom.length; i++) {
 				var diseñoDeDragonI;
 				var textDragonI;
-				var fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
+				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
 				if (updateRoom[i].nickName != nickNamePlayer && mapPlayersG.has(updateRoom[i].nickName)) {
 					diseñoDeDragonI = mapPlayersG.get(updateRoom[i].nickName);
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
@@ -236,30 +233,31 @@ var init = (function () {
 					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
 					textDragonI.x = updateRoom[i].posX - 20;
 					textDragonI.y = updateRoom[i].posY + 40;
+					var collider = this.physics.add.collider(this.fuegoSprite, diseñoDeDragonI, null, function () {
+						alert('colisiono con '+diseñoDeDragonI.name);
+					}, this);
 					if (atacantes.includes(updateRoom[i].nickName)) {
 						let angleNow = diseñoDeDragonI.angle;
 						coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 						seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
-						this.fuegoSprite = this.physics.add.sprite(diseñoDeDragonI.x + (50 * coseno), diseñoDeDragonI.y - (50 * seno), 'fuegos').play('fuego1');
-						this.fuegoSprite.angle = angleNow - 180;
-						fuegosActivos.push(this.fuegoSprite);
+						this.fuego2 = this.physics.add.sprite(diseñoDeDragonI.x + (50 * coseno), diseñoDeDragonI.y - (50 * seno), 'fuegos').play('fuego1');
+						this.fuego2.angle = angleNow - 180;
+						fuegosActivos.push(this.fuego2);
 						delete atacantes[atacantes.indexOf(updateRoom[i].nickName)];
 					}
-					//this.physics.add.collider(diseñoDeDragonI, foodsJugador, eatFood, null, this);
-					//this.physics.add.overlap(diseñoDeDragonI, foodsJugador, eatFood, null, this);
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) { //nuevos dragones					
 					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
 					diseñoDeDragonI.setCollideWorldBounds(true);
+					diseñoDeDragonI.name=updateRoom[i].nickName;
 					mapPlayersG.set(updateRoom[i].nickName, diseñoDeDragonI); //agregar nuevo dragon al hasmap de gráficas
 					textDragonI = this.add.text(updateRoom[i].posX - 20, updateRoom[i].posY + 50, updateRoom[i].nickName);
-					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);
-					//this.physics.add.collider(diseñoDeDragonI, foodsJugador, eatFood, null, this);
-					//this.physics.add.overlap(diseñoDeDragonI, foodsJugador, eatFood, null, this);				
+					mapTextJugadores.set(updateRoom[i].nickName, textDragonI);			
 				}
 			}
 		}
 		if(fuegosActivos.length>0){
+			
 			var time;
 			timedEvent1 = this.time.delayedCall(250, otherEvent, [], this);
 		}
@@ -278,24 +276,8 @@ var init = (function () {
 		food.disableBody(true, true);
 		foodsJugador.remove(food);*/
 		appGame.eat(food.name);
-
-
-
-		/*
-		
-		var foodG = foodsJugador.create(foodsO[id].posX, foodsO[id].posY, 'foodImg');
-		foodG.name=foodsO[id].id;
-		alert("pongo "+foodsO[id].id+" donde deberia" + foodsO[id].posX);
-		mapFood.set(foodsO[id].id,foodG);*/
-		//comida.disableBody(false, false);
-
-
-
 	}
 
-	function mate(dragon, fuego) {
-		alert("yo mate");
-	}
 
 	return {
 		initializeGame: function (numRoomInit) {
