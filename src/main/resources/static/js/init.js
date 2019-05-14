@@ -126,8 +126,7 @@ var init = (function () {
 			//alert("tipeOf foos"+ typeof foodsO[i].id);
 			mapFood.set(foodsO[i].id, foodG);
 		}
-		this.physics.add.collider(dragon, foodsJugador, collectFood, null, this);
-		//this.physics.add.overlap(dragon, foodsJugador, collectFood, null, this);
+		
 
 		//mouse and fire
 		this.fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
@@ -152,6 +151,9 @@ var init = (function () {
 			}
 		}, this);
 
+		//crear puntaje
+		scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
 	}
 
 	function onEvent() {
@@ -170,6 +172,9 @@ var init = (function () {
 	}
 
 	function update(time, delta) {
+		this.physics.add.collider(dragon, foodsJugador, collectFood, null, this);
+		//this.physics.add.overlap(dragon, foodsJugador, collectFood, null, this);
+
 		//movimiento del dragon que siga el mouse
 		deby = this.input.mousePointer.y + 32
 		if (parseInt(dragon.x) != this.input.mousePointer.x || parseInt(dragon.y) != this.input.mousePointer.y + 32) {
@@ -199,33 +204,15 @@ var init = (function () {
 
 		appGame.moveDragon(player); //si detecta movimiento de este jugador se actualiza el servidor
 
-		//if (updateFoods){
-		for (var i = 0; i < foodsO.length; i++) {
-
-			var comida = mapFood.get(foodsO[i].id);
-			if (comida.x != foodsO[i].posX || comida.y != foodsO[i].posY) {
-				//alert(foodsO[i].id+"donde esta"+comida.x+"donde deberia "+foodsO[i].posX);
-				//comida.disableBody(true, true);
-				//foodsJugador.remove(foodsJugador.children.entries[foodsO[i].id]);
-				//comida.reset(foodsO[i].posX ,foodsO[i].posY);
-				comida.setX(foodsO[i].posX);
-				comida.setY(foodsO[i].posY);
-				//comida.disableBody(false, false);
-				//alert("ahora"+foodsO[i].id+"donde esta"+comida.x+"donde deberia "+foodsO[i].posX);
-
-
-
-			}
-		}
-		updateFoods = false;
-		//}
-
-
 		if (typeof updateRoom !== 'undefined') {
 			for (var i = 0; i < updateRoom.length; i++) {
 				var diseñoDeDragonI;
 				var textDragonI;
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
+				if (updateRoom[i].nickName == nickNamePlayer){
+					score = updateRoom[i].score;
+					scoreText.setText('Score: ' + score);
+				}
 				if (updateRoom[i].nickName != nickNamePlayer && mapPlayersG.has(updateRoom[i].nickName)) {
 					diseñoDeDragonI = mapPlayersG.get(updateRoom[i].nickName);
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
@@ -266,7 +253,7 @@ var init = (function () {
 	//####################CORREGIR !
 	//No se sabe como obtener la posicion en el arreglo (foodsO) para enviarla al servidor y despues actualizarla visualmente
 	function collectFood(dragon, food) {
-		alert("como " + food.name + " donde esta" + food.x);
+		//alert("como " + food.name + " donde esta" + food.x);
 		var id = food.name;
 		var comida = mapFood.get(foodsO[id].id);
 		//comida.disableBody(true, true);
@@ -275,7 +262,24 @@ var init = (function () {
 		
 		food.disableBody(true, true);
 		foodsJugador.remove(food);*/
+		//score += 10;
+		//scoreText.setText('Score: ' + score);
+		
 		appGame.eat(food.name);
+	}
+
+	function eatFood(){
+		for (var i = 0; i < foodsO.length; i++) {
+			var comida = mapFood.get(foodsO[i].id);
+			if (comida.x != foodsO[i].posX || comida.y != foodsO[i].posY) {
+				comida.body.immovable = true;
+				comida.body.moves = false;
+				comida.setX(foodsO[i].posX);
+				comida.setY(foodsO[i].posY);
+				
+			}
+		}
+		updateFoods = false;
 	}
 
 
@@ -302,6 +306,7 @@ var init = (function () {
 		},
 		updateFood: function (foods) {
 			foodsO = foods;
+			eatFood();
 			//updateFoods = true;
 			//alert(JSON.stringify(foodsO));		
 		},

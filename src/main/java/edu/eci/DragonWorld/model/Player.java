@@ -9,6 +9,8 @@ public class Player {
 	public float posY;
 	public String state;
 	public int numRoomP;
+	public long score;
+	
 
 	public Player() {
 
@@ -21,6 +23,7 @@ public class Player {
 		this.numRoomP = numRoomP;
 		this.angle = angle;
 		this.state = state;
+		this.score =0;
 	}
 
 	/*
@@ -87,5 +90,20 @@ public class Player {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public long getScore() {
+		return score;
+	}
+
+	public void setScore(long score) {
+		System.out.println("entro a setScore");
+		System.out.println(score);
+		this.score = score;
+	}
+
+	public void sumScore(long score) {
+		this.score += 10;
+	}
+
 
 }

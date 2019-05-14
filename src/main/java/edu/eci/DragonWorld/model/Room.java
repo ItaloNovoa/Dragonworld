@@ -45,13 +45,14 @@ public class Room {
 		return players;
 	}
 
+
 	public String playersJson() {
 		String resp = "[";
 		for (String key : players.keySet()) {
 			Player player = players.get(key);
 			resp += "{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
-					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()
-					+ "\"},";
+					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()+
+					"\",\"score\":"+player.getScore()+ "},";
 		}
 		resp = resp.substring(0, resp.length() - 1);
 		resp += "]";
@@ -86,6 +87,17 @@ public class Room {
 		resp += "]";
 		// System.out.println(resp);
 		return resp;
+	}
+
+	public void eatPlayer(Player playerG){
+		System.out.println("Score al entrar a eat"+players.get(playerG.getNickName()).getScore());
+		System.out.println("nombre "+players.get(playerG.getNickName()).getNickName());
+		players.get(playerG.getNickName()).setScore((long) 1000);
+		Player jugador = players.get(playerG.getNickName());
+		//jugador.setScore(1000);
+		players.replace(playerG.getNickName(), jugador);
+		System.out.println("Score al salir a eat"+players.get(playerG.getNickName()).getScore());
+
 	}
 
 	public ConcurrentHashMap<Integer, Food> getFoods() {

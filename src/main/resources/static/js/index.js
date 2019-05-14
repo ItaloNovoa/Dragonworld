@@ -125,7 +125,7 @@ var appGame = (function () {
         },
 
         eat: function (numFood) {
-            alert("llego al index");
+            //alert("llego al index");
             stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));            
         },
         ataque: function(){

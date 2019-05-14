@@ -88,5 +88,19 @@ public class ServicesDragonImpl implements ServicesDragon {
         double posy = 0.0 + (room.getAlto() - 0.0) * r.nextDouble();
         rooms.get(numRoom).getFoods().get(numFood).setPosX(posx);
         rooms.get(numRoom).getFoods().get(numFood).setPosY(posy);
+        System.out.println("score antes de entrar a eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
+        rooms.get(numRoom).eatPlayer(player);
+        System.out.println("score al salir de eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
+
+        /*Player playerJuego = room.getPlayers().get(player.getNickName());
+        System.out.println(playerJuego.getNickName()+" score "+playerJuego.getScore());
+        long actualScore = playerJuego.getScore();
+        playerJuego.setScore(100);
+        playerJuego.setNickName("yp spy vale");
+       // playerJuego.setScore(actualScore+10);
+        rooms.get(numRoom).getPlayers().replace(playerJuego.getNickName(), playerJuego);
+        
+        System.out.println(playerJuego.getScore());*/
+
     }
 }
