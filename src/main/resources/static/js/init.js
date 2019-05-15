@@ -80,7 +80,6 @@ var init = (function () {
 	var dragon;
 	var foodsJugador;
 	var mapFood = new Map();
-	var updateFoods = true;
 	var atacantes = [];
 	var fuegosActivos = [];
 
@@ -250,24 +249,14 @@ var init = (function () {
 		}
 	}
 
-	//####################CORREGIR !
-	//No se sabe como obtener la posicion en el arreglo (foodsO) para enviarla al servidor y despues actualizarla visualmente
+	//Realiza la accion de comer
 	function collectFood(dragon, food) {
-		//alert("como " + food.name + " donde esta" + food.x);
 		var id = food.name;
 		var comida = mapFood.get(foodsO[id].id);
-		//comida.disableBody(true, true);
-		/*var id = food.name;	
-		var comida=mapFood.get(foodsO[id].id);
-		
-		food.disableBody(true, true);
-		foodsJugador.remove(food);*/
-		//score += 10;
-		//scoreText.setText('Score: ' + score);
-		
 		appGame.eat(food.name);
 	}
 
+	//Actualiza las esferas comidas por jugadores
 	function eatFood(){
 		for (var i = 0; i < foodsO.length; i++) {
 			var comida = mapFood.get(foodsO[i].id);
@@ -307,7 +296,6 @@ var init = (function () {
 		updateFood: function (foods) {
 			foodsO = foods;
 			eatFood();
-			//updateFoods = true;
 			//alert(JSON.stringify(foodsO));		
 		},
 		getNickName: function (nickNameP) {
