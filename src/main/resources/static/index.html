@@ -45,13 +45,12 @@
 					<a class="fh5co-card-item image-popup">
 						<div class="fh5co-text" style="margin-bottom: 0.2em; margin-top: 1.2em; height: 200px;">
 							<h2>Jugar</h2>
-							<input id="nickname" type="text" value="Vale" title="Nickname">
-							<input id="sala" type="text" value="10" title="Sala">
+							<input id="nickname" type="text" placeholder="Nickname" title="Nickname">
+							<input id="sala" type="number"  placeholder="Sala" min="0" max="10" title="Sala">
 							<p></p>
 							<p>
 								<!--<span class="btn btn-primary">Schedule a Trip action="juego.html"</span>-->
-								
-									<button onclick="appGame.conectar();">PLAY</button>									
+								<button onclick="appGame.conectar();">Play</button>
 								
 							</p>
 						</div>

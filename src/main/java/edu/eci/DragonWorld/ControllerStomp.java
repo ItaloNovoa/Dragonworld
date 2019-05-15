@@ -22,9 +22,16 @@ public class ControllerStomp {
     public void handlePlayerEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
         // Al crear un nuevo jugador, verificar que no exista alguno con el mismo
         servicesDragon.addPlayerToRoom(player, numRoom);
-        if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
-            String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
-            msgt.convertAndSend("/topic/newGame." + numRoom, playersJson);
+        try {
+            if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
+                // String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
+                System.out.println("comida al iniciar");
+                System.out.println(servicesDragon.getRooms().get(numRoom).getFoods());
+                msgt.convertAndSend("/topic/createFood." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
+                msgt.convertAndSend("/topic/newGame." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+            }
+        } catch (Exception e) {
+            // Block of code to handle errors
         }
     }
 
@@ -37,6 +44,8 @@ public class ControllerStomp {
             // System.out.println("--------------------------numero de sala: " +
             // roomObj.getNum());
             servicesDragon.addNewRoom(roomObj);
+            System.out.println("crear nuvep room");
+
         }
 
     }
@@ -44,8 +53,6 @@ public class ControllerStomp {
     @MessageMapping("/movePlayer.{numRoom}")
     public void handlePlayerMoveEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
         servicesDragon.moveDragon(player, numRoom);
-        // System.out.println("#Jugadores: " +
-        // servicesDragon.getRooms().get(numRoom).getPlayers().size());
         msgt.convertAndSend("/topic/movePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
     }
 
@@ -53,9 +60,21 @@ public class ControllerStomp {
     public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
         servicesDragon.deletePlayerOfRoom(player, numRoom);
         msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
-        // System.out.println("DESCONECTADO");
-        // System.out.println(servicesDragon.getRooms().get(numRoom).playersJson());
-        // System.out.println("#Jugadores: " +
-        // servicesDragon.getRooms().get(numRoom).getPlayers().size());
     }
+
+    @MessageMapping("/eat/{numRoom}/food.{numFood}")
+    public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
+            @DestinationVariable Integer numFood) throws Exception {
+        servicesDragon.eat(player, numFood, numRoom);
+        System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
+        msgt.convertAndSend("/topic/eat/" + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
+    }
+
+    @MessageMapping("/ataca/{numRoom}")
+    public void handlePlayerAtacEvent(Player player,@DestinationVariable Integer numRoom)
+            throws Exception {
+        String a="{\"nickName\":\""+player.getNickName()+ "\"}";
+        msgt.convertAndSend("/topic/ataca/" + numRoom, a);
+    }
+
 }
