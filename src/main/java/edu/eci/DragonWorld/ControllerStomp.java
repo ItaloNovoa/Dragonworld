@@ -65,16 +65,16 @@ public class ControllerStomp {
     @MessageMapping("/eat/{numRoom}/food.{numFood}")
     public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
             @DestinationVariable Integer numFood) throws Exception {
-        servicesDragon.eat(player, numFood, numRoom);
-        System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
-        msgt.convertAndSend("/topic/eat/" + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
+            servicesDragon.eat(player, numFood, numRoom);
+            System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
+            msgt.convertAndSend("/topic/eat." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
     }
 
     @MessageMapping("/ataca/{numRoom}")
     public void handlePlayerAtacEvent(Player player,@DestinationVariable Integer numRoom)
             throws Exception {
-        String a="{\"nickName\":\""+player.getNickName()+ "\"}";
-        msgt.convertAndSend("/topic/ataca/" + numRoom, a);
+            String a="{\"nickName\":\""+player.getNickName()+ "\"}";
+            msgt.convertAndSend("/topic/ataca." + numRoom, a);
     }
 
 }

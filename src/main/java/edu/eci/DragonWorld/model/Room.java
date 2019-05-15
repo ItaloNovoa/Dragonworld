@@ -12,7 +12,7 @@ public class Room {
 	public final int CAPACIDAD = 50;
 	public double ancho;
 	public double alto;
-	public final int CAPACIDADFOOD = 10;
+	public final int CAPACIDADFOOD = 20;
 	public boolean comiendo = false;
 	public List<Food> alimentos;
 

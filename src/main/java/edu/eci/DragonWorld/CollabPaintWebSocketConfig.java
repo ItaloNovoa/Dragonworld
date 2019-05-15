@@ -24,13 +24,13 @@ public class CollabPaintWebSocketConfig extends AbstractWebSocketMessageBrokerCo
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        /*config.enableStompBrokerRelay("/topic/").setRelayHost(brokerRabbitMQHost).setRelayPort(relayPort).
+        //config.enableSimpleBroker("/topic");
+        config.enableStompBrokerRelay("/topic/").setRelayHost(brokerRabbitMQHost).setRelayPort(relayPort).
                 setClientLogin(brokerRabbitMQUser).
                 setClientPasscode(brokerRabbitMQPassword).
                 setSystemLogin(brokerRabbitMQUser).
                 setSystemPasscode(brokerRabbitMQPassword).
-                setVirtualHost(brokerRabbitMQUser);*/
-        config.enableSimpleBroker("/topic");
+                setVirtualHost(brokerRabbitMQUser);
         config.setApplicationDestinationPrefixes("/app");
     }
 

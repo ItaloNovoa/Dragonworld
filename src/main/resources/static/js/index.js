@@ -44,8 +44,8 @@ var appGame = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
-        //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
-        stompClient.connect({}, function (frame) {
+        stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+        //stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
@@ -70,17 +70,22 @@ var appGame = (function () {
                 init.endGame(gameObj);
                 appGame.disconnect();
             });
-            stompClient.subscribe('/topic/eat/' + numRoom , function (eventbody) {
+            stompClient.subscribe('/topic/eat.' + numRoom , function (eventbody) {
                 var Comida = JSON.parse(eventbody.body);
                 //alert(JSON.stringify(Comida));
                 init.updateFood(Comida);
             });
-            stompClient.subscribe('/topic/ataca/' + numRoom , function (eventbody) {
+            stompClient.subscribe('/topic/ataca.' + numRoom , function (eventbody) {
                 var nombre = JSON.parse(eventbody.body);
                 init.ataco(nombre);                
             });
-            init.initializeGame(numRoom);
-        });
+            init.initializeGame(numRoom);  
+        } , 
+        function(error){
+            console.info("error"+error);
+        }
+
+        , "skieprkh");
     };
 
     function mostrar(gameJSON, callback) {

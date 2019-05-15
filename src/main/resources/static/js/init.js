@@ -256,12 +256,15 @@ var init = (function () {
 	function collectFood(dragon, food) {
 		var id = food.name;
 		var comida = mapFood.get(foodsO[id].id);
-		comida.body.immovable = true;
-		comida.body.moves = false;
+		//comida.body.immovable = true;
+		//comida.body.moves = false;
 		var esferaBoolean = comibles.get(foodsO[id].id);
+		//alert("esfera boolean "+esferaBoolean);
 		if (esferaBoolean){
-			comibles.set(id,false);
-			appGame.eat(food.name);
+			
+			comibles.set(foodsO[id].id,false);
+			appGame.eat(foodsO[id].id);
+			
 		}
 	}
 
