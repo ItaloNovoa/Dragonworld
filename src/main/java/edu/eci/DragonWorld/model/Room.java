@@ -13,7 +13,7 @@ public class Room {
 	public double ancho;
 	public double alto;
 	public final int CAPACIDADFOOD = 10;
-
+	public boolean comiendo = false;
 	public List<Food> alimentos;
 
 	public Room() {
@@ -53,6 +53,7 @@ public class Room {
 			resp += "{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
 					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()+
 					"\",\"score\":"+player.getScore()+ "},";
+					//System.out.println("dragon: "+player.getNickName()+" posicion x: "+player.getPosX()+" score "+player.getScore());
 		}
 		resp = resp.substring(0, resp.length() - 1);
 		resp += "]";
@@ -89,15 +90,12 @@ public class Room {
 		return resp;
 	}
 
-	public void eatPlayer(Player playerG){
-		System.out.println("Score al entrar a eat"+players.get(playerG.getNickName()).getScore());
-		System.out.println("nombre "+players.get(playerG.getNickName()).getNickName());
-		players.get(playerG.getNickName()).setScore((long) 1000);
-		Player jugador = players.get(playerG.getNickName());
-		//jugador.setScore(1000);
-		players.replace(playerG.getNickName(), jugador);
-		System.out.println("Score al salir a eat"+players.get(playerG.getNickName()).getScore());
-
+	public void eatPlayer(Player playerG,int numFood){
+		//System.out.println("Score al entrar a eat"+players.get(playerG.getNickName()).getScore());
+		//System.out.println("nombre "+players.get(playerG.getNickName()).getNickName());
+		long actualScore = players.get(playerG.getNickName()).getScore();
+		int aditionalScore = foods.get(numFood).getScore();
+		players.get(playerG.getNickName()).setScore(actualScore + aditionalScore);
 	}
 
 	public ConcurrentHashMap<Integer, Food> getFoods() {

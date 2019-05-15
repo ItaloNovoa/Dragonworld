@@ -72,7 +72,10 @@ public class ServicesDragonImpl implements ServicesDragon {
 
     @Override
     public void moveDragon(Player player, int numRoom) {
-        rooms.get(numRoom).getPlayers().replace(player.getNickName(), player);
+        rooms.get(numRoom).getPlayers().get(player.getNickName()).setPosX(player.getPosX());
+        rooms.get(numRoom).getPlayers().get(player.getNickName()).setPosY(player.getPosY());
+        rooms.get(numRoom).getPlayers().get(player.getNickName()).setAngle(player.getAngle());
+        rooms.get(numRoom).getPlayers().get(player.getNickName()).setState(player.getState());
     }
 
     @Override
@@ -88,19 +91,9 @@ public class ServicesDragonImpl implements ServicesDragon {
         double posy = 0.0 + (room.getAlto() - 0.0) * r.nextDouble();
         rooms.get(numRoom).getFoods().get(numFood).setPosX(posx);
         rooms.get(numRoom).getFoods().get(numFood).setPosY(posy);
-        System.out.println("score antes de entrar a eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
-        rooms.get(numRoom).eatPlayer(player);
-        System.out.println("score al salir de eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
-
-        /*Player playerJuego = room.getPlayers().get(player.getNickName());
-        System.out.println(playerJuego.getNickName()+" score "+playerJuego.getScore());
-        long actualScore = playerJuego.getScore();
-        playerJuego.setScore(100);
-        playerJuego.setNickName("yp spy vale");
-       // playerJuego.setScore(actualScore+10);
-        rooms.get(numRoom).getPlayers().replace(playerJuego.getNickName(), playerJuego);
-        
-        System.out.println(playerJuego.getScore());*/
+        //System.out.println("score antes de entrar a eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
+        rooms.get(numRoom).eatPlayer(player,numFood);
+        //System.out.println("score al salir de eat"+rooms.get(numRoom).getPlayers().get(player.getNickName()).getScore());
 
     }
 }
