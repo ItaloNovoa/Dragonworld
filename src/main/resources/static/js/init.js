@@ -82,6 +82,7 @@ var init = (function () {
 	var mapFood = new Map();
 	var atacantes = [];
 	var fuegosActivos = [];
+	var comibles = new Map(); //hasmap de los posible comibles
 
 	function preload() { //funcion que carga recursos	
 		this.load.image('dragonImg', 'images/dragon3.png');
@@ -124,6 +125,7 @@ var init = (function () {
 			//alert("tipeOF name"+typeof foodG.name);
 			//alert("tipeOf foos"+ typeof foodsO[i].id);
 			mapFood.set(foodsO[i].id, foodG);
+			comibles.set(foodsO[i].id, true);
 		}
 		
 
@@ -254,7 +256,13 @@ var init = (function () {
 	function collectFood(dragon, food) {
 		var id = food.name;
 		var comida = mapFood.get(foodsO[id].id);
-		appGame.eat(food.name);
+		comida.body.immovable = true;
+		comida.body.moves = false;
+		var esferaBoolean = comibles.get(foodsO[id].id);
+		if (esferaBoolean){
+			comibles.set(id,false);
+			appGame.eat(food.name);
+		}
 	}
 
 	//Actualiza las esferas comidas por jugadores
@@ -266,7 +274,7 @@ var init = (function () {
 				comida.body.moves = false;
 				comida.setX(foodsO[i].posX);
 				comida.setY(foodsO[i].posY);
-				
+				comibles.set(foodsO[i].id,true);
 			}
 		}
 		updateFoods = false;
