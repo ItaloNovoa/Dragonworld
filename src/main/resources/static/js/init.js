@@ -53,6 +53,7 @@ var init = (function () {
 		width: document.documentElement.clientWidth - 20,
 		height: document.documentElement.clientHeight - 20,
 		parent: 'container',
+		pixelArt: true,
 		transparent: true,
 		"render.transparent": true,
 		"render.autoResize": true,
@@ -87,23 +88,37 @@ var init = (function () {
 
 	function preload() { //funcion que carga recursos	
 		this.load.image('dragonImg', 'images/dragon3.png');
-		this.load.atlas('dragonesAtlas', 'images/dragones.png', 'images/dragones.js');
-		this.load.json('dragonesf_anim', 'images/dragonesf_anim.json');
-		this.load.atlas('fireAtlas', 'images/fuego1.png', 'images/fuego.js');
-		this.load.atlas('dragonesf', 'images/dragonesf.png', 'images/dragonesf_atlas.json');
+		this.load.atlas('dragonesAtlas', 'images/dragones.png', 'images/dragones.js');		
+		this.load.atlas('fireAtlas', 'images/fuego1.png', 'images/fuego.js');		
 		this.load.image('foodImg', 'images/esfera3.png');
+
+		//nuevos diseños
+		this.load.json('dragoneslvl1_anim','images/dragoneslvl1_anim.json');
+		this.load.atlas('dragoneslvl1', 'images/dragoneslvl1.png','images/dragoneslvl1_atlas.json');
+
+		this.load.json('dragoneslvl2_anim', 'images/dragoneslvl2_anim.json');
+		this.load.atlas('dragoneslvl2', 'images/dragoneslvl2.png', 'images/dragoneslvl2_atlas.json');
+
 	}
 
 	function create() {//muesta imagenes, sprites etc
-		this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
+		//this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
+		
+		
+		
+		this.dragoneslvl2_anim = this.cache.json.get('dragoneslvl2_anim');	
+		this.anims.fromJSON(this.dragoneslvl2_anim);
+		this.dragoneslvl1_anim = this.cache.json.get('dragoneslvl1_anim');	
+		this.anims.fromJSON(this.dragoneslvl1_anim);
+
 		for (var i = 0; i < roomADibujar.length; i++) {
 			//Dibujar este dragon
 			if (roomADibujar[i].nickName == nickNamePlayer) {
-				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
+				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('azul');
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				dragon.setCollideWorldBounds(true);
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui
-				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
+				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('azul');;
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
 				graphicDragon.name=roomADibujar[i].nickName;
 				mapPlayersG.set(roomADibujar[i].nickName, graphicDragon);
@@ -204,6 +219,10 @@ var init = (function () {
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
+					if(score>100 && score<140){
+						//alert(JSON.stringify(dragon));
+						dragon.textureKey="dragoneslvl2";
+					}
 					scoreText.setText('Score: ' + score);
 				}
 				if (updateRoom[i].nickName != nickNamePlayer && mapPlayersG.has(updateRoom[i].nickName)) {
@@ -230,7 +249,8 @@ var init = (function () {
 					}
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) { //nuevos dragones					
-					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragonesAtlas').play('dragonSprite');
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play('azul');
+					
 					diseñoDeDragonI.setCollideWorldBounds(true);
 					diseñoDeDragonI.name=updateRoom[i].nickName;
 					mapPlayersG.set(updateRoom[i].nickName, diseñoDeDragonI); //agregar nuevo dragon al hasmap de gráficas
@@ -328,15 +348,11 @@ var init = (function () {
 			eatFood(food);
 		},
 		ataco: function (nombre) {
-			if (nombre.nickName === nickNamePlayer) {
-				//alert("yo ataque");
-			} else {
-				//alert("ataco " + JSON.stringify(nombre.nickName));
+			if (nombre.nickName != nickNamePlayer) {
 				if (atacantes.includes(nombre.nickName) == false) {
 					atacantes.push(nombre.nickName);
 				}
 			}
-			//alert("atacantes" + atacantes);
 		}
 		/** comidaNueva: function(comida){
 			foods1=comida;

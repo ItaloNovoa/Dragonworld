@@ -1,0 +1,164 @@
+{
+    "frames": [
+        {
+            "filename": "dragon1sprite_0",
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_1",
+            "frame": {
+                "x": 49,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_2",
+            "frame": {
+                "x": 98,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_3",
+            "frame": {
+                "x": 147,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_4",
+            "frame": {
+                "x": 196,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_5",
+            "frame": {
+                "x": 245,
+                "y": 0,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_6",
+            "frame": {
+                "x": 0,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_7",
+            "frame": {
+                "x": 49,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_8",
+            "frame": {
+                "x": 98,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_9",
+            "frame": {
+                "x": 147,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_10",
+            "frame": {
+                "x": 196,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "dragon1sprite_11",
+            "frame": {
+                "x": 245,
+                "y": 60,
+                "w": 49,
+                "h": 60
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Phaser3",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

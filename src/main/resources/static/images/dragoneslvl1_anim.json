@@ -1,0 +1,196 @@
+{
+    "anims": [
+        {
+            "key": "rojo",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_0"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_0"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_0"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_6"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_6"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_6"
+                }
+            ]
+        },
+        {
+            "key": "verde",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_1"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_1"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_1"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_7"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_7"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_7"
+                }
+            ]
+        },
+        {
+            "key": "naranja",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_2"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_2"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_2"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_8"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_8"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_8"
+                }
+            ]
+        },
+        {
+            "key": "azul",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_3"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_3"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_3"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_9"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_9"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_9"
+                }
+            ]
+        },
+        {
+            "key": "negro",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_4"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_4"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_4"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_10"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_10"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_10"
+                }
+            ]
+        },
+        {
+            "key": "blanco",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 12,
+            "frames": [
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_5"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_5"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_5"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_11"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_11"
+                },
+                {
+                    "key": "dragoneslvl1",
+                    "frame": "dragon1sprite_11"
+                }
+            ]
+        }
+    ]
+}

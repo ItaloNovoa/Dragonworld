@@ -60,7 +60,7 @@ public class ControllerStomp {
     public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
         System.out.println("antes ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
         String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
-        String jugadorBorrado = servicesDragon.deletePlayerOfRoom(player, numRoom);
+        servicesDragon.deletePlayerOfRoom(player, numRoom);
         //System.out.println("depues ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
         //System.out.println(jugadoreErase);
         msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
@@ -81,9 +81,15 @@ public class ControllerStomp {
     }
     @MessageMapping("//muere/{numRoom}/{nombre}")
     public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre) throws Exception {
+        try {
+            Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
+            String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
+            //servicesDragon.deletePlayerOfRoom(player, numRoom);
+            //msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
+        } catch (Exception e) {
+            // Block of code to handle errors
+        }
         
-        Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
-        System.out.println("va a morir "+player.toString());
         //servicesDragon.deletePlayerOfRoom(player, numRoom);
         //String a="{\"nickName\":\""+player.getNickName()+ "\"}";
         //msgt.convertAndSend("/topic/murio." + numRoom, a);
