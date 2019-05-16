@@ -81,7 +81,14 @@ var appGame = (function () {
                 var nombre = JSON.parse(eventbody.body);
                 init.ataco(nombre);
             });
-
+            stompClient.subscribe('/topic/redirigir.' + numRoom, function (eventbody) {
+                var jugador = JSON.parse(eventbody.body);
+                if(jugador[0].nickName===nickName){
+                    //no se hace el alert
+                    //alert("Felicidades su puntaje a sido"+jugador[0].score);                    
+                    location.href =window.location;                
+                }
+            });
 
             init.initializeGame(numRoom);
         });
@@ -128,13 +135,11 @@ var appGame = (function () {
         },
 
         eat: function (numFood) {
-            //alert("llego al index");
             stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));
         },
         ataque: function () {
             stompClient.send("/app/ataca/" + numRoom, {}, JSON.stringify(objPlayer));
         }, muere: function (nombre) {
-            alert("va a morir -->" + nombre);
             stompClient.send("/app/muere/" + numRoom + "/" + nombre);
         },
         connectTopic: function () {

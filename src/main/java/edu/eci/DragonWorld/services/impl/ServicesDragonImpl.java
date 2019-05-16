@@ -60,12 +60,15 @@ public class ServicesDragonImpl implements ServicesDragon {
 
     @Override
     public String deletePlayerOfRoom(Player player, int numRoom) {
-        Player jugadorBorrado = rooms.get(numRoom).getPlayers().get(player.getNickName());
-        if (rooms.containsKey(numRoom)) {
-            rooms.get(numRoom).getPlayers().remove(player.getNickName());
+        try{
+            Player jugadorBorrado = rooms.get(numRoom).getPlayers().get(player.getNickName());
+            if (rooms.containsKey(numRoom)) {
+                rooms.get(numRoom).getPlayers().remove(player.getNickName());
+            }
+            return jugadorBorrado.getNickName();
+        }catch (Exception e) {
+            return null;
         }
-        return jugadorBorrado.getNickName();
-
     }
 
     @Override
@@ -75,10 +78,14 @@ public class ServicesDragonImpl implements ServicesDragon {
 
     @Override
     public void moveDragon(Player player, int numRoom) {
+        try{
         rooms.get(numRoom).getPlayers().get(player.getNickName()).setPosX(player.getPosX());
         rooms.get(numRoom).getPlayers().get(player.getNickName()).setPosY(player.getPosY());
         rooms.get(numRoom).getPlayers().get(player.getNickName()).setAngle(player.getAngle());
         rooms.get(numRoom).getPlayers().get(player.getNickName()).setState(player.getState());
+        }catch (Exception e) {
+            // Block of code to handle errors
+        }
     }
 
     @Override

@@ -84,8 +84,10 @@ public class ControllerStomp {
         try {
             Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
             String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
-            //servicesDragon.deletePlayerOfRoom(player, numRoom);
-            //msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
+            msgt.convertAndSend("/topic/redirigir." + numRoom, jugadoreErase);
+            
+            servicesDragon.deletePlayerOfRoom(player, numRoom);
+            msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
         } catch (Exception e) {
             // Block of code to handle errors
         }

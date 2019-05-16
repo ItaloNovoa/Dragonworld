@@ -190,7 +190,6 @@ var init = (function () {
 			console.log("DRAGON ************* " + dragon.x + "*******" + dragon.y);
 			console.log("mouse ************* " + this.input.mousePointer.x + "*******" + deby);
 		} else {
-			//alert("iguales ****************");
 			this.physics.moveTo(dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 0);
 		}
 		//Cambio de la posicion del nombre
@@ -220,7 +219,6 @@ var init = (function () {
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
 					if(score>100 && score<140){
-						//alert(JSON.stringify(dragon));
 						dragon.textureKey="dragoneslvl2";
 					}
 					scoreText.setText('Score: ' + score);
@@ -273,7 +271,6 @@ var init = (function () {
 		//comida.body.immovable = true;
 		//comida.body.moves = false;
 		var esferaBoolean = comibles.get(foodsO[id].id);
-		//alert("esfera boolean "+esferaBoolean);
 		if (esferaBoolean){
 			
 			comibles.set(foodsO[id].id,false);
@@ -316,13 +313,11 @@ var init = (function () {
 			}
 		},
 		startFood: function (foods) {
-			foodsO = foods;
-			//alert(JSON.stringify(foodsO));		
+			foodsO = foods;		
 		},
 		updateFood: function (foods) {
 			foodsO = foods;
-			eatFood();
-			//alert(JSON.stringify(foodsO));		
+			eatFood();		
 		},
 		getNickName: function (nickNameP) {
 			nickNamePlayer = nickNameP;
@@ -331,14 +326,9 @@ var init = (function () {
 			updateRoom = dragons;
 		},
 		endGame: function (dragonsR) {
-			//alert("llego al endGame "+dragonsR[0].nickName);
-
 			var textDragonI = mapTextJugadores.get(dragonsR[0].nickName);
-			//alert("text "+textDragonI.active);
 			textDragonI.setVisible(false);
-
 			var diseñoDeDragonI = mapPlayersG.get(dragonsR[0].nickName);
-			//alert("text "+diseñoDeDragonI.allowGravity);
 			diseñoDeDragonI.setVisible(false);
 			mapTextJugadores.delete(updateRoom[i].nickName);
 			mapPlayersG.delete(updateRoom[i].nickName);	
