@@ -58,23 +58,26 @@ public class ControllerStomp {
 
     @MessageMapping("/disconnect.{numRoom}")
     public void handlePlayerDisconnectEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
-        servicesDragon.deletePlayerOfRoom(player, numRoom);
-        msgt.convertAndSend("/topic/deletePlayer." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
+        System.out.println("antes ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
+        String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
+        String jugadorBorrado = servicesDragon.deletePlayerOfRoom(player, numRoom);
+        System.out.println("depues ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
+        System.out.println(jugadoreErase);
+        msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
     }
 
     @MessageMapping("/eat/{numRoom}/food.{numFood}")
     public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
             @DestinationVariable Integer numFood) throws Exception {
-            servicesDragon.eat(player, numFood, numRoom);
-            System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
-            msgt.convertAndSend("/topic/eat." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
+        servicesDragon.eat(player, numFood, numRoom);
+        System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
+        msgt.convertAndSend("/topic/eat." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
     }
 
     @MessageMapping("/ataca/{numRoom}")
-    public void handlePlayerAtacEvent(Player player,@DestinationVariable Integer numRoom)
-            throws Exception {
-            String a="{\"nickName\":\""+player.getNickName()+ "\"}";
-            msgt.convertAndSend("/topic/ataca." + numRoom, a);
+    public void handlePlayerAtacEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
+        String a = "{\"nickName\":\"" + player.getNickName() + "\"}";
+        msgt.convertAndSend("/topic/ataca." + numRoom, a);
     }
 
 }

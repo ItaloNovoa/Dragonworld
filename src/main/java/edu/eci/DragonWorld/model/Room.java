@@ -61,6 +61,17 @@ public class Room {
 		return resp;
 	}
 
+	public String playerJson(Player player) {
+		Player playerJson = players.get(player.getNickName());
+		String resp = "[{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
+					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()+
+					"\",\"score\":"+player.getScore()+ "}]";
+					//System.out.println("dragon: "+player.getNickName()+" posicion x: "+player.getPosX()+" score "+player.getScore());
+	
+		// System.out.println(resp);
+		return resp;
+	}
+
 	public void generateFood() {
 		for (int i = 0; i < CAPACIDADFOOD; i++) {
 			Random r = new Random();

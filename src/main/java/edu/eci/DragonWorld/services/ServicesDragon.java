@@ -13,7 +13,7 @@ public interface ServicesDragon {
 
     public void moveDragon(Player player, int numRoom);
 
-    public void deletePlayerOfRoom(Player player, int numRoom);
+    public String deletePlayerOfRoom(Player player, int numRoom);
 
     public void endGamePlayer(Player player, int numRoom);
 

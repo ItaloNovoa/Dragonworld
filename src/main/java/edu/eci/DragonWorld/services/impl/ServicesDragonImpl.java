@@ -59,10 +59,13 @@ public class ServicesDragonImpl implements ServicesDragon {
     }
 
     @Override
-    public void deletePlayerOfRoom(Player player, int numRoom) {
+    public String deletePlayerOfRoom(Player player, int numRoom) {
+        Player jugadorBorrado = rooms.get(numRoom).getPlayers().get(player.getNickName());
         if (rooms.containsKey(numRoom)) {
             rooms.get(numRoom).getPlayers().remove(player.getNickName());
         }
+        return jugadorBorrado.getNickName();
+
     }
 
     @Override

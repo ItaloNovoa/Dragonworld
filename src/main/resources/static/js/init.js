@@ -317,28 +317,18 @@ var init = (function () {
 			updateRoom = dragons;
 		},
 		endGame: function (dragonsR) {
+			//alert("llego al endGame "+dragonsR[0].nickName);
 
-			for (var i = 0; i < updateRoom.length; i++) {
-				if (!dragonsR.includes(updateRoom[i])) {
-					var textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
-					diseñoDeDragonI = mapPlayersG.get(updateRoom[i].nickName);
-					try {
-						diseñoDeDragonI.setVisible(false);
-						diseñoDeDragonI.setActive(false);
-						textDragonI.setVisible(false);
-					} catch (err) {
-					}
-					try {
-						mapTextJugadores.delete(updateRoom[i].nickName);
-						mapPlayersG.delete(updateRoom[i].nickName);
-					} catch (err) {
+			var textDragonI = mapTextJugadores.get(dragonsR[0].nickName);
+			//alert("text "+textDragonI.active);
+			textDragonI.setVisible(false);
 
-					}
-				}
-			}
-			try {
-				appGame.deletePlayer();
-			} catch (err) { }
+			var diseñoDeDragonI = mapPlayersG.get(dragonsR[0].nickName);
+			//alert("text "+diseñoDeDragonI.allowGravity);
+			diseñoDeDragonI.setVisible(false);
+			mapTextJugadores.delete(updateRoom[i].nickName);
+			mapPlayersG.delete(updateRoom[i].nickName);	
+			
 		},
 		eat: function (food) {
 			eatFood(food);

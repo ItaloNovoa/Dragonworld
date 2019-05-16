@@ -67,8 +67,9 @@ var appGame = (function () {
             });
             stompClient.subscribe('/topic/deletePlayer.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
+                //alert("llega delete player");
                 init.endGame(gameObj);
-                appGame.disconnect();
+                //appGame.disconnect();
             });
             stompClient.subscribe('/topic/eat.' + numRoom , function (eventbody) {
                 var Comida = JSON.parse(eventbody.body);
