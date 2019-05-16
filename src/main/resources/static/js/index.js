@@ -44,7 +44,8 @@ var appGame = (function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
-        stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+        stompClient.connect({}, function (frame) {
+        //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
         //stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
@@ -80,12 +81,18 @@ var appGame = (function () {
                 var nombre = JSON.parse(eventbody.body);
                 init.ataco(nombre);                
             });
-            init.initializeGame(numRoom);  
-        } , 
+        });
+    /**        init.initializeGame(numRoom);  
+    } , 
         function(error){
             console.info("error"+error);
-        }, "skieprkh");
-    };
+        }, "skieprkh");*/
+    
+    setTimeout(function() {
+        init.initializeGame(numRoom);
+    }, 100);        
+};
+
 
     function mostrar(gameJSON, callback) {
         callback(gameJSON);
