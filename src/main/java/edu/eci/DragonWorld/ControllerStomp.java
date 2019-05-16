@@ -25,8 +25,8 @@ public class ControllerStomp {
         try {
             if (servicesDragon.getRooms().get(numRoom).getPlayers().size() >= 1) {
                 // String playersJson = servicesDragon.getRooms().get(numRoom).playersJson();
-                System.out.println("comida al iniciar");
-                System.out.println(servicesDragon.getRooms().get(numRoom).getFoods());
+                //System.out.println("comida al iniciar");
+                //System.out.println(servicesDragon.getRooms().get(numRoom).getFoods());
                 msgt.convertAndSend("/topic/createFood." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
                 msgt.convertAndSend("/topic/newGame." + numRoom, servicesDragon.getRooms().get(numRoom).playersJson());
             }
@@ -61,8 +61,8 @@ public class ControllerStomp {
         System.out.println("antes ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
         String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
         String jugadorBorrado = servicesDragon.deletePlayerOfRoom(player, numRoom);
-        System.out.println("depues ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
-        System.out.println(jugadoreErase);
+        //System.out.println("depues ----- " + servicesDragon.getRooms().get(numRoom).playersJson());
+        //System.out.println(jugadoreErase);
         msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
     }
 
@@ -70,7 +70,7 @@ public class ControllerStomp {
     public void handlePlayerEatEvent(Player player, @DestinationVariable Integer numRoom,
             @DestinationVariable Integer numFood) throws Exception {
         servicesDragon.eat(player, numFood, numRoom);
-        System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
+        //System.out.println("ENTRO A COMIDAa------------------" + numFood + "player" + player.getNickName());
         msgt.convertAndSend("/topic/eat." + numRoom, servicesDragon.getRooms().get(numRoom).foodsJson());
     }
 
@@ -78,6 +78,15 @@ public class ControllerStomp {
     public void handlePlayerAtacEvent(Player player, @DestinationVariable Integer numRoom) throws Exception {
         String a = "{\"nickName\":\"" + player.getNickName() + "\"}";
         msgt.convertAndSend("/topic/ataca." + numRoom, a);
+    }
+    @MessageMapping("//muere/{numRoom}/{nombre}")
+    public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre) throws Exception {
+        
+        Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
+        System.out.println("va a morir "+player.toString());
+        //servicesDragon.deletePlayerOfRoom(player, numRoom);
+        //String a="{\"nickName\":\""+player.getNickName()+ "\"}";
+        //msgt.convertAndSend("/topic/murio." + numRoom, a);
     }
 
 }

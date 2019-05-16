@@ -84,9 +84,7 @@ var appGame = (function () {
         } , 
         function(error){
             console.info("error"+error);
-        }
-
-        , "skieprkh");
+        }, "skieprkh");
     };
 
     function mostrar(gameJSON, callback) {
@@ -136,6 +134,9 @@ var appGame = (function () {
         },
         ataque: function(){
             stompClient.send("/app/ataca/" + numRoom ,{},JSON.stringify(objPlayer));
+        },muere: function(nombre){
+            alert("va a morir -->"+nombre);
+            stompClient.send("/app/muere/" + numRoom +"/"+nombre);
         },
         connectTopic: function () {
             connectAndSubscribe();

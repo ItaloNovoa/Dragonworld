@@ -82,6 +82,7 @@ var init = (function () {
 	var mapFood = new Map();
 	var atacantes = [];
 	var fuegosActivos = [];
+	var atacados=[];
 	var comibles = new Map(); //hasmap de los posible comibles
 
 	function preload() { //funcion que carga recursos	
@@ -105,10 +106,6 @@ var init = (function () {
 				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragonesAtlas').play('dragonSprite');
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
 				graphicDragon.name=roomADibujar[i].nickName;
-
-				//this.physics.add.collider(graphicDragon, foodsJugador, eatFood, null, this);
-				//this.physics.add.overlap(graphicDragon, foodsJugador, eatFood, null, this);
-
 				mapPlayersG.set(roomADibujar[i].nickName, graphicDragon);
 				var txtDragon = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, roomADibujar[i].nickName);
 				mapTextJugadores.set(roomADibujar[i].nickName, txtDragon);
@@ -122,8 +119,6 @@ var init = (function () {
 
 			var foodG = foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
 			foodG.name = i;
-			//alert("tipeOF name"+typeof foodG.name);
-			//alert("tipeOf foos"+ typeof foodsO[i].id);
 			mapFood.set(foodsO[i].id, foodG);
 			comibles.set(foodsO[i].id, true);
 		}
@@ -134,20 +129,14 @@ var init = (function () {
 		this.input.on('pointerdown', function (pointer) {
 			if (pointer.buttons == 1 && fuegoActivo) {
 				fuegoActivo = false;
-				//let cursor = pointer;
 				//calcular el angulo entre el dragon y el mouse (tomando la esquina del sprite (--arreglar eso))
-				//let angleNow = (Math.atan2(dragon.y - cursor.y, dragon.x - cursor.x) * 180 / Math.PI);
 				let angleNow = dragon.angle;
 				coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 				seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
 				this.fuegoSprite = this.physics.add.sprite(dragon.x + (50 * coseno), dragon.y - (50 * seno), 'fuegos').play('fuego1');
 				this.fuegoSprite.angle = angleNow - 180;
-				
-
 				var time;
-				timedEvent = this.time.delayedCall(250, onEvent, [], this);
-
-				//mandar al broker el fuego
+				timedEvent = this.time.delayedCall(300, onEvent, [], this);
 
 			}
 		}, this);
@@ -158,9 +147,11 @@ var init = (function () {
 	}
 
 	function onEvent() {
+		//mandar al broker el fuego
 		appGame.ataque();
 		this.fuegoSprite.destroy();
 		fuegoActivo = true;
+		atacados =[];
 
 	}
 
@@ -223,7 +214,10 @@ var init = (function () {
 					textDragonI.x = updateRoom[i].posX - 20;
 					textDragonI.y = updateRoom[i].posY + 40;
 					var collider = this.physics.add.collider(this.fuegoSprite, diseñoDeDragonI, null, function () {
-						alert('colisiono con '+diseñoDeDragonI.name);
+						if(atacados.includes(diseñoDeDragonI.name)==false){
+							appGame.muere(diseñoDeDragonI.name);
+							atacados.push(diseñoDeDragonI.name);
+						}						
 					}, this);
 					if (atacantes.includes(updateRoom[i].nickName)) {
 						let angleNow = diseñoDeDragonI.angle;
@@ -248,7 +242,7 @@ var init = (function () {
 		if(fuegosActivos.length>0){
 			
 			var time;
-			timedEvent1 = this.time.delayedCall(250, otherEvent, [], this);
+			timedEvent1 = this.time.delayedCall(300, otherEvent, [], this);
 		}
 	}
 

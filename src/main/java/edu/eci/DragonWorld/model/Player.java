@@ -104,6 +104,9 @@ public class Player {
 	public void sumScore(long score) {
 		this.score += 10;
 	}
-
-
+	@Override
+	public String toString() {
+		return "Player [nickName=" + nickName + ", posX=" + posX + ", angle=" + angle + ", posY=" + posY + ", state="
+				+ state + ", numRoomP=" + numRoomP + ", score=" + score + "]";
+	}
 }
