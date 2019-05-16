@@ -45,8 +45,8 @@ var appGame = (function () {
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
-        //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
-        //stompClient.connect({}, function (frame) {
+            //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
+            //stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
@@ -72,32 +72,24 @@ var appGame = (function () {
                 init.endGame(gameObj);
                 //appGame.disconnect();
             });
-            stompClient.subscribe('/topic/eat.' + numRoom , function (eventbody) {
+            stompClient.subscribe('/topic/eat.' + numRoom, function (eventbody) {
                 var Comida = JSON.parse(eventbody.body);
                 //alert(JSON.stringify(Comida));
                 init.updateFood(Comida);
             });
-            stompClient.subscribe('/topic/ataca.' + numRoom , function (eventbody) {
+            stompClient.subscribe('/topic/ataca.' + numRoom, function (eventbody) {
                 var nombre = JSON.parse(eventbody.body);
-                init.ataco(nombre);                
+                init.ataco(nombre);
             });
-        });
-    /**        init.initializeGame(numRoom);  
-    } , 
-        function(error){
-            console.info("error"+error);
-        }, "skieprkh");*/
-    
-    setTimeout(function() {
-        init.initializeGame(numRoom);
-    }, 100);        
-};
 
+
+            init.initializeGame(numRoom);
+        });
+    };
 
     function mostrar(gameJSON, callback) {
         callback(gameJSON);
     }
-
     return {
         conectar: function () {
             nickName = document.getElementById("nickname").value;
@@ -137,13 +129,13 @@ var appGame = (function () {
 
         eat: function (numFood) {
             //alert("llego al index");
-            stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));            
+            stompClient.send("/app/eat/" + numRoom + "/food." + numFood, {}, JSON.stringify(objPlayer));
         },
-        ataque: function(){
-            stompClient.send("/app/ataca/" + numRoom ,{},JSON.stringify(objPlayer));
-        },muere: function(nombre){
-            alert("va a morir -->"+nombre);
-            stompClient.send("/app/muere/" + numRoom +"/"+nombre);
+        ataque: function () {
+            stompClient.send("/app/ataca/" + numRoom, {}, JSON.stringify(objPlayer));
+        }, muere: function (nombre) {
+            alert("va a morir -->" + nombre);
+            stompClient.send("/app/muere/" + numRoom + "/" + nombre);
         },
         connectTopic: function () {
             connectAndSubscribe();
