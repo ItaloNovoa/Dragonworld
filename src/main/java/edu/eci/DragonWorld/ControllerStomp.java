@@ -81,16 +81,16 @@ public class ControllerStomp {
     }
     @MessageMapping("//muere/{numRoom}/{nombre}")
     public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre) throws Exception {
-        try {
+        //try {
             Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
             String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
             msgt.convertAndSend("/topic/redirigir." + numRoom, jugadoreErase);
             
             servicesDragon.deletePlayerOfRoom(player, numRoom);
             msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
-        } catch (Exception e) {
+        //} catch (Exception e) {
             // Block of code to handle errors
-        }
+        //}
         
         //servicesDragon.deletePlayerOfRoom(player, numRoom);
         //String a="{\"nickName\":\""+player.getNickName()+ "\"}";

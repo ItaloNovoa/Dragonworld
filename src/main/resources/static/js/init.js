@@ -268,8 +268,8 @@ var init = (function () {
 	function collectFood(dragon, food) {
 		var id = food.name;
 		var comida = mapFood.get(foodsO[id].id);
-		//comida.body.immovable = true;
-		//comida.body.moves = false;
+		comida.body.immovable = false;
+		comida.body.moves = true;
 		var esferaBoolean = comibles.get(foodsO[id].id);
 		if (esferaBoolean){
 			

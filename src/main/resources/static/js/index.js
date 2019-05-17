@@ -85,8 +85,11 @@ var appGame = (function () {
                 var jugador = JSON.parse(eventbody.body);
                 if(jugador[0].nickName===nickName){
                     //no se hace el alert
-                    //alert("Felicidades su puntaje a sido"+jugador[0].score);                    
-                    location.href =window.location;                
+                    alert("Felicidades su puntaje a sido"+jugador[0].score);     
+                    setTimeout(function () {
+                        location.href =window.location; 
+                    }, 400);               
+                                   
                 }
             });
 
