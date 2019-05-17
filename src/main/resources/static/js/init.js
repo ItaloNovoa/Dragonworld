@@ -86,6 +86,7 @@ var init = (function () {
 	var atacados=[];
 	var comibles = new Map(); //hasmap de los posible comibles
 	var evo=1;
+	var color;
 
 	function preload() { //funcion que carga recursos	
 		this.load.image('dragonImg', 'images/dragon3.png');
@@ -99,13 +100,33 @@ var init = (function () {
 
 		this.load.json('dragoneslvl2_anim', 'images/dragoneslvl2_anim.json');
 		this.load.atlas('dragoneslvl2', 'images/dragoneslvl2.png', 'images/dragoneslvl2_atlas.json');
-
+		switch(color) {
+			case c1:
+			 	color='rojo1';
+			 	break;
+			case c2:
+				color='verde1';			
+				 break;
+			case c3:
+				color='naranja1';			
+				 break;
+			case c4:
+				color='azul1';			
+				break; 
+			case c5:
+				color='negro1';			
+				break;
+			case c6:
+				color='blanco1';			
+				break;
+			default:
+				color='negro1';	
+				
+		}
 	}
 
 	function create() {//muesta imagenes, sprites etc
 		//this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
-		
-		
 		
 		this.dragoneslvl2_anim = this.cache.json.get('dragoneslvl2_anim');	
 		this.anims.fromJSON(this.dragoneslvl2_anim);
@@ -221,7 +242,7 @@ var init = (function () {
 					score = updateRoom[i].score;
 					if(score > 100 && evo==1){
 						dragon.textureKey="dragoneslvl2";						
-						dragon.anims.play("blanco1");
+						dragon.anims.play(color);
 						evo+=1;
 					}
 					scoreText.setText('Score: ' + score);
@@ -308,7 +329,8 @@ var init = (function () {
 			player = new Player(nickName, posX, posY, 0, "activo", numRoomInit);
 			appGame.initializeGame(numRoomInit, player, room);
 		},
-		startGame: function (room) {
+		startGame: function (room, color) {
+			color = color;
 			roomADibujar = room;
 			$('#divInicio').hide();
 			if (game == null) {

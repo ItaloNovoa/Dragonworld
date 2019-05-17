@@ -37,7 +37,7 @@
 	
 </head>
 
-<body style=" background: url('images/fondo5.jpg'); "  onbeforeunload="cerrarWindow();">	
+<body style=" background: url('images/fondo5.jpg'); "  onbeforeunload="cerrarWindow();" onload="select();">	
 	<div class="gtco-section" id="divInicio">
 		<div class="gtco-container">
 			<div class="row">
@@ -57,33 +57,33 @@
 							<input id="nickname" type="text" placeholder="Nickname" title="Nickname">
 							<input id="sala" type="number"  placeholder="Sala" min="0" max="10" title="Sala">						
 							
-							<div  id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 100px; margin-top: 15px; width: 100%;">
+							<div  id="carouselColor" class="carousel slide" data-interval="false" data-ride="carousel" style="height: 100px; margin-top: 15px; width: 100%;">
 								<!-- Wrapper for slides -->
 								<div class="carousel-inner" style="height: 70%; width: 100%;  text-align: center">
-									<div class="item active" >
+									<div id="c1" class="item active" >
 										<img src="images/colores/rojo2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>
-									<div class="item">
+									<div id="c2" class="item">
 										<img src="images/colores/verde2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>							
-									<div class="item">
+									<div id="c3" class="item">
 										<img src="images/colores/naranja2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>							
-									<div class="item">
+									<div id="c4" class="item">
 										<img src="images/colores/azul2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>
-									<div class="item">
+									<div id="c5" class="item">
 										<img src="images/colores/negro2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>
-									<div class="item">
+									<div id="c6" class="item">
 										<img src="images/colores/lila2.png" style="width: 50px; margin:12px auto; display:block;">
 									</div>
 								</div>
-									<label class="fh5co-card-item left carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#myCarousel" role="button" data-slide="prev">
+									<label class="fh5co-card-item left carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#carouselColor" role="button" data-slide="prev">
 										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 										<span class="sr-only">Previous</span>
 									</label>
-									<label class="fh5co-card-item right carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#myCarousel" role="button" data-slide="next">
+									<label class="fh5co-card-item right carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#carouselColor" role="button" data-slide="next">
 										<span class="carousel-control-next-icon" aria-hidden="true"></span>
 										<span class="sr-only">Next</span>
 									</label>
@@ -92,6 +92,10 @@
 						<p>
 							<!--<span class="btn btn-primary">Schedule a Trip action="juego.html"</span>-->
 							<button class="bubbly-button" onclick="appGame.conectar();">Play</button>
+						</p>
+						<p>
+							<!--<span class="btn btn-primary">Schedule a Trip action="juego.html"</span>-->
+							<button class="bubbly-button">Color</button>
 						</p>						
 					</a>
 				</div>

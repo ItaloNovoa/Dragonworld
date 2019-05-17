@@ -2,6 +2,7 @@ var nickName;
 var numRoom;
 var numFood = 1;
 var objPlayer;
+var color = 0;
 
 apimock = (function () {
     return {
@@ -18,15 +19,12 @@ apimock = (function () {
     };
 
 })();
-
-/*
-window.onbeforeunload = function(){ 
-    c = confirm('Are you sure?'); 
-    if(c == true){ 
-        appGame.cerrar();
-        return true; 
-    }             
-} */
+function select() {
+    $('#carouselColor').on('slid.bs.carousel', function (e){
+        //console.log(e.relatedTarget.id);        
+        color = e.relatedTarget.id;
+    });
+}
 
 function cerrarWindow() {
     appGame.cerrar();
@@ -52,7 +50,7 @@ var appGame = (function () {
                 var gameObj = JSON.parse(eventbody.body);
                 // Se cambiaba de página cuando empezaba el juego. Por el momento se quita el div de inicio y se muestra en el index
                 setTimeout(function () {
-                    init.startGame(gameObj);
+                    init.startGame(gameObj, color);
                 }, 60);
             });
             stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
@@ -104,6 +102,8 @@ var appGame = (function () {
         conectar: function () {
             nickName = document.getElementById("nickname").value;
             numRoom = document.getElementById("sala").value;
+            
+
             if (nickName == "" || numRoom == "") {
                 alert("Ingrese el Nickname o numero de SALA");
             } else if (numRoom < 0 || numRoom > 10) {
