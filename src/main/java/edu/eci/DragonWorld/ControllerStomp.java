@@ -79,22 +79,20 @@ public class ControllerStomp {
         String a = "{\"nickName\":\"" + player.getNickName() + "\"}";
         msgt.convertAndSend("/topic/ataca." + numRoom, a);
     }
-    @MessageMapping("/muere/{numRoom}/{nombre}")
-    public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre) throws Exception {
-        //try {
+    @MessageMapping("/muere/{numRoom}/{nombre}/{nickName}")
+    public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre,@DestinationVariable String nickName) throws Exception {
+       
+            Player asesino =servicesDragon.getPlayerByNicknameRoom(numRoom, nickName);            
             Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
+            asesino.setScore(asesino.getScore()+(25*player.getEvolucion()));
+
             String jugadoreErase = servicesDragon.getRooms().get(numRoom).playerJson(player);
             msgt.convertAndSend("/topic/redirigir." + numRoom, jugadoreErase);
             
             servicesDragon.deletePlayerOfRoom(player, numRoom);
             msgt.convertAndSend("/topic/deletePlayer." + numRoom, jugadoreErase);
-        //} catch (Exception e) {
-            // Block of code to handle errors
-        //}
-        
-        //servicesDragon.deletePlayerOfRoom(player, numRoom);
-        //String a="{\"nickName\":\""+player.getNickName()+ "\"}";
-        //msgt.convertAndSend("/topic/murio." + numRoom, a);
+
+
     }
     @MessageMapping("/evolucion/{numRoom}/{nombre}/{numEvo}")
     public void handlePlayerEvolveEvent(@DestinationVariable Integer numRoom,@DestinationVariable String nombre,@DestinationVariable Integer numEvo) throws Exception {

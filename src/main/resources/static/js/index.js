@@ -143,7 +143,7 @@ var appGame = (function () {
         ataque: function () {
             stompClient.send("/app/ataca/" + numRoom, {}, JSON.stringify(objPlayer));
         }, muere: function (nombre) {
-            stompClient.send("/app/muere/" + numRoom + "/" + nombre);
+            stompClient.send("/app/muere/" + numRoom + "/" + nombre+"/"+nickName);
         },
         connectTopic: function () {
             connectAndSubscribe();

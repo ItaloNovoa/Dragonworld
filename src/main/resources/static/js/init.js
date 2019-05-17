@@ -255,7 +255,7 @@ var init = (function () {
 						let angleNow = diseñoDeDragonI.angle;
 						coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 						seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
-						this.fuego2 = this.physics.add.sprite(diseñoDeDragonI.x + ((45+(updateRoom[i].evolucion)) * coseno), diseñoDeDragonI.y - ((45+(updateRoom[i].evolucion))  * seno), 'fuegos').play('fuego1');
+						this.fuego2 = this.physics.add.sprite(diseñoDeDragonI.x +((45+(20*updateRoom[i].evolucion)) * coseno), diseñoDeDragonI.y - ((45+(20*updateRoom[i].evolucion)) *seno), 'fuegos').play('fuego1');
 						this.fuego2.angle = angleNow - 180;
 						fuegosActivos.push(this.fuego2);
 						delete atacantes[atacantes.indexOf(updateRoom[i].nickName)];
