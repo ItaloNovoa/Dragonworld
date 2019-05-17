@@ -1669,13 +1669,13 @@ form label {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  border-radius: 0px;
+  border-radius: 10px;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
 }
 .fh5co-card-item figure {
-  height: 240px;
+  height: 300px;
   overflow: hidden;
   z-index: 12;
   position: relative;

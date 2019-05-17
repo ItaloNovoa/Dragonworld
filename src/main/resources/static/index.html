@@ -9,12 +9,16 @@
 	<script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js"></script>
     <script src="js/scenes/MenuScene.js"></script>
 	<script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<script src="js/index.js"></script>
+	<script src="js/botonAnimado.js"></script>
 	<script src="js/init.js"></script>
-	
+	<link rel="shortcut icon" href="images/logo3.png" />
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 	<!-- Themify Icons-->
 	<link rel="stylesheet" href="css/themify-icons.css">
@@ -24,46 +28,80 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- Estilo propio  -->
 	<link rel="stylesheet" href="css/estilo.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 	
 	
 </head>
 
-<body style=" background: url('images/fondo5.jpg'); "  onbeforeunload="cerrarWindow();">
-	<div id="container" style="display: -webkit-box; background-color: transparent; margin-right: 5px;">		
-    </div>
+<body style=" background: url('images/fondo5.jpg'); "  onbeforeunload="cerrarWindow();">	
 	<div class="gtco-section" id="divInicio">
 		<div class="gtco-container">
 			<div class="row">
 				<!--<div class="col-md-8 col-md-offset-2 text-center gtco-heading">-->
 				<div class="col-md-8 col-md-offset-2 text-center titleEfecto">
 					<label>DragonWorld</label>
+					<img src="images/logo1.gif" alt="Image" class="img-responsive" style="height: 70px;">
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-lg-1 col-md-1 col-sm-1"></div>
-				<div class="col-lg-5 col-md-5 col-sm-5">
-					<a class="fh5co-card-item image-popup">
-						<div class="fh5co-text" style="margin-bottom: 0.2em; margin-top: 1.2em; height: 200px;">
+				<div class="col-lg-5 col-md-5 col-sm-5" style="text-align: center">
+					<a class="fh5co-card-item image-popup" >
+						<div id="divJuego" class="fh5co-text" style=" margin-top: 1.2em; height: 160px; width: 100%;">
 							<h2>Jugar</h2>
 							<input id="nickname" type="text" placeholder="Nickname" title="Nickname">
-							<input id="sala" type="number"  placeholder="Sala" min="0" max="10" title="Sala">
-							<p></p>
-							<p>
-								<!--<span class="btn btn-primary">Schedule a Trip action="juego.html"</span>-->
-								<button onclick="appGame.conectar();">Play</button>
-								
-							</p>
+							<input id="sala" type="number"  placeholder="Sala" min="0" max="10" title="Sala">						
+							
+							<div  id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 100px; margin-top: 15px; width: 100%;">
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" style="height: 70%; width: 100%;  text-align: center">
+									<div class="item active" >
+										<img src="images/colores/rojo2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>
+									<div class="item">
+										<img src="images/colores/verde2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>							
+									<div class="item">
+										<img src="images/colores/naranja2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>							
+									<div class="item">
+										<img src="images/colores/azul2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>
+									<div class="item">
+										<img src="images/colores/negro2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>
+									<div class="item">
+										<img src="images/colores/lila2.png" style="width: 50px; margin:12px auto; display:block;">
+									</div>
+								</div>
+									<label class="fh5co-card-item left carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#myCarousel" role="button" data-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</label>
+									<label class="fh5co-card-item right carousel-control " style="width: 20px; height: 35px; background-color:dodgerblue; margin-top: 20px;" href="#myCarousel" role="button" data-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</label>
+								</div>														
 						</div>
+						<p>
+							<!--<span class="btn btn-primary">Schedule a Trip action="juego.html"</span>-->
+							<button class="bubbly-button" onclick="appGame.conectar();">Play</button>
+						</p>						
 					</a>
 				</div>
 				<div class="col-lg-5 col-md-5 col-sm-5">
-					<a class="fh5co-card-item image-popup">
-
-						<div class="fh5co-text" style="margin-bottom: 0.2em; margin-top: 1.2em; height: 200px;">
-							<h2>Acerca del juego</h2>							
-								
-							<p></p>
-							<p>
+					<a class="fh5co-card-item">
+						<div class="fh5co-text" style="margin-bottom: 0.2em; margin-top: 1.2em; height: 210px;">
+							<h2>Cómo jugar</h2>							
+							<div>
+								<img src="images/instruccionesJuego.png" style="height: auto; width: 100%; display:block; max-height: 20%;">
+							</div>
 								<!--<span class="btn btn-primary">Schedule a Trip</span>-->
 							</p>
 						</div>
