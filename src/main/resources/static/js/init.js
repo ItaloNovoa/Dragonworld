@@ -22,13 +22,15 @@ var init = (function () {
 	}
 
 	class Player {
-		constructor(nickName, posX, posY, angle, state, numRoomP) {
+		constructor(nickName, posX, posY, angle,color,evolucion, state, numRoomP) {
 			this.nickName = nickName;
 			this.posX = posX;
 			this.posY = posY;
 			this.numRoom = numRoomP;
 			this.angle = angle;
 			this.state = state;
+			this.color=color;
+			this.evolucion=evolucion
 		}
 
 		setPosX(posx) {
@@ -39,6 +41,12 @@ var init = (function () {
 		}
 		setAngle(angle) {
 			this.angle = angle;
+		}
+		setColor(color){
+			this.color=color;
+		}
+		setEvolucion(evolucion){
+			this.evolucion=evolucion;
 		}
 		setActive(active) {
 			this.active = active;
@@ -84,12 +92,10 @@ var init = (function () {
 	var atacantes = [];
 	var fuegosActivos = [];
 	var atacados=[];
+	var evolucionados= new Map();
 	var comibles = new Map(); //hasmap de los posible comibles
-	var evo=1;
 
-	function preload() { //funcion que carga recursos	
-		this.load.image('dragonImg', 'images/dragon3.png');
-		this.load.atlas('dragonesAtlas', 'images/dragones.png', 'images/dragones.js');		
+	function preload() { //funcion que carga recursos					
 		this.load.atlas('fireAtlas', 'images/fuego1.png', 'images/fuego.js');		
 		this.load.image('foodImg', 'images/esfera3.png');
 
@@ -115,18 +121,17 @@ var init = (function () {
 		for (var i = 0; i < roomADibujar.length; i++) {
 			//Dibujar este dragon
 			if (roomADibujar[i].nickName == nickNamePlayer) {
-				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('blanco');
+				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(player.color);
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				dragon.setCollideWorldBounds(true);
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui
-				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('blanco');;
+				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(roomADibujar[i].color);;
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
 				graphicDragon.name=roomADibujar[i].nickName;
 				mapPlayersG.set(roomADibujar[i].nickName, graphicDragon);
 				var txtDragon = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, roomADibujar[i].nickName);
 				mapTextJugadores.set(roomADibujar[i].nickName, txtDragon);
 			}
-			console.log("despues de grafica");
 		}
 		//Crear comida
 		foodsJugador = this.physics.add.group();
@@ -149,7 +154,7 @@ var init = (function () {
 				let angleNow = dragon.angle;
 				coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 				seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
-				this.fuegoSprite = this.physics.add.sprite(dragon.x + ((45+(20*evo)) * coseno), dragon.y - ((45+(20*evo)) * seno), 'fuegos').play('fuego1');
+				this.fuegoSprite = this.physics.add.sprite(dragon.x + ((45+(20*player.evolucion)) * coseno), dragon.y - ((45+(20*player.evolucion)) * seno), 'fuegos').play('fuego1');
 				this.fuegoSprite.angle = angleNow - 180;
 				var time;
 				timedEvent = this.time.delayedCall(300, onEvent, [], this);
@@ -188,8 +193,6 @@ var init = (function () {
 		if (parseInt(dragon.x) != this.input.mousePointer.x || parseInt(dragon.y) != this.input.mousePointer.y + 32) {
 
 			this.physics.moveTo(dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 200);
-			console.log("DRAGON ************* " + dragon.x + "*******" + dragon.y);
-			console.log("mouse ************* " + this.input.mousePointer.x + "*******" + deby);
 		} else {
 			this.physics.moveTo(dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 0);
 		}
@@ -209,25 +212,34 @@ var init = (function () {
 		player.setAngle(dragon.angle);
 		player.setPosX(dragon.x);
 		player.setPosY(dragon.y);
+		//player.setColor(dragon.color);
 
 		appGame.moveDragon(player); //si detecta movimiento de este jugador se actualiza el servidor
 
 		if (typeof updateRoom !== 'undefined') {
 			for (var i = 0; i < updateRoom.length; i++) {
+				//alert(JSON.stringify(updateRoom[i]));
 				var diseñoDeDragonI;
 				var textDragonI;
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
-					if(score > 100 && evo==1){
-						dragon.textureKey="dragoneslvl2";						
-						dragon.anims.play("blanco1");
-						evo+=1;
+					if(score > 100 && player.evolucion==1){
+						dragon.textureKey="dragoneslvl2";				
+						dragon.anims.play(player.color+"1");
+						player.setEvolucion(2);
+						appGame.evolucione(2,nickNamePlayer);
 					}
 					scoreText.setText('Score: ' + score);
 				}
 				if (updateRoom[i].nickName != nickNamePlayer && mapPlayersG.has(updateRoom[i].nickName)) {
+					
 					diseñoDeDragonI = mapPlayersG.get(updateRoom[i].nickName);
+					if(updateRoom[i].evolucion>1 && evolucionados.has(updateRoom[i].nickName+updateRoom[i].evolucion)==false){
+						diseñoDeDragonI.textureKey="dragoneslvl2";
+						diseñoDeDragonI.anims.play(updateRoom[i].color+"1");
+						evolucionados.set(updateRoom[i].nickName+updateRoom[i].evolucion,"");
+					}
 					this.physics.moveTo(diseñoDeDragonI, updateRoom[i].posX, updateRoom[i].posY, 200);
 					diseñoDeDragonI.setAngle(updateRoom[i].angle);
 					textDragonI = mapTextJugadores.get(updateRoom[i].nickName);
@@ -243,14 +255,14 @@ var init = (function () {
 						let angleNow = diseñoDeDragonI.angle;
 						coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 						seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
-						this.fuego2 = this.physics.add.sprite(diseñoDeDragonI.x + (50 * coseno), diseñoDeDragonI.y - (50 * seno), 'fuegos').play('fuego1');
+						this.fuego2 = this.physics.add.sprite(diseñoDeDragonI.x + ((45+(updateRoom[i].evolucion)) * coseno), diseñoDeDragonI.y - ((45+(updateRoom[i].evolucion))  * seno), 'fuegos').play('fuego1');
 						this.fuego2.angle = angleNow - 180;
 						fuegosActivos.push(this.fuego2);
 						delete atacantes[atacantes.indexOf(updateRoom[i].nickName)];
 					}
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) { //nuevos dragones					
-					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play('blanco');
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play(updateRoom[i].color);
 					
 					diseñoDeDragonI.setCollideWorldBounds(true);
 					diseñoDeDragonI.name=updateRoom[i].nickName;
@@ -273,12 +285,11 @@ var init = (function () {
 		var comida = mapFood.get(foodsO[id].id);
 		comida.body.immovable = false;
 		comida.body.moves = true;
+		comida.setVisible = false;
 		var esferaBoolean = comibles.get(foodsO[id].id);
-		if (esferaBoolean){
-			
+		if (esferaBoolean){			
 			comibles.set(foodsO[id].id,false);
-			appGame.eat(foodsO[id].id);
-			
+			appGame.eat(foodsO[id].id);			
 		}
 	}
 
@@ -292,6 +303,7 @@ var init = (function () {
 				comida.setX(foodsO[i].posX);
 				comida.setY(foodsO[i].posY);
 				comibles.set(foodsO[i].id,true);
+				comida.setVisible = true;
 			}
 		}
 		updateFoods = false;
@@ -305,7 +317,7 @@ var init = (function () {
 			var room = new Room(numRoomInit, ancho, alto);
 			var posX = Phaser.Math.FloatBetween(32, config.width - 32);
 			var posY = Phaser.Math.FloatBetween(32, config.height - 32);
-			player = new Player(nickName, posX, posY, 0, "activo", numRoomInit);
+			player = new Player(nickName, posX, posY, 0,"verde",1, "activo", numRoomInit);
 			appGame.initializeGame(numRoomInit, player, room);
 		},
 		startGame: function (room) {

@@ -85,7 +85,7 @@ var appGame = (function () {
                 var jugador = JSON.parse(eventbody.body);
                 if(jugador[0].nickName===nickName){
                     //no se hace el alert
-                    alert("Felicidades su puntaje a sido"+jugador[0].score);     
+                    alert("Felicidades su puntaje ha sido"+jugador[0].score);     
                     setTimeout(function () {
                         location.href =window.location; 
                     }, 400);               
@@ -120,12 +120,12 @@ var appGame = (function () {
         },
 
         initializeGame: function (numRoomSend, player, room) {
-            objPlayer = player;
+            objPlayer = player;            
             stompClient.send("/app/newRoom", {}, JSON.stringify(room));
             setTimeout(function () {
                 stompClient.send("/app/newPlayer." + numRoomSend, {}, JSON.stringify(player)); //convierte obje
                 init.getNickName(nickName);
-            }, 50);
+            }, 200);
         },
 
         moveDragon: function (player) {
@@ -147,6 +147,9 @@ var appGame = (function () {
         },
         connectTopic: function () {
             connectAndSubscribe();
+        },
+        evolucione(numEvo,nombre){
+            stompClient.send("/app/evolucion/" + numRoom + "/" + nombre+"/"+numEvo);
         }
     };
 })();

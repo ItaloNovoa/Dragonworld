@@ -79,7 +79,7 @@ public class ControllerStomp {
         String a = "{\"nickName\":\"" + player.getNickName() + "\"}";
         msgt.convertAndSend("/topic/ataca." + numRoom, a);
     }
-    @MessageMapping("//muere/{numRoom}/{nombre}")
+    @MessageMapping("/muere/{numRoom}/{nombre}")
     public void handlePlayerDead( @DestinationVariable Integer numRoom,@DestinationVariable String nombre) throws Exception {
         //try {
             Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
@@ -95,6 +95,11 @@ public class ControllerStomp {
         //servicesDragon.deletePlayerOfRoom(player, numRoom);
         //String a="{\"nickName\":\""+player.getNickName()+ "\"}";
         //msgt.convertAndSend("/topic/murio." + numRoom, a);
+    }
+    @MessageMapping("/evolucion/{numRoom}/{nombre}/{numEvo}")
+    public void handlePlayerEvolveEvent(@DestinationVariable Integer numRoom,@DestinationVariable String nombre,@DestinationVariable Integer numEvo) throws Exception {
+        Player player=servicesDragon.getPlayerByNicknameRoom(numRoom, nombre);
+        player.SetEvolucion(numEvo);
     }
 
 }
