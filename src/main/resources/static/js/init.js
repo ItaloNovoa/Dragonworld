@@ -115,11 +115,11 @@ var init = (function () {
 		for (var i = 0; i < roomADibujar.length; i++) {
 			//Dibujar este dragon
 			if (roomADibujar[i].nickName == nickNamePlayer) {
-				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('azul');
+				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('blanco');
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				dragon.setCollideWorldBounds(true);
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui
-				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('azul');;
+				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play('blanco');;
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
 				graphicDragon.name=roomADibujar[i].nickName;
 				mapPlayersG.set(roomADibujar[i].nickName, graphicDragon);
@@ -221,7 +221,7 @@ var init = (function () {
 					score = updateRoom[i].score;
 					if(score > 100 && evo==1){
 						dragon.textureKey="dragoneslvl2";						
-						dragon.anims.play("azul1");
+						dragon.anims.play("blanco1");
 						evo+=1;
 					}
 					scoreText.setText('Score: ' + score);
@@ -250,7 +250,7 @@ var init = (function () {
 					}
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) { //nuevos dragones					
-					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play('azul');
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play('blanco');
 					
 					diseñoDeDragonI.setCollideWorldBounds(true);
 					diseñoDeDragonI.name=updateRoom[i].nickName;
@@ -347,8 +347,5 @@ var init = (function () {
 				}
 			}
 		}
-		/** comidaNueva: function(comida){
-			foods1=comida;
-		}*/
 	};
 })();

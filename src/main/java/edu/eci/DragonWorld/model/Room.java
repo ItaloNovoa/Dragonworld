@@ -50,7 +50,7 @@ public class Room {
 		String resp = "[";
 		for (String key : players.keySet()) {
 			Player player = players.get(key);
-			resp += "{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
+			resp += "{\"nickName\":\"" + player.getNickName()+"\",\"evolucion\":\""+player.getEvolucion()+"" +"\",\"color\":\"" +player.getColor()+ "\",\"posX\":" + player.getPosX() + ",\"posY\":"
 					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()+
 					"\",\"score\":"+player.getScore()+ "},";
 					//System.out.println("dragon: "+player.getNickName()+" posicion x: "+player.getPosX()+" score "+player.getScore());
@@ -63,12 +63,12 @@ public class Room {
 
 	public String playerJson(Player player) {
 		Player playerJson = players.get(player.getNickName());
-		String resp = "[{\"nickName\":\"" + player.getNickName() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
+		String resp = "[{\"nickName\":\"" + player.getNickName()+"\",\"evolucion\":\""+player.getEvolucion()+"\",\"color\":\"" +player.getColor() + "\",\"posX\":" + player.getPosX() + ",\"posY\":"
 					+ player.getPosY() + ",\"angle\":" + player.getAngle() + ",\"state\":\"" + player.getState()+
 					"\",\"score\":"+player.getScore()+ "}]";
 					//System.out.println("dragon: "+player.getNickName()+" posicion x: "+player.getPosX()+" score "+player.getScore());
 	
-		// System.out.println(resp);
+		System.out.println(resp);
 		return resp;
 	}
 

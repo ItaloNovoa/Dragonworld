@@ -10,13 +10,15 @@ public class Player {
 	public String state;
 	public int numRoomP;
 	public long score;
+	public String color;
+	public int evolucion;
 	
 
 	public Player() {
 
 	}
 
-	public Player(String nickName, float posX, float posY, float angle, String state, int numRoomP) {
+	public Player(String nickName, float posX, float posY, float angle,String color,int evolucion,String state, int numRoomP) {
 		this.nickName = nickName;
 		this.posX = posX;
 		this.posY = posY;
@@ -24,8 +26,26 @@ public class Player {
 		this.angle = angle;
 		this.state = state;
 		this.score =0;
+		this.color="azul";
+		this.evolucion=1;
 	}
 
+
+	public void SetEvolucion(int evolucion){
+		this.evolucion=evolucion;
+	}
+
+	public int getEvolucion(){
+		return evolucion;
+	}
+
+	public void SetColor(String color){
+		this.color=color;
+	}
+
+	public String getColor(){
+		return color;
+	}
 	/*
 	 * public Player(String nickName, String nombre, long exp, float posX, float
 	 * posY, boolean vivo) { super(); this.nickName = nickName; this.nombre =
