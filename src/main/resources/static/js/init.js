@@ -85,6 +85,7 @@ var init = (function () {
 	var fuegosActivos = [];
 	var atacados=[];
 	var comibles = new Map(); //hasmap de los posible comibles
+	var evo=1;
 
 	function preload() { //funcion que carga recursos	
 		this.load.image('dragonImg', 'images/dragon3.png');
@@ -148,7 +149,7 @@ var init = (function () {
 				let angleNow = dragon.angle;
 				coseno = Math.cos(((angleNow - 180) * -1) * Math.PI / 180);
 				seno = Math.sin(((angleNow - 180) * -1) * Math.PI / 180)
-				this.fuegoSprite = this.physics.add.sprite(dragon.x + (50 * coseno), dragon.y - (50 * seno), 'fuegos').play('fuego1');
+				this.fuegoSprite = this.physics.add.sprite(dragon.x + ((45+(20*evo)) * coseno), dragon.y - ((45+(20*evo)) * seno), 'fuegos').play('fuego1');
 				this.fuegoSprite.angle = angleNow - 180;
 				var time;
 				timedEvent = this.time.delayedCall(300, onEvent, [], this);
@@ -218,8 +219,10 @@ var init = (function () {
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
-					if(score>100 && score<140){
-						dragon.textureKey="dragoneslvl2";
+					if(score > 100 && evo==1){
+						dragon.textureKey="dragoneslvl2";						
+						dragon.anims.play("azul1");
+						evo+=1;
 					}
 					scoreText.setText('Score: ' + score);
 				}
