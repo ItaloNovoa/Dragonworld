@@ -2,7 +2,7 @@ var nickName;
 var numRoom;
 var numFood = 1;
 var objPlayer;
-var color = 0;
+var color="rojo";
 
 apimock = (function () {
     return {
@@ -21,8 +21,9 @@ apimock = (function () {
 })();
 function select() {
     $('#carouselColor').on('slid.bs.carousel', function (e){
-        //console.log(e.relatedTarget.id);        
+        console.log(e.relatedTarget.id);        
         color = e.relatedTarget.id;
+        console.log(color);
     });
 }
 
@@ -39,18 +40,18 @@ var appGame = (function () {
     };
 
     var connectAndSubscribe = function () {
-        console.info('Connecting to WS...');
+        //console.info('Connecting to WS...');
         var socket = new SockJS('/stompDragon');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             //stompClient.connect("skieprkh", "3qg80KHy7MJAC9MH4kWzFANGNbg-Qjki", function (frame) {
             //stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
+            //console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newGame.' + numRoom, function (eventbody) {
                 var gameObj = JSON.parse(eventbody.body);
                 // Se cambiaba de página cuando empezaba el juego. Por el momento se quita el div de inicio y se muestra en el index
                 setTimeout(function () {
-                    init.startGame(gameObj, color);
+                    init.startGame(gameObj);
                 }, 60);
             });
             stompClient.subscribe('/topic/createFood.' + numRoom, function (eventbody) {
@@ -87,11 +88,10 @@ var appGame = (function () {
                     setTimeout(function () {
                         location.href =window.location; 
                     }, 400);               
-                                   
                 }
             });
-
-            init.initializeGame(numRoom);
+            console.log(color);
+            init.initializeGame(numRoom, color);
         });
     };
 
@@ -102,8 +102,6 @@ var appGame = (function () {
         conectar: function () {
             nickName = document.getElementById("nickname").value;
             numRoom = document.getElementById("sala").value;
-            
-
             if (nickName == "" || numRoom == "") {
                 alert("Ingrese el Nickname o numero de SALA");
             } else if (numRoom < 0 || numRoom > 10) {
