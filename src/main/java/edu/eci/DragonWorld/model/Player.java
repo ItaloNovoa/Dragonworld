@@ -12,38 +12,37 @@ public class Player {
 	public long score;
 	public String color;
 	public int evolucion;
-	
 
 	public Player() {
 
 	}
 
-	public Player(String nickName, float posX, float posY, float angle,String color,int evolucion,String state, int numRoomP) {
+	public Player(String nickName, float posX, float posY, String color, float angle, int evolucion, String state,
+			int numRoomP) {
 		this.nickName = nickName;
 		this.posX = posX;
 		this.posY = posY;
 		this.numRoomP = numRoomP;
 		this.angle = angle;
 		this.state = state;
-		this.score =0;
-		this.color="azul";
-		this.evolucion=1;
+		this.score = 0;
+		this.color = "azul";
+		this.evolucion = 1;
 	}
 
-
-	public void SetEvolucion(int evolucion){
-		this.evolucion=evolucion;
+	public void SetEvolucion(int evolucion) {
+		this.evolucion = evolucion;
 	}
 
-	public int getEvolucion(){
+	public int getEvolucion() {
 		return evolucion;
 	}
 
-	public void SetColor(String color){
-		this.color=color;
+	public void SetColor(String color) {
+		this.color = color;
 	}
 
-	public String getColor(){
+	public String getColor() {
 		return color;
 	}
 	/*
@@ -124,6 +123,7 @@ public class Player {
 	public void sumScore(long score) {
 		this.score += 10;
 	}
+
 	@Override
 	public String toString() {
 		return "Player [nickName=" + nickName + ", posX=" + posX + ", angle=" + angle + ", posY=" + posY + ", state="

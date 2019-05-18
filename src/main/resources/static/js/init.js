@@ -1,8 +1,10 @@
+
 var init = (function () {
 	var roomADibujar;
 	var updateRoom;
 	var nickNamePlayer;
 	var activo;
+	var color="rojo";
 
 	class Room {
 		constructor(num, ancho, alto, foods) {
@@ -22,7 +24,7 @@ var init = (function () {
 	}
 
 	class Player {
-		constructor(nickName, posX, posY, angle,color,evolucion, state, numRoomP) {
+		constructor(nickName, posX, posY,color, angle, evolucion, state, numRoomP) {
 			this.nickName = nickName;
 			this.posX = posX;
 			this.posY = posY;
@@ -96,6 +98,7 @@ var init = (function () {
 	var comibles = new Map(); //hasmap de los posible comibles
 
 	function preload() { //funcion que carga recursos					
+	var evo=1;		
 		this.load.atlas('fireAtlas', 'images/fuego1.png', 'images/fuego.js');		
 		this.load.image('foodImg', 'images/esfera3.png');
 
@@ -105,14 +108,9 @@ var init = (function () {
 
 		this.load.json('dragoneslvl2_anim', 'images/dragoneslvl2_anim.json');
 		this.load.atlas('dragoneslvl2', 'images/dragoneslvl2.png', 'images/dragoneslvl2_atlas.json');
-
 	}
 
-	function create() {//muesta imagenes, sprites etc
-		//this.anims.create({ key: 'dragonSprite', frames: this.anims.generateFrameNames('dragonesAtlas', { prefix: 'dragon1_', end: 100, zeroPad: 4 }), repeat: -1 });
-		
-		
-		
+	function create() {//muesta imagenes, sprites etc	
 		this.dragoneslvl2_anim = this.cache.json.get('dragoneslvl2_anim');	
 		this.anims.fromJSON(this.dragoneslvl2_anim);
 		this.dragoneslvl1_anim = this.cache.json.get('dragoneslvl1_anim');	
@@ -135,15 +133,12 @@ var init = (function () {
 		}
 		//Crear comida
 		foodsJugador = this.physics.add.group();
-
 		for (var i = 0; i < foodsO.length; i++) {
-
 			var foodG = foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
 			foodG.name = i;
 			mapFood.set(foodsO[i].id, foodG);
 			comibles.set(foodsO[i].id, true);
-		}
-		
+		}		
 
 		//mouse and fire
 		this.fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
@@ -158,11 +153,10 @@ var init = (function () {
 				this.fuegoSprite.angle = angleNow - 180;
 				var time;
 				timedEvent = this.time.delayedCall(300, onEvent, [], this);
-
 			}
 		}, this);
 
-		//crear puntaje
+		//Puntaje
 		scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
 	}
@@ -186,13 +180,14 @@ var init = (function () {
 
 	function update(time, delta) {
 		this.physics.add.collider(dragon, foodsJugador, collectFood, null, this);
-		//this.physics.add.overlap(dragon, foodsJugador, collectFood, null, this);
 
 		//movimiento del dragon que siga el mouse
 		deby = this.input.mousePointer.y + 32
 		if (parseInt(dragon.x) != this.input.mousePointer.x || parseInt(dragon.y) != this.input.mousePointer.y + 32) {
 
 			this.physics.moveTo(dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 200);
+			//console.log("DRAGON ************* " + dragon.x + "*******" + dragon.y);
+			//console.log("mouse ************* " + this.input.mousePointer.x + "*******" + deby);
 		} else {
 			this.physics.moveTo(dragon, this.input.mousePointer.x, this.input.mousePointer.y + 32, 0);
 		}
@@ -222,6 +217,7 @@ var init = (function () {
 				var diseñoDeDragonI;
 				var textDragonI;
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
+				 
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
 					if(score > 100 && player.evolucion==1){
@@ -311,18 +307,19 @@ var init = (function () {
 
 
 	return {
-		initializeGame: function (numRoomInit) {
+		initializeGame: function (numRoomInit, colorR) {
+			color = colorR;
 			var ancho = config.width;
 			var alto = config.height;
 			var room = new Room(numRoomInit, ancho, alto);
 			var posX = Phaser.Math.FloatBetween(32, config.width - 32);
 			var posY = Phaser.Math.FloatBetween(32, config.height - 32);
-			player = new Player(nickName, posX, posY, 0,"verde",1, "activo", numRoomInit);
+			player = new Player(nickName, posX, posY, colorR, 0, 1, "activo", numRoomInit);
 			appGame.initializeGame(numRoomInit, player, room);
 		},
 		startGame: function (room) {
 			roomADibujar = room;
-			$('#divInicio').hide();
+			$('#divInicio').hide();			
 			if (game == null) {
 				game = new Phaser.Game(config);
 			}
