@@ -4,7 +4,7 @@ var init = (function () {
 	var updateRoom;
 	var nickNamePlayer;
 	var activo;
-	var color;
+	var color="rojo";
 
 	class Room {
 		constructor(num, ancho, alto, foods) {
