@@ -4,7 +4,7 @@ var init = (function () {
 	var updateRoom;
 	var nickNamePlayer;
 	var activo;
-	var color="rojo";
+	var color="verde";
 
 	class Room {
 		constructor(num, ancho, alto, foods) {
@@ -119,7 +119,7 @@ var init = (function () {
 		for (var i = 0; i < roomADibujar.length; i++) {
 			//Dibujar este dragon
 			if (roomADibujar[i].nickName == nickNamePlayer) {
-				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(player.color);
+				dragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(color);
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				dragon.setCollideWorldBounds(true);
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui

@@ -2,7 +2,7 @@ var nickName;
 var numRoom;
 var numFood = 1;
 var objPlayer;
-var color="rojo";
+var color="verde";
 
 apimock = (function () {
     return {
