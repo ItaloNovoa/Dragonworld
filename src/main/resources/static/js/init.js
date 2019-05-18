@@ -24,13 +24,14 @@ var init = (function () {
 	}
 
 	class Player {
-		constructor(nickName, posX, posY, angle, state, numRoomP) {
+		constructor(nickName, posX, posY, color, angle, state, numRoomP) {
 			this.nickName = nickName;
 			this.posX = posX;
 			this.posY = posY;
 			this.numRoom = numRoomP;
 			this.angle = angle;
 			this.state = state;
+			this.color = color;
 		}
 
 		setPosX(posx) {
@@ -100,7 +101,6 @@ var init = (function () {
 
 		this.load.json('dragoneslvl2_anim', 'images/dragoneslvl2_anim.json');
 		this.load.atlas('dragoneslvl2', 'images/dragoneslvl2.png', 'images/dragoneslvl2_atlas.json');
-		console.log("preload", color);
 	}
 
 	function create() {//muesta imagenes, sprites etc	
@@ -116,26 +116,24 @@ var init = (function () {
 				this.txt = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, nickNamePlayer);
 				dragon.setCollideWorldBounds(true);
 			} else if (roomADibujar[i].state != "inactivo") { //Dibujar los dragones diferentes al creado aqui
-				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(color);
+				console.log("DIBUJADO A OTROS");
+				console.log("otrocolor: ",roomADibujar[i].color);
+				var graphicDragon = this.physics.add.sprite(roomADibujar[i].posX, roomADibujar[i].posY, 'dragoneslvl1').anims.play(roomADibujar[i].color);
 				graphicDragon.setCollideWorldBounds(true); //para que el dragon n os salga de la pantalla
 				graphicDragon.name=roomADibujar[i].nickName;
 				mapPlayersG.set(roomADibujar[i].nickName, graphicDragon);
 				var txtDragon = this.add.text(roomADibujar[i].posX, roomADibujar[i].posY + 50, roomADibujar[i].nickName);
 				mapTextJugadores.set(roomADibujar[i].nickName, txtDragon);
 			}
-			console.log("despues de grafica");
 		}
 		//Crear comida
 		foodsJugador = this.physics.add.group();
-
 		for (var i = 0; i < foodsO.length; i++) {
-
 			var foodG = foodsJugador.create(foodsO[i].posX, foodsO[i].posY, 'foodImg');
 			foodG.name = i;
 			mapFood.set(foodsO[i].id, foodG);
 			comibles.set(foodsO[i].id, true);
-		}
-		
+		}		
 
 		//mouse and fire
 		this.fuegoSprite = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
@@ -150,11 +148,10 @@ var init = (function () {
 				this.fuegoSprite.angle = angleNow - 180;
 				var time;
 				timedEvent = this.time.delayedCall(300, onEvent, [], this);
-
 			}
 		}, this);
 
-		//crear puntaje
+		//Puntaje
 		scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
 	}
@@ -178,7 +175,6 @@ var init = (function () {
 
 	function update(time, delta) {
 		this.physics.add.collider(dragon, foodsJugador, collectFood, null, this);
-		//this.physics.add.overlap(dragon, foodsJugador, collectFood, null, this);
 
 		//movimiento del dragon que siga el mouse
 		deby = this.input.mousePointer.y + 32
@@ -214,6 +210,7 @@ var init = (function () {
 				var diseñoDeDragonI;
 				var textDragonI;
 				this.fuego2 = this.anims.create({ key: 'fuego1', frames: this.anims.generateFrameNames('fireAtlas', { prefix: 'fuego_', end: 100, zeroPad: 4 }), repeat: 0 });
+				 
 				if (updateRoom[i].nickName == nickNamePlayer){
 					score = updateRoom[i].score;
 					if(score > 100 && evo==1){
@@ -247,7 +244,7 @@ var init = (function () {
 					}
 
 				} else if (updateRoom[i].nickName != nickNamePlayer) { //nuevos dragones					
-					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play(color);
+					diseñoDeDragonI = this.physics.add.sprite(updateRoom[i].posX, updateRoom[i].posY, 'dragoneslvl1').anims.play(updateRoom[i].color);
 					
 					diseñoDeDragonI.setCollideWorldBounds(true);
 					diseñoDeDragonI.name=updateRoom[i].nickName;
@@ -297,15 +294,13 @@ var init = (function () {
 
 	return {
 		initializeGame: function (numRoomInit, colorR) {
-			console.log("inicializar",colorR);
 			color = colorR;
 			var ancho = config.width;
 			var alto = config.height;
 			var room = new Room(numRoomInit, ancho, alto);
 			var posX = Phaser.Math.FloatBetween(32, config.width - 32);
 			var posY = Phaser.Math.FloatBetween(32, config.height - 32);
-			player = new Player(nickName, posX, posY, 0, "activo", numRoomInit);
-			console.log("inicializar",color);
+			player = new Player(nickName, posX, posY, colorR, 0, "activo", numRoomInit);
 			appGame.initializeGame(numRoomInit, player, room);
 		},
 		startGame: function (room) {
